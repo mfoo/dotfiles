@@ -1,0 +1,7 @@
+*.pyc
+tags
+*~
+*.swp
+.DS_Store
+build
+dist

@@ -1,0 +1,12 @@
+[user]
+	name = Martin Foot
+	email = martin@mfoot.com
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[core]
+	autocrlf = false
+    editor = /usr/bin/vim
+    excludesfile = ~/.gitignore
