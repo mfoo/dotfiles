@@ -134,7 +134,9 @@ set background=dark " When set to "dark", Vim will try to use colors that look
 
 colorscheme molokai
 
-set tags=tags;/usr/include/;/home/martin/src/;/home/martin/android/src/
+" Tell vim's Taglist plugin to search the current directory first, then up the
+" heirarchy until the root to try and find tags files.
+set tags=./tags;/
 
 filetype plugin indent on
 syntax on
