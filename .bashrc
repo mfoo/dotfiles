@@ -1,7 +1,7 @@
 alias grep='grep --color=auto'
 
 export EDITOR=vim
-export PATH=$PATH:~/bin/
+export PATH=~/bin/:$PATH
 
 export ANDROID_NDK=~/Android/android-ndk-r6b
 export ANDTOOLCHAIN=~/android-cmake/toolchain/android.toolchain.cmake
