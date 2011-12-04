@@ -137,6 +137,7 @@ colorscheme molokai
 " Tell vim's Taglist plugin to search the current directory first, then up the
 " heirarchy until the root to try and find tags files.
 set tags=./tags;/
+let Tlist_WinWidth=50
 
 filetype plugin indent on
 syntax on
