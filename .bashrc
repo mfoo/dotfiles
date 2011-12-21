@@ -1,14 +1,18 @@
 alias grep='grep --color=auto'
 
 export EDITOR=vim
+
+# Add my scripts to the path
 export PATH=~/bin/:$PATH
 
 # MacPorts
 export PATH=$PATH:/opt/local/bin
 
-export ANDROID_NDK=~/Android/android-ndk-r6b
-export ANDTOOLCHAIN=~/android-cmake/toolchain/android.toolchain.cmake
-alias android-cmake='cmake -DCMAKE_TOOLCHAIN_FILE=/Users/martin/android-cmake/toolchain/android.toolchain.cmake '
+# CMake-android
+export ANDROID_NDK=$HOME/Android/android-ndk-r7
+export ANDROID_NDK_TOOLCHAIN_ROOT=$HOME/android-toolchain
+export ANDTOOLCHAIN=$HOME/android-cmake/toolchain/android.toolchain.cmake
+alias android-cmake='cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/android-cmake/toolchain/android.toolchain.cmake '
 
 # Enable git autocompletion in bash
 source ~/.git-completion.bash
