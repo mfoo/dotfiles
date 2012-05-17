@@ -51,6 +51,7 @@ nnoremap ; :
 
 set guifont=Menlo:h11
 
+map Q q             " Allow :Q to quit
 
 " .vimrc
 " File based on the Arch Linux .vimrc file:
