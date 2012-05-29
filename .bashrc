@@ -10,6 +10,9 @@ export PATH=~/bin/:$PATH
 # MacPorts
 export PATH=$PATH:/opt/local/bin
 
+# Android SDK
+export PATH=$PATH:$HOME/Android/android-sdk-mac_x86/tools/
+export PATH=$PATH:$HOME/Android/android-sdk-mac_x86/platform-tools/
 # CMake-android
 export ANDROID_NDK=$HOME/Android/android-ndk-r7
 export ANDROID_NDK_TOOLCHAIN_ROOT=$HOME/android-toolchain
