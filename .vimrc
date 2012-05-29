@@ -1,66 +1,77 @@
+"------------------------------------------------------------------------------
+" Pathogen
+"------------------------------------------------------------------------------
+
 " Initialise Pathogen (https://github.com/tpope/vim-pathogen)
 filetype off
 call pathogen#runtime_append_all_bundles() 
 filetype plugin indent on
 
-" Ignore vi compatibility mode.
-set nocompatible
+"-------------------------------------------------------------------------------
+" Visible Editor Features
+"-------------------------------------------------------------------------------
+set ruler           " Show the line and column number of the cursor position,
+                    " separated by a comma.
 
-set modelines=0             " See http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
+set cursorline      " Highlight the current line
 
+
+set relativenumber  " Show line numbers relative to current position.
+
+set scrolloff=4     " Always try to keep 4 lines visible on the screen above and below the cursor.
+
+"set showcmd         " Show partial command info (like lines/char selected) at bottom
+set wildmenu        " Show command completion list
+set wildmode=list:longest
+set ttyfast         " Assume a fast terminal, redraw on every character
+
+
+set laststatus=2    " Always use a status line in the bottom of each window.
+
+set list            " Show newline characters and tabs.
+set listchars=tab:▸\ ,eol:¬
+
+
+
+set guifont=Menlo:h11
+"------------------------------------------------------------------------------
+" General Editor Features
+"------------------------------------------------------------------------------
+set nocompatible    " Ignore vi compatibility mode.
 
 " Tab settings
 set tabstop=4       " Number of spaces that a <Tab> in the file counts for.
-
 set softtabstop=4   " Number of spaces that inserting a <Tab> causes
-
 set shiftwidth=4    " Number of spaces to use for each step of (auto)indent.
 set expandtab       " Use the appropriate number of spaces to insert a <Tab>.
                     " Spaces are used in indents with the '>' and '<' commands
                     " and when 'autoindent' is on. To insert a real tab when
                     " 'expandtab' is on, use CTRL-V <Tab>.
- 
+
 set encoding=utf-8
-set scrolloff=4     " Always try to keep 4 lines visible on the screen above and below the cursor.
 
-set showcmd
-set wildmenu
-set wildmode=list:longest
-set cursorline
-set ttyfast
-set laststatus=2
+set showmatch       " When typing a bracket, quickly jump to the matching one so we know.
+"------------------------------------------------------------------------------
+" Search Settings
+"------------------------------------------------------------------------------
 
+set incsearch       " Start showing search results as soon as we type
 set ignorecase      " Get search to ignore cases.
 set smartcase       " If the search string has uppercase characters, override ignorecase.
-set incsearch       " Use incremental searching rather than searching only after the search term has been entered.
-set showmatch       " When typing a bracket, quickly jump to the matching one so we know.
+"------------------------------------------------------------------------------
+" Key Bindings
+"------------------------------------------------------------------------------
 
-nnoremap / /\v
 " Use normal regex chars.
+nnoremap / /\v
 vnoremap / /\v
 
-nnoremap <tab> %
 " Make the tab key swap between matching brackets as it's easier to type than %.
+nnoremap <tab> %
 vnoremap <tab> %
-
-set list            " Show newline characters and tabs.
-set listchars=tab:▸\ ,eol:¬
 
 nnoremap ; :
 " Tell the ; key to do :'s job so I don't have to press shift all the time.
-
-set guifont=Menlo:h11
-
-map Q q             " Allow :Q to quit
-
-" .vimrc
-" File based on the Arch Linux .vimrc file:
-" https://wiki.archlinux.org/index.php/Vim#Example_.vimrc
-"
-" See: http://vimdoc.sourceforge.net/htmldoc/options.html for details
-
-" For multi-byte character support (CJK support, for example):
-"set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,euc-kr,gb18030,latin1
 
 ""set t_Co=256
 
@@ -122,10 +133,7 @@ set formatoptions=c,q,r,t " This is a sequence of letters which describes how
                     " t         Auto-wrap text using textwidth (does not apply
                     "           to comments)
  
-set ruler           " Show the line and column number of the cursor position,
-                    " separated by a comma.
- 
-set relativenumber
+
 set background=dark " When set to "dark", Vim will try to use colors that look
                     " good on a dark background. When set to "light", Vim will
                     " try to use colors that look good on a light background.
@@ -140,10 +148,10 @@ colorscheme molokai
 set tags=./tags;/
 let Tlist_WinWidth=50
 
-filetype plugin indent on
-syntax on
+filetype plugin indent on   " Enable different indentation for different filetypes
+syntax on                   " Enable syntax highlighting
 
-set colorcolumn=85
+set colorcolumn=80          " Highlight column 80
 
 highlight TODO ctermfg=DarkMagenta
 match TODO /TODO/
