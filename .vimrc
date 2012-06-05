@@ -70,8 +70,11 @@ vnoremap / /\v
 nnoremap <tab> %
 vnoremap <tab> %
 
-nnoremap ; :
 " Tell the ; key to do :'s job so I don't have to press shift all the time.
+nnoremap ; :
+
+" Map control-space to control-n for more eclipse-like text suggestion
+inoremap <C-Space> <C-n>
 
 ""set t_Co=256
 
