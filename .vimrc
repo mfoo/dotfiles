@@ -42,9 +42,9 @@ set guifont=Menlo:h11
 set nocompatible    " Ignore vi compatibility mode.
 
 " Tab settings
-set tabstop=4       " Number of spaces that a <Tab> in the file counts for.
-set softtabstop=4   " Number of spaces that inserting a <Tab> causes
-set shiftwidth=4    " Number of spaces to use for each step of (auto)indent.
+set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
+set softtabstop=2   " Number of spaces that inserting a <Tab> causes
+set shiftwidth=2    " Number of spaces to use for each step of (auto)indent.
 set expandtab       " Use the appropriate number of spaces to insert a <Tab>.
                     " Spaces are used in indents with the '>' and '<' commands
                     " and when 'autoindent' is on. To insert a real tab when
@@ -53,6 +53,7 @@ set expandtab       " Use the appropriate number of spaces to insert a <Tab>.
 set encoding=utf-8
 
 set showmatch       " When typing a bracket, quickly jump to the matching one so we know.
+set mat=5           " Matched brackets and quotations blink to draw attention
 "------------------------------------------------------------------------------
 " Search Settings
 "------------------------------------------------------------------------------
