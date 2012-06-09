@@ -14,7 +14,7 @@ fi
 export GREP_OPTIONS
 
 export TERM="xterm-256color"
-export EDITOR=vim
+export EDITOR=vi
 
 # Add my scripts to the path
 export PATH=~/bin/:$PATH
