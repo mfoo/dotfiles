@@ -99,7 +99,15 @@ set hlsearch        " When there is a previous search pattern, highlight all
  
 set incsearch       " While typing a search command, show immediately where the
                     " so far typed pattern matches.
- 
+
+" The next two commands come from
+" http://blog.sanctum.geek.nz/vim-search-highlighting/
+autocmd InsertEnter * :setlocal nohlsearch " Disable search highlighting when
+                                           " entering insert mode
+                                           "
+autocmd InsertLeave * :setlocal hlsearch   " Enable search highlighting when
+                                           " leaving insert mode
+
 set ignorecase      " Ignore case in search patterns.
  
 set smartcase       " Override the 'ignorecase' option if the search pattern
