@@ -80,3 +80,15 @@ function extract () {
         echo "'$1' is not a valid file"
     fi
 }
+
+shopt -s cdspell        # Tolerate typos in an interactive shell
+shopt -s histappend     # Don't overwrite the last session's bash history,
+                        # append to it
+HISTSIZE=50000          # Allow 100,000 entries in the bash history rather than
+                        # default 500
+HISTCONTROL=ignoredups  # Don't write duplicate consecutive commands into the
+                        # bash history.
+
+# Write bash history as soon as commands are entered rather than when the shell
+# terminates.
+PROMPT_COMMAND='history -a; history -n'
