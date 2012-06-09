@@ -1,6 +1,18 @@
-alias grep='grep --color=auto'
 
-alias grep='grep --color=auto'
+# Set GNU Grep to use colours by default and ignore errors about files not
+# existing or being unreadable
+GREP_OPTIONS=' --color=auto'
+
+# Stop 'grep -r' searches including repository folders
+# Wrapped in an if because older Grep versions (such as the mac default) don't
+# support --exclude-dir
+if grep --help | grep -- --exclude-dir &>/dev/null; then
+    for PATTERN in .cvs .git .hg .svn; do
+        GREP_OPTIONS="$GREP_OPTIONS --exclude-dir=$PATTERN"
+    done
+fi
+export GREP_OPTIONS
+
 export TERM="xterm-256color"
 export EDITOR=vim
 
@@ -32,7 +44,7 @@ set -o vi
 vim()
 {
     if [[ $# -eq 1 && $1 =~ (.*):([[:digit:]]+):([[:digit:]]+): ]]; then
-FILE="${BASH_REMATCH[1]}"
+        FILE="${BASH_REMATCH[1]}"
         LINE="${BASH_REMATCH[2]}"
         COL="${BASH_REMATCH[3]}"
         $(which vim) -c "call cursor($LINE,$COL)" $FILE
@@ -45,7 +57,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=$PATH:/usr/local/apache-maven-3.0.4/bin
 
 function sshfwd {
-    ssh devel.modeltwozero.com -L 8080:localhost:80 -N
+   ssh devel.modeltwozero.com -L 8080:localhost:80 -N &
 }
 
 function extract () {
