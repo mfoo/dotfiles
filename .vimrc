@@ -4,7 +4,7 @@
 
 " Initialise Pathogen (https://github.com/tpope/vim-pathogen)
 filetype off
-call pathogen#runtime_append_all_bundles() 
+call pathogen#infect()
 filetype plugin indent on
 
 "-------------------------------------------------------------------------------
