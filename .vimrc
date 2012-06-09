@@ -29,7 +29,9 @@ set ttyfast         " Assume a fast terminal, redraw on every character
 set laststatus=2    " Always use a status line in the bottom of each window.
 
 set list            " Show newline characters and tabs.
-set listchars=tab:▸\ ,eol:¬
+
+" Highlight tabs, trailing whitespace and line endings. Mark wrapped lines.
+set listchars=tab:▸\ ,eol:¬,trail:~,extends:>,precedes:<
 
 
 
