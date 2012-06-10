@@ -1,12 +1,25 @@
 [user]
-	name = Martin Foot
-	email = martin@mfoot.com
+  name = Martin Foot
+  email = martin@mfoot.com
 [color]
-	branch = auto
-	diff = auto
-	interactive = auto
-	status = auto
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
 [core]
-	autocrlf = false
-    editor = /usr/bin/vim
-    excludesfile = ~/.gitignore
+  autocrlf = false
+  editor = /usr/bin/vim
+  excludesfile = ~/.gitignore
+	whitespace = trailing-space,space-before-tab
+[advice]
+	statusHints = false
+[diff]
+	renames = copies
+[branch]
+	autosetupmerge = true
+[push]
+	default = tracking
+[rerere]
+	enabled = true
+[merge]
+	stat = true
