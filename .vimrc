@@ -54,6 +54,14 @@ set encoding=utf-8
 
 set showmatch       " When typing a bracket, quickly jump to the matching one so we know.
 set mat=5           " Matched brackets and quotations blink to draw attention
+
+set history=1000    " Use a large command history
+set undolevels=500  " Use a large number of undo levels
+set title           " Change the title of the terminal that we're using to the
+                    " name of the file that we are editing
+
+" Ignore certain file types when tab completing
+set wildignore=*.swp,*.bak,*.pyc,*.class
 "------------------------------------------------------------------------------
 " Search Settings
 "------------------------------------------------------------------------------
