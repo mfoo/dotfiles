@@ -62,6 +62,11 @@ set title           " Change the title of the terminal that we're using to the
 
 " Ignore certain file types when tab completing
 set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildignore+=*.a,*.o
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*~,*.tmp
+
 "------------------------------------------------------------------------------
 " Search Settings
 "------------------------------------------------------------------------------
