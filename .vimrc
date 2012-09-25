@@ -203,3 +203,6 @@ call rainbow_parentheses#Toggle()
 
 " Key bindings for Gundo
 nnoremap <F5> :GundoToggle<CR>
+
+" Enable the NERDTree window file explorer window
+noremap <F6> :NERDTree<CR>
