@@ -1,26 +1,28 @@
 "------------------------------------------------------------------------------
-" Pathogen
+" Global config, always run first
 "------------------------------------------------------------------------------
+set nocompatible    " Ignore vi compatibility mode.
+filetype off
 
 " Initialise Pathogen (https://github.com/tpope/vim-pathogen)
-filetype off
 call pathogen#infect()
-filetype plugin indent on
+syntax on                   " Enable syntax highlighting
+filetype plugin indent on   " Enable different indentation for different filetypes
 
 "-------------------------------------------------------------------------------
 " Visible Editor Features
 "-------------------------------------------------------------------------------
+
 set ruler           " Show the line and column number of the cursor position,
                     " separated by a comma.
 
 set cursorline      " Highlight the current line
 
-
 set relativenumber  " Show line numbers relative to current position.
 
 set scrolloff=4     " Always try to keep 4 lines visible on the screen above and below the cursor.
 
-"set showcmd         " Show partial command info (like lines/char selected) at bottom
+set showcmd         " Show partial command info (like lines/char selected) at bottom
 set wildmenu        " Show command completion list
 set wildmode=list:longest
 set ttyfast         " Assume a fast terminal, redraw on every character
@@ -33,13 +35,64 @@ set list            " Show newline characters and tabs.
 " Highlight tabs, trailing whitespace and line endings. Mark wrapped lines.
 set listchars=tab:▸\ ,eol:¬,trail:~,extends:>,precedes:<
 
-
-
 set guifont=Menlo:h11
+
+set showcmd         " Show (partial) command in status line.
+
+set number          " Show line numbers.
+
+set showmatch       " When a bracket is inserted, briefly jump to the matching
+                    " one. The jump is only done if the match can be seen on the
+                    " screen. The time to show the match can be set with
+                    " 'matchtime'.
+ 
+set hlsearch        " When there is a previous search pattern, highlight all
+                    " its matches.
+ 
+set incsearch       " While typing a search command, show immediately where the
+                    " so far typed pattern matches.
+
+" The next two commands come from
+" http://blog.sanctum.geek.nz/vim-search-highlighting/
+autocmd InsertEnter * :setlocal nohlsearch " Disable search highlighting when
+                                           " entering insert mode
+                                           "
+autocmd InsertLeave * :setlocal hlsearch   " Enable search highlighting when
+                                           " leaving insert mode
+
+set colorcolumn=80  " Highlight column 80
+
+set textwidth=79    " Maximum width of text that is being inserted. A longer
+                    " line will be broken after white space to get this width.
+ 
+set formatoptions=c,q,r,t " This is a sequence of letters which describes how
+                    " automatic formatting is to be done.
+                    "
+                    " letter    meaning when present in 'formatoptions'
+                    " ------    ---------------------------------------
+                    " c         Auto-wrap comments using textwidth, inserting
+                    "           the current comment leader automatically.
+                    " q         Allow formatting of comments with "gq".
+                    " r         Automatically insert the current comment leader
+                    "           after hitting <Enter> in Insert mode. 
+                    " t         Auto-wrap text using textwidth (does not apply
+                    "           to comments)
+ 
+
+set background=dark " When set to "dark", Vim will try to use colors that look
+                    " good on a dark background. When set to "light", Vim will
+                    " try to use colors that look good on a light background.
+                    " Any other value is illegal.
+
+" Highlight the word TODO in any document with magenta
+highlight TODO ctermfg=DarkMagenta
+match TODO /TODO/
+
+colorscheme molokai " Port of Textmate monokai theme https://github.com/tomasr/molokai
+
 "------------------------------------------------------------------------------
 " General Editor Features
 "------------------------------------------------------------------------------
-set nocompatible    " Ignore vi compatibility mode.
 
 " Tab settings
 set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
@@ -67,6 +120,35 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.tmp
 
+" Code folding settings
+set foldmethod=indent " Lines with equal indentation form a fold
+set nofoldenable      " Don't fold code by default, only when asked
+
+set smarttab        " When on, a <Tab> in front of a line inserts blanks
+                    " according to 'shiftwidth'. 'tabstop' is used in other
+                    " places. A <BS> will delete a 'shiftwidth' worth of space
+                    " at the start of the line.
+ 
+set ignorecase      " Ignore case in search patterns.
+ 
+set smartcase       " Override the 'ignorecase' option if the search pattern
+                    " contains upper case characters.
+ 
+set backspace=indent,eol,start " Influences the working of <BS>, <Del>, CTRL-W
+                    " and CTRL-U in Insert mode. This is a list of items,
+                    " separated by commas. Each item allows a way to backspace
+                    " over something.
+ 
+set autoindent      " Copy indent from current line when starting a new line
+                    " (typing <CR> in Insert mode or when using the "o" or "O"
+                    " command).
+ 
+set smartindent     " Do smart autoindenting when starting a new line. Works
+                    " for C-like programs, but can also be used for other
+                    " languages.
+
+set wrap            " Wrap lines that are longer than the width of the screen
+
 "------------------------------------------------------------------------------
 " Search Settings
 "------------------------------------------------------------------------------
@@ -77,6 +159,7 @@ set smartcase       " If the search string has uppercase characters, override ig
 "------------------------------------------------------------------------------
 " Key Bindings
 "------------------------------------------------------------------------------
+let mapleader=","
 
 " Use normal regex chars.
 nnoremap / /\v
@@ -106,97 +189,14 @@ if has("user_commands")
     command! -bang Qa qa<bang>
 endif
 
-
-""set t_Co=256
-
-
-
-set smarttab        " When on, a <Tab> in front of a line inserts blanks
-                    " according to 'shiftwidth'. 'tabstop' is used in other
-                    " places. A <BS> will delete a 'shiftwidth' worth of space
-                    " at the start of the line.
- 
-set showcmd         " Show (partial) command in status line.
-
-set number          " Show line numbers.
-
-set showmatch       " When a bracket is inserted, briefly jump to the matching
-                    " one. The jump is only done if the match can be seen on the
-                    " screen. The time to show the match can be set with
-                    " 'matchtime'.
- 
-set hlsearch        " When there is a previous search pattern, highlight all
-                    " its matches.
- 
-set incsearch       " While typing a search command, show immediately where the
-                    " so far typed pattern matches.
-
-" The next two commands come from
-" http://blog.sanctum.geek.nz/vim-search-highlighting/
-autocmd InsertEnter * :setlocal nohlsearch " Disable search highlighting when
-                                           " entering insert mode
-                                           "
-autocmd InsertLeave * :setlocal hlsearch   " Enable search highlighting when
-                                           " leaving insert mode
-
-set ignorecase      " Ignore case in search patterns.
- 
-set smartcase       " Override the 'ignorecase' option if the search pattern
-                    " contains upper case characters.
- 
-set backspace=indent,eol,start " Influences the working of <BS>, <Del>, CTRL-W
-                    " and CTRL-U in Insert mode. This is a list of items,
-                    " separated by commas. Each item allows a way to backspace
-                    " over something.
- 
-set autoindent      " Copy indent from current line when starting a new line
-                    " (typing <CR> in Insert mode or when using the "o" or "O"
-                    " command).
- 
-set smartindent     " Do smart autoindenting when starting a new line. Works
-                    " for C-like programs, but can also be used for other
-                    " languages.
-
-set wrap
-
-set textwidth=79    " Maximum width of text that is being inserted. A longer
-                    " line will be broken after white space to get this width.
- 
-set formatoptions=c,q,r,t " This is a sequence of letters which describes how
-                    " automatic formatting is to be done.
-                    "
-                    " letter    meaning when present in 'formatoptions'
-                    " ------    ---------------------------------------
-                    " c         Auto-wrap comments using textwidth, inserting
-                    "           the current comment leader automatically.
-                    " q         Allow formatting of comments with "gq".
-                    " r         Automatically insert the current comment leader
-                    "           after hitting <Enter> in Insert mode. 
-                    " t         Auto-wrap text using textwidth (does not apply
-                    "           to comments)
- 
-
-set background=dark " When set to "dark", Vim will try to use colors that look
-                    " good on a dark background. When set to "light", Vim will
-                    " try to use colors that look good on a light background.
-                    " Any other value is illegal.
- 
-"set mouse=a         " Enable the use of the mouse.
-
-colorscheme molokai
+"------------------------------------------------------------------------------
+" Plugin specific settings
+"------------------------------------------------------------------------------
 
 " Tell vim's Taglist plugin to search the current directory first, then up the
 " heirarchy until the root to try and find tags files.
 set tags=./tags;/
 let Tlist_WinWidth=50
-
-filetype plugin indent on   " Enable different indentation for different filetypes
-syntax on                   " Enable syntax highlighting
-
-set colorcolumn=80          " Highlight column 80
-
-highlight TODO ctermfg=DarkMagenta
-match TODO /TODO/
 
 " Start Rainbow parenthesis
 call rainbow_parentheses#Toggle()
