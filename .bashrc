@@ -60,6 +60,7 @@ function sshfwd {
    ssh devel.modeltwozero.com -L 8080:localhost:80 -N &
 }
 
+# Via http://indlovu.wordpress.com/2010/07/26/useful-bash-functions/
 function extract () {
     if [ -f $1 ] ; then
         case $1 in
@@ -79,6 +80,22 @@ function extract () {
     else
         echo "'$1' is not a valid file"
     fi
+}
+
+#disk usage formatted
+function duf {
+    du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y;
+    do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi;
+    size=$((size/1024)); done; done
+}
+
+#dirsize - finds directory sizes and lists them for the current directory
+dirsize () {
+    du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
+    egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+    egrep '^ *[0-9.]*M' /tmp/list
+    egrep '^ *[0-9.]*G' /tmp/list
+    rm -rf /tmp/list
 }
 
 shopt -s cdspell        # Tolerate typos in an interactive shell
