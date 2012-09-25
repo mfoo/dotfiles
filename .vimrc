@@ -192,6 +192,8 @@ endif
 "------------------------------------------------------------------------------
 " Plugin specific settings
 "------------------------------------------------------------------------------
+" Allow w!! to write a file with sudo when it wasn't opened with it (thanks Steve Losh).
+cmap w!! w !sudo tee % >/dev/null
 
 " Tell vim's Taglist plugin to search the current directory first, then up the
 " heirarchy until the root to try and find tags files.
