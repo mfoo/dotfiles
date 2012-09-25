@@ -207,4 +207,13 @@ call rainbow_parentheses#Toggle()
 nnoremap <F5> :GundoToggle<CR>
 
 " Enable the NERDTree window file explorer window
-noremap <F6> :NERDTree<CR>
+noremap <F6> :NERDTreeToggle<CR>
+
+function! UpdateTags()
+  execute ":!ctags -R --languages=C++ --c++-kinds=+p --fields=+iaS --extra=+q ./"
+  echohl StatusLine | echo "Ctags updated" | echohl None
+endfunction
+nnoremap <F7> :call UpdateTags()<CR>
+
+" Enable the Tagbar plugin (http://majutsushi.github.com/tagbar/)
+nmap <F8> :TagbarToggle<CR>
