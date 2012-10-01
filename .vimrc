@@ -196,7 +196,7 @@ endif
 cmap w!! w !sudo tee % >/dev/null
 
 " Tell vim's Taglist plugin to search the current directory first, then up the
-" heirarchy until the root to try and find tags files.
+" heirarch until the root to try and find tags files.
 set tags=./tags;/
 let Tlist_WinWidth=50
 
@@ -217,3 +217,8 @@ nnoremap <F7> :call UpdateTags()<CR>
 
 " Enable the Tagbar plugin (http://majutsushi.github.com/tagbar/)
 nmap <F8> :TagbarToggle<CR>
+
+"------------------------------------------------------------------------------
+" File specific settings
+"------------------------------------------------------------------------------
+au BufRead,BufNewFile Vagrantfile set filetype=ruby
