@@ -54,11 +54,12 @@ vim()
 }
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-export PATH=$PATH:/usr/local/apache-maven-3.0.4/bin
 
-function sshfwd {
-   ssh devel.modeltwozero.com -L 8080:localhost:80 -N &
-}
+if [[ -n "$PS1" ]] && [[ -s $HOME/.rvm/scripts/rvm]] ; then
+  source $HOME/.rvm/scripts/rvm;
+fi
+
+export PATH=$PATH:/usr/local/apache-maven-3.0.4/bin
 
 # Via http://indlovu.wordpress.com/2010/07/26/useful-bash-functions/
 function extract () {
@@ -109,3 +110,5 @@ HISTCONTROL=ignoredups  # Don't write duplicate consecutive commands into the
 # Write bash history as soon as commands are entered rather than when the shell
 # terminates.
 PROMPT_COMMAND='history -a; history -n'
+
+export JAVA_HOME=/usr/lib/jvm/default-java
