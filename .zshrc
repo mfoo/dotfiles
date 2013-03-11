@@ -43,9 +43,39 @@ export PATH=$PATH:~/Repositories/entropyzero/Core-C++/EntropyZero-CommandLine/
 
 [[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && source ~/.autojump/etc/profile.d/autojump.zsh
 
-function sshfwd {
-   ssh devel.modeltwozero.com -L 8080:localhost:80 -N &
-}
-
 # Allow comments even in interactive shells
 setopt interactive_comments
+
+# Manually disable autocorrect for some commands
+alias rspec='nocorrect rspec ' 
+alias bundle='nocorrect bundle'
+
+GREP_OPTIONS=
+for PATTERN in .cvs .git .hg .svn; do
+    GREP_OPTIONS="$GREP_OPTIONS --exclude-dir=$PATTERN"
+done
+export GREP_OPTIONS
+
+# Via http://indlovu.wordpress.com/2010/07/26/useful-bash-functions/
+function extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1         ;;
+            *.tar.gz)    tar xzf $1         ;;
+            *.bz2)       bunzip2 $1         ;;
+            *.rar)       rar x $1           ;;
+            *.gz)        gunzip $1          ;;
+            *.tar)       tar xf $1          ;;
+            *.tbz2)      tar xjf $1         ;;
+            *.tgz)       tar xzf $1         ;;
+            *.zip)       unzip $1           ;;
+            *.Z)         uncompress $1      ;;
+            *.7z)        7z x $1            ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+
