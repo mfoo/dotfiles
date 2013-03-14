@@ -1,4 +1,6 @@
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+  source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
+fi
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
