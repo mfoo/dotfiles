@@ -38,7 +38,7 @@ plugins=(git rails bundler mvn rake autojump vagrant knife)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export TERM=xterm-256color
+export TERM=screen-256color
 
 export PATH=/home/martin/bin/:/home/martin/.rvm/gems/ruby-1.9.3-p194/bin:/home/martin/.rvm/gems/ruby-1.9.3-p194@global/bin:/home/martin/.rvm/rubies/ruby-1.9.3-p194/bin:/home/martin/.rvm/bin:/home/martin/bin/:/home/martin/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/local/bin:/home/martin/Android/android-sdk-mac_x86/tools/:/home/martin/Android/android-sdk-mac_x86/platform-tools/:/home/martin/.rvm/bin:/usr/local/apache-maven-3.0.4/bin:/opt/local/bin:/home/martin/Android/android-sdk-mac_x86/tools/:/home/martin/Android/android-sdk-mac_x86/platform-tools/:/home/martin/.rvm/bin:/usr/local/apache-maven-3.0.4/bin:~/Repositories/entropyzero/Core-C++/EntropyZero-CommandLine/
 export PATH=$PATH:~/Repositories/entropyzero/Core-C++/EntropyZero-CommandLine/
