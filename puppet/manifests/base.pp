@@ -26,5 +26,7 @@ include git
 # Install and configure zsh
 include zsh
 
+# Include tmux with tmux conf
+include tmux
 # zsh, tmux, mpd, git-core
 
