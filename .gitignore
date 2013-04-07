@@ -6,3 +6,4 @@ tags
 build
 dist
 .vim/.netrwhist
+.vagrant

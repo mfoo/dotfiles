@@ -1,0 +1,3 @@
+[submodule "puppet/modules/path_functions"]
+	path = puppet/modules/path_functions
+	url = https://github.com/richardc/puppet-path_functions
