@@ -8,7 +8,8 @@ class zsh {
 		require => [
 			User["martin"],
 			Package["zsh"]
-		]
+		],
+		creates => "/home/martin/.zshrc"
 	}
 
 	# Install oh-my-zsh
