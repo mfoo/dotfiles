@@ -50,7 +50,13 @@ setopt interactive_comments
 # Manually disable autocorrect for some commands
 alias rspec='nocorrect rspec ' 
 alias bundle='nocorrect bundle'
+alias -g gp='| grep -i'
+alias -s rb=vim
+alias -s h=vim
+alias -s cpp=vim
+alias -s log=less -R
 
+# 
 GREP_OPTIONS=
 for PATTERN in .cvs .git .hg .svn; do
     GREP_OPTIONS="$GREP_OPTIONS --exclude-dir=$PATTERN"
