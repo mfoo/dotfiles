@@ -84,4 +84,5 @@ function extract () {
     fi
 }
 
+stty start undef stop undef
 
