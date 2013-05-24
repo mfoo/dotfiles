@@ -32,6 +32,8 @@ set laststatus=2    " Always use a status line in the bottom of each window.
 
 set list            " Show newline characters and tabs.
 
+set t_Co=256        " Force vim to use 256 colours
+
 " Highlight tabs, trailing whitespace and line endings. Mark wrapped lines.
 set listchars=tab:▸\ ,eol:¬,trail:~,extends:>,precedes:<
 
