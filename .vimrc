@@ -220,7 +220,21 @@ nnoremap <F7> :call UpdateTags()<CR>
 " Enable the Tagbar plugin (http://majutsushi.github.com/tagbar/)
 nmap <F8> :TagbarToggle<CR>
 
+" Rspec.vim mappings
+" Run tests
+map <Leader>rt :call RunCurrentSpecFile()<CR>
+" Run nearest
+map <Leader>rn :call RunNearestSpec()<CR>
+" Run last
+map <Leader>rl :call RunLastSpec()<CR>
+" Run all
+map <Leader>ra :call RunAllSpecs()<CR>
+
 "------------------------------------------------------------------------------
 " File specific settings
 "------------------------------------------------------------------------------
 au BufRead,BufNewFile Vagrantfile set filetype=ruby
+au BufRead,BufNewFile *.hamlc set filetype=haml
+au BufRead,BufNewFile *.pp set filetype=ruby
+
+set re=1
