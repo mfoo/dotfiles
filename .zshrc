@@ -33,7 +33,23 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails bundler mvn rake autojump vagrant knife)
+plugins=(
+  git                     # Add a large number of git aliasses
+  rails3                  # Add rails3 commands rc (rails console), rs (rails server)
+  bundler                 # Adds be (bundle exec), bu (bundle update) and bi (bundle install)
+  redis-cli               # Completion for redis-cli
+  tmux                    # Configuration options for tmux with zsh
+  mvn                     # Add command line completion for maven
+  rake
+  autojump                # Enables autojump if installed
+  vagrant                 # Adds vagrant command autocompletion
+  web-search              # Adds support for "google foo" opening a google search
+  debian                  # Adds as (apt-cache search), ad (apt-get update), ag (apt-get upgrade), ai (apt-get install), ar (apt-get remove), ac (apt-get clean)
+  command-not-found       # If a command can't be found, check apt to see which package contains it
+  gitfast                 # Enable fast zsh git completion
+  git-extras              # Enable git-extras command completion
+  jira
+)
 
 source $ZSH/oh-my-zsh.sh
 
