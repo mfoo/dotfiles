@@ -35,7 +35,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
   git                     # Add a large number of git aliasses
-  rails3                  # Add rails3 commands rc (rails console), rs (rails server)
+  rails                   # Add rails3 commands rc (rails console), rs (rails server)
   bundler                 # Adds be (bundle exec), bu (bundle update) and bi (bundle install)
   redis-cli               # Completion for redis-cli
   tmux                    # Configuration options for tmux with zsh
@@ -66,6 +66,7 @@ setopt interactive_comments
 # Manually disable autocorrect for some commands
 alias rspec='nocorrect rspec ' 
 alias bundle='nocorrect bundle'
+alias -g bec='bundle exec cucumber'
 alias -g gp='| grep -i'
 alias -s rb=vim
 alias -s h=vim
