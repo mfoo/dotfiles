@@ -2,10 +2,81 @@
 " Global config, always run first
 "------------------------------------------------------------------------------
 set nocompatible    " Ignore vi compatibility mode.
-filetype off
 
-" Initialise Pathogen (https://github.com/tpope/vim-pathogen)
-call pathogen#infect()
+"------------------------------------------------------------------------------
+" Vundle configuration and bundle list
+"------------------------------------------------------------------------------
+
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+
+" Editor augmentation
+" ===================
+" Hitting tab in insert mode provides tab completion list
+Bundle 'ervandew/supertab'
+
+" Fuzzy file search
+Bundle 'wincent/Command-T'
+
+" File explorer tree view
+Bundle 'scrooloose/nerdtree'
+
+" Better status line at the bottom
+Bundle 'Lokaltog/vim-powerline'
+
+" Adds 'surrounding' to vim grammar as 's'
+Bundle 'tpope/vim-surround'
+
+" Syntax errors and warnings for various different languages
+Bundle 'scrooloose/syntastic'
+
+" Add ctag-generated tag highlighting
+Bundle 'majutsushi/tagbar'
+
+" Add overview of source files (functions etc) for quick navigation
+Bundle 'vim-scripts/taglist.vim'
+
+" Graphical undo tree
+Bundle 'vim-scripts/Gundo'
+
+" Use ga to show unicode character names
+Bundle 'tpope/vim-characterize'
+
+" Update ctags files automatically when saving
+Bundle 'vim-scripts/AutoTag'
+
+" Tool Support
+" ============
+
+" Provide git modification markers in the gutter
+Bundle 'airblade/vim-gitgutter'
+
+" Helpers for running rspec tests from within vim
+Bundle 'thoughtbot/vim-rspec'
+
+" Interface with the silver searcher for fast searching
+Bundle 'rking/ag.vim'
+
+" Language specific plugins
+" =========================
+
+" Coffeescript syntax highlighting, indenting, compiling
+Bundle 'kchmck/vim-coffee-script'
+
+" Rails generator support
+Bundle 'tpope/vim-rails'
+
+" Puppet syntax highlighting and tab support
+Bundle 'puppetlabs/puppet-syntax-vim'
+
+" Markdown support
+Bundle 'tpope/vim-markdown'
+
+
 syntax on                   " Enable syntax highlighting
 filetype plugin indent on   " Enable different indentation for different filetypes
 
