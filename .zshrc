@@ -53,7 +53,9 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export TERM=xterm-256color
+export TERM=screen-256color
+
+export LANG=en_GB.utf8
 
 export PATH=/home/martin/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/local/bin
 
