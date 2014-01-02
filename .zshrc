@@ -44,7 +44,6 @@ plugins=(
   autojump                # Enables autojump if installed
   vagrant                 # Adds vagrant command autocompletion
   web-search              # Adds support for "google foo" opening a google search
-  debian                  # Adds as (apt-cache search), ad (apt-get update), ag (apt-get upgrade), ai (apt-get install), ar (apt-get remove), ac (apt-get clean)
   command-not-found       # If a command can't be found, check apt to see which package contains it
   gitfast                 # Enable fast zsh git completion
   git-extras              # Enable git-extras command completion
