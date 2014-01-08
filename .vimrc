@@ -266,6 +266,9 @@ if has("user_commands")
     command! -bang Qa qa<bang>
 endif
 
+" Grep for the current word in the current directory (recursive) using F4
+" Via http://vim.wikia.com/wiki/Find_in_files_within_Vim
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 "------------------------------------------------------------------------------
 " Plugin specific settings
 "------------------------------------------------------------------------------
