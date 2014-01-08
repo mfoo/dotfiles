@@ -183,7 +183,8 @@ set encoding=utf-8
 
 set showmatch       " When typing a bracket, quickly jump to the matching one so we know.
 set mat=5           " Matched brackets and quotations blink to draw attention
-
+set re=1            " Vim 7.4 introduced a new regex engine which made my
+                    " syntax highlighting very slow. Force old engine.
 set history=1000    " Use a large command history
 set undolevels=500  " Use a large number of undo levels
 set title           " Change the title of the terminal that we're using to the
@@ -204,21 +205,21 @@ set smarttab        " When on, a <Tab> in front of a line inserts blanks
                     " according to 'shiftwidth'. 'tabstop' is used in other
                     " places. A <BS> will delete a 'shiftwidth' worth of space
                     " at the start of the line.
- 
+
 set ignorecase      " Ignore case in search patterns.
- 
+
 set smartcase       " Override the 'ignorecase' option if the search pattern
                     " contains upper case characters.
- 
+
 set backspace=indent,eol,start " Influences the working of <BS>, <Del>, CTRL-W
                     " and CTRL-U in Insert mode. This is a list of items,
                     " separated by commas. Each item allows a way to backspace
                     " over something.
- 
+
 set autoindent      " Copy indent from current line when starting a new line
                     " (typing <CR> in Insert mode or when using the "o" or "O"
                     " command).
- 
+
 set smartindent     " Do smart autoindenting when starting a new line. Works
                     " for C-like programs, but can also be used for other
                     " languages.
