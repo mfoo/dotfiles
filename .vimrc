@@ -314,5 +314,4 @@ map <Leader>ra :call RunAllSpecs()<CR>
 au BufRead,BufNewFile Vagrantfile set filetype=ruby
 au BufRead,BufNewFile *.hamlc set filetype=haml
 au BufRead,BufNewFile *.pp set filetype=ruby
-
-set re=1
+au Filetype cpp setlocal noexpandtab
