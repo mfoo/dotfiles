@@ -118,12 +118,15 @@ set showmatch       " When a bracket is inserted, briefly jump to the matching
                     " one. The jump is only done if the match can be seen on the
                     " screen. The time to show the match can be set with
                     " 'matchtime'.
- 
+
 set hlsearch        " When there is a previous search pattern, highlight all
                     " its matches.
- 
+
 set incsearch       " While typing a search command, show immediately where the
                     " so far typed pattern matches.
+                    "
+set wrapscan        " Allow search to wrap from bottom to top. This is the
+                    " default but one of these settings has disabled it.
 
 " The next two commands come from
 " http://blog.sanctum.geek.nz/vim-search-highlighting/
@@ -137,7 +140,7 @@ set colorcolumn=80  " Highlight column 80
 
 set textwidth=79    " Maximum width of text that is being inserted. A longer
                     " line will be broken after white space to get this width.
- 
+
 set formatoptions=c,q,r,t " This is a sequence of letters which describes how
                     " automatic formatting is to be done.
                     "
