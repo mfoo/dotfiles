@@ -13,7 +13,6 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
-
 " Editor augmentation
 " ===================
 " Hitting tab in insert mode provides tab completion list
@@ -26,7 +25,7 @@ Bundle 'wincent/Command-T'
 Bundle 'scrooloose/nerdtree'
 
 " Better status line at the bottom
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Adds 'surrounding' to vim grammar as 's'
 Bundle 'tpope/vim-surround'
@@ -48,6 +47,9 @@ Bundle 'tpope/vim-characterize'
 
 " Update ctags files automatically when saving
 Bundle 'vim-scripts/AutoTag'
+
+" follow internal links of wikis
+Bundle 'mmai/wikilink'
 
 " Tool Support
 " ============
@@ -75,7 +77,6 @@ Bundle 'puppetlabs/puppet-syntax-vim'
 
 " Markdown support
 Bundle 'tpope/vim-markdown'
-
 
 syntax on                   " Enable syntax highlighting
 filetype plugin indent on   " Enable different indentation for different filetypes
