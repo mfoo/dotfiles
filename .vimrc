@@ -334,3 +334,10 @@ au BufRead,BufNewFile *.hamlc set filetype=haml
 au BufRead,BufNewFile *.pp set syntax=ruby
 au BufRead,BufNewFile *.pp set filetype=puppet
 au Filetype cpp setlocal noexpandtab
+
+
+let g:Powerline_symbols='fancy'
+
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
