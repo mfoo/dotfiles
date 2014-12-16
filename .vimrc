@@ -168,10 +168,10 @@ set formatoptions=c,q,r,t " This is a sequence of letters which describes how
                     "           the current comment leader automatically.
                     " q         Allow formatting of comments with "gq".
                     " r         Automatically insert the current comment leader
-                    "           after hitting <Enter> in Insert mode. 
+                    "           after hitting <Enter> in Insert mode.
                     " t         Auto-wrap text using textwidth (does not apply
                     "           to comments)
- 
+
 
 set background=dark " When set to "dark", Vim will try to use colors that look
                     " good on a dark background. When set to "light", Vim will
