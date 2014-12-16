@@ -182,8 +182,8 @@ set background=dark " When set to "dark", Vim will try to use colors that look
 highlight TODO ctermfg=DarkMagenta
 match TODO /TODO/
 
-colorscheme molokai " Port of Textmate monokai theme https://github.com/tomasr/molokai
-
+""colorscheme molokai " Port of Textmate monokai theme https://github.com/tomasr/molokai
+colorscheme solarized
 "------------------------------------------------------------------------------
 " General Editor Features
 "------------------------------------------------------------------------------
