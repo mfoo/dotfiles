@@ -51,6 +51,18 @@ Bundle 'vim-scripts/AutoTag'
 " follow internal links of wikis
 Bundle 'mmai/wikilink'
 
+" Nicer looking bottom status bar
+Bundle 'bling/vim-airline'
+let g:airline_powerline_fonts = 1
+
+" Multiple cursors
+Bundle 'terryma/vim-multiple-cursors'
+
+Bundle 'vimwiki/vimwiki'
+
+" CSV support
+""Bundle 'chrisbra/csv'
+
 " Tool Support
 " ============
 
@@ -59,6 +71,11 @@ Bundle 'airblade/vim-gitgutter'
 
 " Helpers for running rspec tests from within vim
 Bundle 'thoughtbot/vim-rspec'
+" RSpec.vim mappings
+map <Leader>f :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 
 " Interface with the silver searcher for fast searching
 Bundle 'rking/ag.vim'
