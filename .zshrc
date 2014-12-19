@@ -62,7 +62,7 @@ export PATH=/home/martin/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:
 setopt interactive_comments
 
 # Manually disable autocorrect for some commands
-alias rspec='nocorrect rspec ' 
+alias rspec='nocorrect rspec '
 alias bundle='nocorrect bundle'
 alias -g bec='bundle exec cucumber'
 alias -g gp='| grep -i'
