@@ -152,9 +152,9 @@ autocmd InsertEnter * :setlocal nohlsearch " Disable search highlighting when
 autocmd InsertLeave * :setlocal hlsearch   " Enable search highlighting when
                                            " leaving insert mode
 
-set colorcolumn=80  " Highlight column 80
+set colorcolumn=100  " Highlight column 100
 
-set textwidth=79    " Maximum width of text that is being inserted. A longer
+set textwidth=99    " Maximum width of text that is being inserted. A longer
                     " line will be broken after white space to get this width.
 
 set formatoptions=c,q,r,t " This is a sequence of letters which describes how
