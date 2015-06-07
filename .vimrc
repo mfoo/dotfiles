@@ -11,8 +11,6 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-
 " Editor augmentation
 " ===================
 " Hitting tab in insert mode provides tab completion list
