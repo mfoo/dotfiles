@@ -10,16 +10,16 @@
   autocrlf = false
   editor = /usr/bin/vim
   excludesfile = ~/.gitignore
-	whitespace = trailing-space,space-before-tab
+  whitespace = trailing-space,space-before-tab
 [advice]
-	statusHints = false
+  statusHints = false
 [diff]
-	renames = copies
+  renames = copies
 [branch]
-	autosetupmerge = true
+  autosetupmerge = true
 [push]
-	default = tracking
+  default = current
 [rerere]
-	enabled = true
+  enabled = true
 [merge]
-	stat = true
+  stat = true
