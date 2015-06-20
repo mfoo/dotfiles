@@ -109,3 +109,5 @@ function extract () {
 
 stty start undef stop undef
 
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
