@@ -29,7 +29,6 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
   git                     # Add a large number of git aliasses
   rails                   # Add rails3 commands rc (rails console), rs (rails server)
@@ -45,6 +44,15 @@ plugins=(
   gitfast                 # Enable fast zsh git completion
   git-extras              # Enable git-extras command completion
   jira
+  autojump                # Enable autojump if installed
+  coffee                  # CoffeeScript completion
+  debian                  # Apt completion
+  dircycle                # Ctrl+Shift+left/right for directory up/down
+  docker                  # Completion for docker
+  gem                     # Completion for rubygems
+  pip                     # Completion for pip
+  sbt                     # Completion for sbt
+  web-search
 )
 
 source $ZSH/oh-my-zsh.sh
