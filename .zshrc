@@ -111,3 +111,27 @@ stty start undef stop undef
 
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=$PATH:~/Repositories/play-2.1.0
+export EDITOR=vim
+alias vr='vagrant destroy -f && vagrant up'
+export PATH=/home/martin/.rvm/gems/ruby-1.9.3-p362/bin:/home/martin/.rvm/gems/ruby-1.9.3-p362@global/bin:/home/martin/.rvm/rubies/ruby-1.9.3-p362/bin:/home/martin/.rvm/bin:/home/martin/.autojump/bin:/home/martin/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/local/bin:/home/martin/Repositories/play-2.1.0:$PATH
+export PATH=/home/martin/Repositories/devops-cube/scripts:$PATH
+export PATH=$PATH:~/bin/play-2.2.1
+
+function git-find-file () {
+for branch in $(git rev-list --all)
+do
+    if (git ls-tree -r --name-only $branch | grep --quiet "$1") 
+        then
+           echo $branch
+        fi
+    done
+}
+
+# Automatically start a tmux session upon logging in
+ZSH_TMUX_AUTOSTART=true
+
+JIRA_URL='http://jira.intranet'
+export EZ_HOME=~/Repositories/entropyzero/Core-C++/Engine-JNI
+
+alias fuck='sudo $(fc -ln -1)'
