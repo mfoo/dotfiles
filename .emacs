@@ -148,13 +148,14 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global major mode configuration
+;; Global mode configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (projectile-global-mode)		  ; Enable projectile everywhere
 (setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
 (helm-projectile-on)			  ; Enable helm-projectile
 (global-whitespace-cleanup-mode t)	  ; Enable whitespace-mode globally
 (global-git-gutter-mode t)		  ; Enable git-gutter-mode everywhere
+(global-git-gutter-mode t)		  ; Enable line numbers in everywhere
 (set-face-foreground 'git-gutter:added "green") ; Configure the colour scheme for git-gutter-mode
 (set-face-foreground 'git-gutter:modified "purple")
 (set-face-foreground 'git-gutter:deleted "red")
