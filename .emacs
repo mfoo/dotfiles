@@ -1,5 +1,7 @@
 ;; Martin's .emacs file
 ;;
+;; Author: Martin Foot <martin@mfoot.com>
+;;
 ;; This file is split into several sections. As a general overview,
 ;; the file adds some package repositories, then lists several
 ;; packages that I use regularly. It then defines a function that
@@ -14,7 +16,7 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 
-; activate installed packages
+;; Activate installed packages
 (package-initialize)
 
 (defvar required-packages
@@ -34,9 +36,14 @@
     ;; whitespace-cleanup would have any effect on the buffer
     whitespace-cleanup-mode
 
+    ;; http://www.emacswiki.org/emacs/Evil
+    ;;
+    ;; Vim keybindings for Emacs
+    evil
+
     ;; https://github.com/syohex/emacs-git-gutter
     ;;
-    ;; Provides git modification markers in the left hand side gutter
+    ;; Provides git modification markers in the left hand side gutter~
     ;; window that shows which lines have been locally modified
     ;; compared to the git index
     git-gutter
@@ -103,7 +110,16 @@
     ;; statements are at a given depth.
     rainbow-delimiters
 
+    ;; https://julien.danjou.info/projects/emacs-packages
+    ;; 
+    ;; Rainbow mode highlights hex colour references in that colour;
+    rainbow-mode
+
+
     solarized-theme
+
+    ;; https://github.com/antonj/scss-mode
+    scss-mode
   ) "a list of packages to ensure are installed at launch.")
 
 
@@ -146,29 +162,53 @@
 (require 'indent-guide)
 (indent-guide-global-mode)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global mode configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Global mode configuration
 (projectile-global-mode)		  ; Enable projectile everywhere
 (setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
 (helm-projectile-on)			  ; Enable helm-projectile
-(global-whitespace-cleanup-mode t)	  ; Enable whitespace-mode globally
-(global-git-gutter-mode t)		  ; Enable git-gutter-mode everywhere
-(global-git-gutter-mode t)		  ; Enable line numbers in everywhere
+(global-whitespace-cleanup-mode)	  ; Enable whitespace-mode globally
+(autopair-mode)			  ; Automatically add and delete parenthesis pairs
+(rainbow-delimiters-mode)		  ; Highlight nested parentheses in different colours
+(rainbow-mode)				  ; Highlight CSS colours in their actual colour
+
+
+(global-whitespace-mode)
+(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark newline-mark)))
+
+(global-git-gutter-mode)		  ; Enable git-gutter-mode everywhere
+(global-linum-mode)                       ; Enable line numbers in everywhere
+(electric-pair-mode)			  ; Automatically complete parentheses when typed
+(show-paren-mode)			  ; Automatically highlight
+(column-number-mode)			  ; Show the column number in the cursor position in the bottom left
+(global-hl-line-mode)			  ; Highlight the current cursor line
 (set-face-foreground 'git-gutter:added "green") ; Configure the colour scheme for git-gutter-mode
 (set-face-foreground 'git-gutter:modified "purple")
 (set-face-foreground 'git-gutter:deleted "red")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Major mode configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Major mode configuration
 (custom-set-variables
  '(coffee-tab-width 2))	  		; Set the tab width to two in coffee-mode
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; general editor configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; General editor configuration
 (setq scroll-step 1)			; Scroll smoothly rather than by paging
 (setq visible-bell 1)			; Disable terminal bells
-(setq show-trailing-whitespace t)	; Highlight trailing whitespace
+(setq-default
+  show-trailing-whitespace t)	        ; Highlight trailing whitespace
+
+(windmove-default-keybindings)
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+
+(defalias 'yes-or-no-p 'y-or-n-p)	; Use 'y' or 'n' instead of 'yes' and 'no' in interactive buffers
+
+(setq backward-delete-char-untabify-method nil)' ; Disable hitting backspace on tabs converting that tab into spaces
+
+;; default to using tabs at 4
+;; (setq-default indent-tabs-mode t)
+;; (setq-default tab-width 4)
+;; (setq-default tab-stop-list (number-sequence 4 200 4))
+;; (setq-default tab-always-indent 'complete)
+;; (setq-default c-basic-offset 4)
+;; (setq-default c-default-style "bsd")

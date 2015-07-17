@@ -32,7 +32,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'scrooloose/syntastic'
 
 " Add ctag-generated tag highlighting
-Bundle 'majutsushi/tagbar'
+""Bundle 'majutsushi/tagbar'
 
 " Add overview of source files (functions etc) for quick navigation
 Bundle 'vim-scripts/taglist.vim'
@@ -44,7 +44,7 @@ Bundle 'vim-scripts/Gundo'
 Bundle 'tpope/vim-characterize'
 
 " Update ctags files automatically when saving
-Bundle 'vim-scripts/AutoTag'
+"Bundle 'vim-scripts/AutoTag'
 
 " follow internal links of wikis
 Bundle 'mmai/wikilink'
@@ -69,6 +69,7 @@ Bundle 'airblade/vim-gitgutter'
 
 " Helpers for running rspec tests from within vim
 Bundle 'thoughtbot/vim-rspec'
+
 " RSpec.vim mappings
 map <Leader>f :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
@@ -120,6 +121,7 @@ set laststatus=2    " Always use a status line in the bottom of each window.
 set list            " Show newline characters and tabs.
 
 set t_Co=256        " Force vim to use 256 colours
+"set term=xterm-256color
 
 " Highlight tabs, trailing whitespace and line endings. Mark wrapped lines.
 set listchars=tab:▸\ ,eol:¬,trail:~,extends:>,precedes:<
@@ -241,6 +243,9 @@ set smartindent     " Do smart autoindenting when starting a new line. Works
                     " languages.
 
 set wrap            " Wrap lines that are longer than the width of the screen
+
+" Format JSON data
+map <C-F6> :%!python -m json.tool<CR>
 
 "------------------------------------------------------------------------------
 " Search Settings
