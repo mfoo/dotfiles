@@ -21,6 +21,21 @@
 
 (defvar required-packages
   '(
+    ;; https://github.com/syohex/emacs-anzu
+    ;; http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
+    ;;
+    ;; Port of anzu.vim. Show total match count and current match
+    ;; number when replacing strings. Display replaced text as
+    ;; replacement is typed.
+    anzu
+    
+    ;; https://github.com/defunkt/coffee-mode
+    ;;
+    ;; An Emacs major mode for CoffeeScript and IcedCoffeeScript.
+    ;; Provides syntax highlighting, indentation support, imenu
+    ;; support, a menu bar, and a few cute commands.
+    coffee-mode
+
     ;; https://github.com/purcell/whitespace-cleanup-mode
     ;;
     ;; whitespace-cleanup is a handy function, but putting it in
@@ -111,7 +126,7 @@
     rainbow-delimiters
 
     ;; https://julien.danjou.info/projects/emacs-packages
-    ;; 
+    ;;
     ;; Rainbow mode highlights hex colour references in that colour;
     rainbow-mode
 
@@ -167,7 +182,6 @@
 (setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
 (helm-projectile-on)			  ; Enable helm-projectile
 (global-whitespace-cleanup-mode)	  ; Enable whitespace-mode globally
-(autopair-mode)			  ; Automatically add and delete parenthesis pairs
 (rainbow-delimiters-mode)		  ; Highlight nested parentheses in different colours
 (rainbow-mode)				  ; Highlight CSS colours in their actual colour
 
@@ -178,16 +192,28 @@
 (global-git-gutter-mode)		  ; Enable git-gutter-mode everywhere
 (global-linum-mode)                       ; Enable line numbers in everywhere
 (electric-pair-mode)			  ; Automatically complete parentheses when typed
-(show-paren-mode)			  ; Automatically highlight
+(show-paren-mode)			  ; Automatically highlight parenthesis pairs
 (column-number-mode)			  ; Show the column number in the cursor position in the bottom left
 (global-hl-line-mode)			  ; Highlight the current cursor line
 (set-face-foreground 'git-gutter:added "green") ; Configure the colour scheme for git-gutter-mode
 (set-face-foreground 'git-gutter:modified "purple")
 (set-face-foreground 'git-gutter:deleted "red")
+(global-anzu-mode)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
 ;;; Major mode configuration
 (custom-set-variables
- '(coffee-tab-width 2))	  		; Set the tab width to two in coffee-mode
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(global-whitespace-newline-mode t))
+	  		; Set the tab width to two in coffee-mode
 
 ;;;; General editor configuration
 (setq scroll-step 1)			; Scroll smoothly rather than by paging
@@ -203,7 +229,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)	; Use 'y' or 'n' instead of 'yes' and 'no' in interactive buffers
 
-(setq backward-delete-char-untabify-method nil)' ; Disable hitting backspace on tabs converting that tab into spaces
+(setq backward-delete-char-untabify-method nil) ; Disable hitting backspace on tabs converting that tab into spaces
 
 ;; default to using tabs at 4
 ;; (setq-default indent-tabs-mode t)
@@ -212,3 +238,21 @@
 ;; (setq-default tab-always-indent 'complete)
 ;; (setq-default c-basic-offset 4)
 ;; (setq-default c-default-style "bsd")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(hl-line ((t (:inherit highlight :background "black"))))
+ '(whitespace-space ((t (:background "grey20" :foreground "color-238"))))
+ '(whitespace-tab ((t (:background "grey22" :foreground "color-238")))))
+
+(defun coffee-mode-hook ()
+  'Mode configuration for working with CoffeeScript files'
+  (flyspell-mode)
+  )
+
+(add-hook 'coffee-mode-hook 'coffee-mode-hook)
+(add-hook 'markdown-mode-hook
+
+	  )
