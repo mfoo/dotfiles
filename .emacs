@@ -36,6 +36,11 @@
 	;; support, a menu bar, and a few cute commands.
 	coffee-mode
 
+	;; https://github.com/purcell/flymake-coffee
+	;; 
+	;; Flymake mode for CoffeeScript linting
+	flymake-coffee
+
 	;; https://github.com/purcell/whitespace-cleanup-mode
 	;;
 	;; whitespace-cleanup is a handy function, but putting it in
@@ -169,6 +174,7 @@
 (column-number-mode)			  ; Show the column number in the cursor position in the bottom left
 (global-hl-line-mode)			  ; Highlight the current cursor line
 
+
 ;; Enable Helm completion and suggestions
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -198,6 +204,7 @@
 
 (electric-pair-mode)			  ; Automatically complete parentheses when typed
 (show-paren-mode)			  ; Automatically highlight parenthesis pairs
+(setq show-paren-delay 0) ; show the paren match immediately
 (global-anzu-mode)
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
@@ -249,6 +256,7 @@
 
 (add-hook 'markdown-mode-hook 'common-text-editing-hook)
 (add-hook 'coffee-mode-hook 'common-programming-language-hook)
+(add-hook 'coffee-mode-hook 'flymake-coffee-load)
 
 ;; If we're at the end of a word and hit TAB, run the expand command
 ;; for tab completion. If we're not at the end of a word, run the
@@ -279,3 +287,4 @@
  '(whitespace-tab ((t (:foreground "black")))))
 
 (add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
+(add-to-list 'audo-mode-alist '("\\.json.jbuilder$" . ruby-mode))
