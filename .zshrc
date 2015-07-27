@@ -69,6 +69,9 @@ export PATH=/home/martin/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:
 # Allow comments even in interactive shells
 setopt interactive_comments
 
+# Allow spelling corrections (e.g. git status -> gut status)
+setopt correct
+
 # Manually disable autocorrect for some commands
 alias rspec='nocorrect rspec '
 alias bundle='nocorrect bundle'
