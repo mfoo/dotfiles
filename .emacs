@@ -138,6 +138,10 @@
 	;; Rainbow mode highlights hex colour references in that colour;
 	rainbow-mode
 
+	;; https://github.com/rejeep/ruby-end.el
+	;;
+	;; Automatically insert 'end' blocks when 'do' is typed in ruby
+	ruby-end
 
 	solarized-theme
 
