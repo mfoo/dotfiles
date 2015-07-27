@@ -184,6 +184,8 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;;(require 'helm-ls-git)
 
+;; Enable evil-mode globally
+(evil-mode)
 
 ;; Smart-mode-line setup
 (setq sml/no-confirm-load-theme t)
@@ -199,12 +201,12 @@
 (projectile-global-mode)		  ; Enable projectile everywhere
 (setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
 (helm-projectile-on)			 ; Enable helm-projectile
-(global-whitespace-cleanup-mode)	; Enable whitespace-mode globally
+;(global-whitespace-cleanup-mode)	; Enable whitespace-mode globally
 (rainbow-delimiters-mode)		; Highlight nested parentheses in different colours
 (rainbow-mode)				; Highlight CSS colours in their actual colour
 
 
-(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark)))
+;(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark)))
 
 (electric-pair-mode)			  ; Automatically complete parentheses when typed
 (show-paren-mode)			  ; Automatically highlight parenthesis pairs
@@ -221,9 +223,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2)
- '(custom-safe-themes (quote ("1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(fill-column 120)
- '(global-whitespace-mode t))
+ '(custom-safe-themes
+   (quote
+	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(fill-column 120))
 
 
 ;;;; General editor configuration
@@ -261,6 +264,7 @@
 (add-hook 'markdown-mode-hook 'common-text-editing-hook)
 (add-hook 'coffee-mode-hook 'common-programming-language-hook)
 (add-hook 'coffee-mode-hook 'flymake-coffee-load)
+(add-hook 'org-mode-hook 'common-text-editing-hook)
 
 ;; If we're at the end of a word and hit TAB, run the expand command
 ;; for tab completion. If we're not at the end of a word, run the
@@ -287,8 +291,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(whitespace-hspace ((t (:foreground "black"))))
- '(whitespace-space ((t (:foreground "#535353"))))
+ '(whitespace-space ((t (:foreground "dark slate gray" :slant italic))))
  '(whitespace-tab ((t (:foreground "black")))))
 
 (add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
-(add-to-list 'audo-mode-alist '("\\.json.jbuilder$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.json.jbuilder$" . ruby-mode))
+(set-face-attribute 'default nil :height 90)
+
+(tool-bar-mode -1)
