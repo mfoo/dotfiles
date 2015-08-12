@@ -3,7 +3,7 @@
 ;; Author: Martin Foot <martin@mfoot.com>
 ;;
 ;; This file is split into several sections. As a general overview,
-;; the file adds some package repositories, then lists several
+;; theprojectile file adds some package repositories, then lists several
 ;; packages that I use regularly. It then defines a function that
 ;; executes on startup to automatically ensure all of those packages
 ;; are installed. This can add to startup time somewhat but helps a
@@ -37,9 +37,19 @@
 	coffee-mode
 
 	;; https://github.com/purcell/flymake-coffee
-	;; 
+	;;
 	;; Flymake mode for CoffeeScript linting
 	flymake-coffee
+
+    ;; https://github.com/benprew/flymake-puppet
+    ;;
+    ;; Puppet flymake support with puppet-lint
+    flymake-puppet
+
+	;; https://github.com/flycheck/flycheck
+	;;
+	;; Modern, on-the-fly syntax checking.
+	flycheck
 
 	;; https://github.com/purcell/whitespace-cleanup-mode
 	;;
@@ -61,8 +71,17 @@
 	;; Vim keybindings for Emacs
 	evil
 
-	;; https://github.com/syohex/emacs-git-gutter
+	;; https://github.com/timcharper/evil-surround
 	;;
+	;; evil-surround is a port of vim's surround plugin. It allows changing surrounding items (e.g. double quotes) for
+	;; single quotes with c s " ' https://github.com/syohex/emacs-git-gutter
+	evil-surround
+
+	;; https://github.com/krisajenkins/evil-tabs
+	;;
+	;; evil-tabs adds vim's tab functionality.
+	evil-tabs
+
 	;; Provides git modification markers in the left hand side gutter~
 	;; window that shows which lines have been locally modified
 	;; compared to the git index
@@ -181,29 +200,31 @@
 
 ;; Enable Helm completion and suggestions
 (helm-mode 1)
+(helm-autoresize-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
 ;;(require 'helm-ls-git)
 
 ;; Enable evil-mode globally
 (evil-mode)
+(global-evil-tabs-mode t)
 
 ;; Smart-mode-line setup
 (setq sml/no-confirm-load-theme t)
 (setq sml/theme 'powerline)
 (sml/setup)
 
-;; Indent guide - highlight current indent level vertically
-;; (indent-guide-global-mode)
-;; (setq indent-guide-recursive t)
+; Indent guide - highlight current indent level vertically
+; (indent-guide-global-mode)
+; (setq indent-guide-recursive t)
 
 
-;;;; Global mode configuration
-(projectile-global-mode)		  ; Enable projectile everywhere
+;;; Global mode configuration
 (setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
 (helm-projectile-on)			 ; Enable helm-projectile
 ;(global-whitespace-cleanup-mode)	; Enable whitespace-mode globally
 (rainbow-delimiters-mode)		; Highlight nested parentheses in different colours
 (rainbow-mode)				; Highlight CSS colours in their actual colour
+(projectile-global-mode)		  ; Enable projectile everywhere
 
 
 ;(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark)))
@@ -226,7 +247,8 @@
  '(custom-safe-themes
    (quote
 	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(fill-column 120))
+ '(fill-column 120)
+ '(org-todo-keywords (quote ((sequence "TODO" "IN_PROGRESS" "|" "DONE")))))
 
 
 ;;;; General editor configuration
@@ -234,6 +256,7 @@
 (setq visible-bell 1)			; Disable terminal bells
 (setq-default
   show-trailing-whitespace t)		; Highlight trailing whitespace
+(global-auto-revert-mode t)	; Automatically revert buffers when files change
 
 (windmove-default-keybindings)
 (global-set-key (kbd "C-c <left>")	'windmove-left)
@@ -261,10 +284,28 @@
   "Mode configuration for working with source code files"
   (flyspell-prog-mode))
 
+(defun org-interactive-hook ()
+  "Mode configuration for org mode when it's run interactively"
+  (interactive)
+  (org-display-inline-images t t))
+
+;(defun projectile-custom-hook ()
+;  "Mode configuration for helm-projectile"
+;  (global-set-key (kbd "C-c p g") 'helm-projectile-grep))
+
 (add-hook 'markdown-mode-hook 'common-text-editing-hook)
 (add-hook 'coffee-mode-hook 'common-programming-language-hook)
 (add-hook 'coffee-mode-hook 'flymake-coffee-load)
 (add-hook 'org-mode-hook 'common-text-editing-hook)
+(add-hook 'org-mode-hook 'org-interactive-hook)
+(add-hook 'puppet-mode-hook 'flymake-puppet-load)
+
+;(add-hook 'projectile-mode-hook 'projectile-custom-hook)
+;(add-hook 'helm-projectile-mode-hook 'projectile-custom-hook)
+
+;(global-unset-key (kbd "C-c p g"))
+;(global-set-key (kbd "C-c p g") 'helm-projectile-grep)
+;(define-key projectile-command-map (kbd "C-c p g") 'helm-projectile-grep)
 
 ;; If we're at the end of a word and hit TAB, run the expand command
 ;; for tab completion. If we're not at the end of a word, run the
@@ -296,6 +337,19 @@
 
 (add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
 (add-to-list 'auto-mode-alist '("\\.json.jbuilder$" . ruby-mode))
+
 (set-face-attribute 'default nil :height 90)
 
 (tool-bar-mode -1)
+
+
+(setq rspec-use-rake-when-possible nil)
+(setq rspec-use-bundler-when-possible nil)
+(setq rspec-use-rvm-when-possible t)
+
+;; TODO: Try and get projectile-ag to work. Is git grep better?
+(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
+(setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
+(setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
+(add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
+(add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
