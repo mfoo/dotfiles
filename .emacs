@@ -157,6 +157,12 @@
 	;; Rainbow mode highlights hex colour references in that colour;
 	rainbow-mode
 
+	;; https://github.com/pezra/rspec-mode
+	;;
+	;; Enable running rspec tests from inside emacs
+	rspec-mode
+
+
 	;; https://github.com/rejeep/ruby-end.el
 	;;
 	;; Automatically insert 'end' blocks when 'do' is typed in ruby
@@ -207,6 +213,7 @@
 ;; Enable evil-mode globally
 (evil-mode)
 (global-evil-tabs-mode t)
+(global-evil-surround-mode t)
 
 ;; Smart-mode-line setup
 (setq sml/no-confirm-load-theme t)
@@ -282,6 +289,7 @@
 
 (defun common-programming-language-hook ()
   "Mode configuration for working with source code files"
+  (flycheck-mode)
   (flyspell-prog-mode))
 
 (defun org-interactive-hook ()
@@ -299,6 +307,7 @@
 (add-hook 'org-mode-hook 'common-text-editing-hook)
 (add-hook 'org-mode-hook 'org-interactive-hook)
 (add-hook 'puppet-mode-hook 'flymake-puppet-load)
+(add-hook 'ruby-mode-hook 'common-programming-language-hook)
 
 ;(add-hook 'projectile-mode-hook 'projectile-custom-hook)
 ;(add-hook 'helm-projectile-mode-hook 'projectile-custom-hook)
