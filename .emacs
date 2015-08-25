@@ -283,6 +283,15 @@
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
 
+;; By default emacs doesn't tab indent to the current level when you hit return. Move to vim style.
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; Don't make backup save files
+(setq make-backup-files nil)
+
+;; Enable multiple windows like a graphical debugger then using GDB
+(setq gdb-many-windows t)
+
 (defun common-text-editing-hook ()
   "Mode configuration for working with text files"
   (flyspell-mode))
@@ -295,7 +304,19 @@
 (defun org-interactive-hook ()
   "Mode configuration for org mode when it's run interactively"
   (interactive)
-  (org-display-inline-images t t))
+  (org-display-inline-images t t)
+  (org-add-link-type
+   "yt"
+   (lambda (handle)
+     (browse-url
+      (concat "https://www.youtube.com/embed/"
+              handle)))
+   (lambda (path desc backend)
+     (cl-case backend
+       (html (format yt-iframe-format
+                     path (or desc "")))
+       (latex (format "\href{%s}{%s}"
+                      path (or desc "video")))))))
 
 ;(defun projectile-custom-hook ()
 ;  "Mode configuration for helm-projectile"
@@ -362,3 +383,23 @@
 (setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
 (add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
 (add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
+
+;; Allow exporting YouTube videos in HTML export. Via
+;; http://endlessparentheses.com/embedding-youtube-videos-with-org-mode-links.html
+(defvar yt-iframe-format
+  ;; You may want to change your width and height.
+  (concat "<iframe width=\"440\""
+          " height=\"335\""
+          " src=\"https://www.youtube.com/embed/%s\""
+          " frameborder=\"0\""
+          " allowfullscreen>%s</iframe>"))
+
+(setq circe-network-options
+      '(("Freenode"
+         :tls t
+         :nick "my-nick"
+         :sasl-username "my-nick"
+         :sasl-password "my-password"
+         :channels ("#emacs-circe")
+         )))
+
