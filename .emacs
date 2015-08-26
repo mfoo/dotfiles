@@ -29,6 +29,11 @@
 	;; replacement is typed.
 	anzu
 
+	;; https://github.com/winterTTr/ace-jump-mode
+	;;
+	;; Very fast navigation.
+	ace-jump-mode
+
 	;; https://github.com/defunkt/coffee-mode
 	;;
 	;; An Emacs major mode for CoffeeScript and IcedCoffeeScript.
@@ -403,3 +408,24 @@
          :channels ("#emacs-circe")
          )))
 
+;; http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-ditaa.html
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t)))
+
+;; Source highlight font blocks in org mode using the correct mode
+(setq-default org-src-fontify-natively t)
+
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t)))
+
+(setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
+
+;; Things that are not in melpa
+(add-to-list 'load-path "~/Dropbox/lisp/")
+(require 'flymake-easy)
+
+;; Map ace-jump-mode to just space when in normal mode in evil
+(define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)

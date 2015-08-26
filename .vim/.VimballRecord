@@ -1,1 +1,2 @@
 rainbow_parenthsis-4.0.vba: call delete('/Users/martin/.vim/autoload/rainbow_parenthsis.vim')|call delete('/Users/martin/.vim/doc/rainbow_parenthsis.txt')|call delete('/Users/martin/.vim/plugin/rainbow_parenthsis.vim')|call delete('/Users/martin/.vim/rainbow_parenthsis_options.vim')
+AnsiEsc.vba: call delete('/home/martin/.vim/plugin/AnsiEscPlugin.vim')|call delete('/home/martin/.vim/autoload/AnsiEsc.vim')|call delete('/home/martin/.vim/plugin/cecutil.vim')|call delete('/home/martin/.vim/doc/AnsiEsc.txt')
