@@ -299,7 +299,9 @@
 
 (defun common-text-editing-hook ()
   "Mode configuration for working with text files"
-  (flyspell-mode))
+  (flyspell-mode)						; Automatic spell checking
+  (auto-fill-mode)						; Add line wraps up to fill-column automatically
+  )
 
 (defun common-programming-language-hook ()
   "Mode configuration for working with source code files"
