@@ -421,7 +421,9 @@
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sql . t)))
+ '((sql . t)
+   (sh . t)
+  ))
 
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 
@@ -431,3 +433,5 @@
 
 ;; Map ace-jump-mode to just space when in normal mode in evil
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+
+(setq x-select-enable-clipboard t)
