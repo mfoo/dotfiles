@@ -260,7 +260,10 @@
    (quote
 	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(fill-column 120)
- '(org-todo-keywords (quote ((sequence "TODO" "IN_PROGRESS" "|" "DONE")))))
+ '(org-log-into-drawer t)
+ '(org-todo-keywords
+   (quote
+	((sequence "TODO(!)" "IN_PROGRESS(d!)" "|" "DONE(d!)")))))
 
 
 ;;;; General editor configuration
@@ -268,7 +271,8 @@
 (setq visible-bell 1)			; Disable terminal bells
 (setq-default
   show-trailing-whitespace t)		; Highlight trailing whitespace
-(global-auto-revert-mode t)	; Automatically revert buffers when files change
+(global-auto-revert-mode t)	; Automatically revert buffers when files change. This is useful when switching branches and
+							; as I sync org mode files between computers
 
 (windmove-default-keybindings)
 (global-set-key (kbd "C-c <left>")	'windmove-left)
@@ -410,11 +414,6 @@
          :channels ("#emacs-circe")
          )))
 
-;; http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-ditaa.html
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ditaa . t)))
-
 ;; Source highlight font blocks in org mode using the correct mode
 (setq-default org-src-fontify-natively t)
 
@@ -423,7 +422,11 @@
  'org-babel-load-languages
  '((sql . t)
    (sh . t)
-  ))
+   (ditaa . t)
+   (dot . t)
+   (calc . t)
+  )
+)
 
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 
@@ -435,3 +438,5 @@
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 
 (setq x-select-enable-clipboard t)
+(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
