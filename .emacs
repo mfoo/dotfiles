@@ -440,3 +440,6 @@
 (setq x-select-enable-clipboard t)
 (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
 (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+
+;; Human readable sizes in dired
+(setq dired-listing-switches "-alh")
