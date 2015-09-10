@@ -177,6 +177,12 @@
 
 	;; https://github.com/antonj/scss-mode
 	scss-mode
+
+	;; https://github.com/capitaomorte/yasnippet
+	;;
+	;; Code snippet insertion
+	yasnippet
+
   ) "a list of packages to ensure are installed at launch.")
 
 
@@ -315,6 +321,8 @@
 (defun org-interactive-hook ()
   "Mode configuration for org mode when it's run interactively"
   (interactive)
+  (electric-pair-mode nil)				; Disable electic pair mode, this makes typing URL links annoying.
+  (require 'ox-md nil t) 				; Enable markdown export
   (org-display-inline-images t t)
   (org-add-link-type
    "yt"
@@ -425,6 +433,8 @@
    (ditaa . t)
    (dot . t)
    (calc . t)
+   (java . t)
+   (emacs-lisp . t)
   )
 )
 
@@ -443,3 +453,10 @@
 
 ;; Human readable sizes in dired
 (setq dired-listing-switches "-alh")
+
+(setq yas-snippet-dirs
+      '(
+		"~/Dropbox/snippets"                 ;; personal snippets
+		))
+
+(yas-global-mode 1) 					; Enable yasnippets globally
