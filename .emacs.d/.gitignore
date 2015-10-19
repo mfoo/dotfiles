@@ -1,0 +1,13 @@
+# Package repositories
+elpa
+
+# Tramp connection history
+tramp
+
+*.cache
+
+.org-id-locations
+config.el
+config.html
+
+eshell
