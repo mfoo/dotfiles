@@ -1,38 +1,10 @@
+
 ;; Martin's .emacs file
 ;;
 ;; Author: Martin Foot <martin@mfoot.com>
-;;
-;; This file is split into several sections. As a general overview,
-;; theprojectile file adds some package repositories, then lists several
-;; packages that I use regularly. It then defines a function that
-;; executes on startup to automatically ensure all of those packages
-;; are installed. This can add to startup time somewhat but helps a
-;; lot when keeping Emacs in sync across multiple machines.
 
-;;; Set-up packages
-(require 'package)
-(require 'cl)
-
-;; Add the Marmalade and Melpa package repositories
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-
-;; Activate installed packages
-(package-initialize)
-
-;;; Bootstrap use-package
-;; Install use-package if it's not already installed.
-;; use-package is used to configure the rest of the packages.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
-
-;;; Load the config
+;; Load the config
 (org-babel-load-file (concat user-emacs-directory "config.org"))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
