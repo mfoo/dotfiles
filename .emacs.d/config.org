@@ -278,6 +278,65 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 #+BEGIN_SRC emacs-lisp
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
+* Blog
+Now that we've configured =org-mode=, let's configure my blog. I always have this in the same location on machines:
+=~/repositories/mfoot.com=. I can therefore add a custom publishing section to =org= (taken from the [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][org-jekyll
+documentation]]):
+
+TODO: See if the following have any effect:
+#+BEGIN_SRC emacs-lisp
+;(setq org-export-in-background nil)
+(setq org-export-async-init-file "~/.emacs.d/org-export-async.el")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq org-publish-project-alist
+  '(
+     ("org-mfoot"
+       ;; Path to your org files.
+       :base-directory "~/repositories/mfoot.com/org/"
+       :base-extension "org"
+
+       ;; Path to your Jekyll project.
+       :publishing-directory "~/repositories/mfoot.com/jekyll/"
+       :recursive t
+       :publishing-function org-html-publish-to-html
+       :headline-levels 4
+       :html-extension "html"
+       :body-only t ;; Only export section between <body> </body>
+
+       :section-numbers nil
+       :headline-levels 4
+       :table-of-contents nil
+       :auto-index nil
+       :auto-preamble nil
+       :body-only t
+       :auto-postamble nil
+     )
+
+    ("org-static-mfoot"
+          :base-directory "~/repositories/mfoot.com/org/"
+          :base-extension "css\\|js\\|png\\|jpg\\|gif"
+          :publishing-directory "~/repositories/mfoot.com/jekyll"
+          :recursive t
+          :publishing-function org-publish-attachment)
+
+    ("mfoot.com" :components ("org-mfoot" "org-static-mfoot"))
+))
+#+END_SRC
+
+This essentially defines an export with the name =mfoot.com= that exports both the posts and the static content.
+
+TODO: update this when I understand it better. Currently it's just copy pasted and modified from the docs.
+
+In addition, I need to install the =htmlize= package to provide syntax highlighting when exporting HTML. See [[http://stackoverflow.com/questions/24082430/org-mode-no-syntax-highlighting-in-exported-html-page][here]] for more
+information.
+
+#+BEGIN_SRC emacs-lisp
+(use-package htmlize
+  :ensure t
+)
+#+END_SRC
 * Window navigation and scrolling
 Scroll smoothly rather than by paging
 #+BEGIN_SRC emacs-lisp
@@ -384,9 +443,7 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
 	;; with linum-mode.
 	; git-gutter
 
-	yasnippet
-
-	markdown-mode
+  markdown-mode
 	dockerfile-mode
 	yaml-mode
 
@@ -420,11 +477,6 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
 
 	;; https://github.com/antonj/scss-mode
 	scss-mode
-
-	;; https://github.com/capitaomorte/yasnippet
-	;;
-	;; Code snippet insertion
-	yasnippet
 
   ) "a list of packages to ensure are installed at launch.")
 
@@ -608,6 +660,15 @@ Major mode for editing CoffeeScript files.
   :config (setq ruby-deep-indent-paren nil)
 )
 #+END_SRC
+* Code snippet handling
+I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
+
+#+BEGIN_SRC emacs-lisp
+; (use-package yasnippet
+;   :ensure t
+;   :config (yas-global-mode 1)
+; )
+#+END_SRC
 * Other configuration
 #+BEGIN_SRC emacs-lisp
 ; Indent guide - highlight current indent level vertically
@@ -689,8 +750,6 @@ Major mode for editing CoffeeScript files.
       '(
 		"~/Dropbox/snippets"                 ;; personal snippets
 		))
-
-(yas-global-mode 1) 					; Enable yasnippets globally
 
 (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
 
