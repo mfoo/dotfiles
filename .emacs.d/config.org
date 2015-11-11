@@ -279,15 +279,26 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
 * Blog
-Now that we've configured =org-mode=, let's configure my blog. I always have this in the same location on machines:
-=~/repositories/mfoot.com=. I can therefore add a custom publishing section to =org= (taken from the [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][org-jekyll
-documentation]]):
+[[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
+host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
+posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll
+understands. This configuration is based on [[ http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
+trying to understand this. I've adapted it slightly to work with the latest =org-mode= (the publishing functions changed
+name), but other than that it all comes from there.
 
-TODO: See if the following have any effect:
+TODO: The next code block exists from some debugging, but right now everything works. Check if this is actually helping.
 #+BEGIN_SRC emacs-lisp
 ;(setq org-export-in-background nil)
 (setq org-export-async-init-file "~/.emacs.d/org-export-async.el")
 #+END_SRC
+
+Here we define a list of projects for org mode. When using the export processor (=C-c C-e=) a projects option now appears
+at the bottom from any file. Two projects are defined; one for the blog posts that get processed with the HTML
+publishing function, and one for static content that gets copied verbatim. I can select a project and select either one
+of the two projects or the component project that wraps both of them. Org will maintain timestamps and caches of these
+files so that it doesn't regenerate what it doesn't have to.
+
+TODO: Describe folder structure. Link to GitHub?
 
 #+BEGIN_SRC emacs-lisp
 (setq org-publish-project-alist
@@ -325,10 +336,6 @@ TODO: See if the following have any effect:
 ))
 #+END_SRC
 
-This essentially defines an export with the name =mfoot.com= that exports both the posts and the static content.
-
-TODO: update this when I understand it better. Currently it's just copy pasted and modified from the docs.
-
 In addition, I need to install the =htmlize= package to provide syntax highlighting when exporting HTML. See [[http://stackoverflow.com/questions/24082430/org-mode-no-syntax-highlighting-in-exported-html-page][here]] for more
 information.
 
@@ -337,6 +344,9 @@ information.
   :ensure t
 )
 #+END_SRC
+
+TODO: Write some notes on how I publish this to S3 with s3-website. I always forget this and have to check my bash
+history.
 * Window navigation and scrolling
 Scroll smoothly rather than by paging
 #+BEGIN_SRC emacs-lisp
