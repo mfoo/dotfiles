@@ -12,25 +12,68 @@
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
 
-This file stores my emacs configuration. It is written using [[http://orgmode.org/][org-mode]] which is an excellent way to organise notes and,
-as it turns out, an excellent way to organise my configuration file. My emacs set-up makes uses of ~org-babel-load-file~
-to generate an =emacs-lisp= file when emacs boots that is based on this file. This extracts source code blocks in
-=emacs-lisp= which emacs then evaluates. This file came about after reading an excellent [[http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php][blog post by Arnaud Legrand]] and
-a [[https://www.youtube.com/watch?v=VIuOwIBL-ZU][YouTube video by Daniel Mai]].
+This file stores my emacs configuration. The latest version can be found [[https://github.com/mfoo/dotfiles/blob/master/.emacs.d/config.org][on GitHub]]. It is written using [[http://orgmode.org/][org-mode]] which
+is an excellent way to organise notes and, as it turns out, an excellent way to organise my configuration file. It is
+intended to be used with ~org-babel-load-file~ which parses this file, generates a =config.el= file, then executes that
+during emacs startup. In this way my Emacs configuration serves as both the configuration settings /and/ a high level
+documentation of those settings. It provides an incredibly convenient way to organise configuration the full benefit of
+org mode's functionality available within the configuration file itself. More information can be found in the [[Installation
+ instructions][Installation instructions]] section.
 
-This file makes a lot of use of the ~use-package~ function. This is a nice way to package up a package declaration with
-its keybindings and hooks and also have it automatically installed. There's a good description on how it works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]].
+I am not a long term emacs user yet, having started in October 2015 after using vim for around 7 years. As such I use
+[[https://bitbucket.org/lyro/evil/wiki/Home][evil-mode]] all the time. This file is a work in progress that I try to keep organised. Like many people experiencing a
+new editor rather than spending an extended period of time reading emacs' extensive documentation, the configuration
+here has been a mix of searching and reading other people's =.emacs= files. I would recommend taking small parts of it and
+asking the inbuilt help system what each command does. I've tried to keep each section documented. You can do this with
+=C-h a=.
 
+Organising my configuration in this way came about after a general interest in literate programming and after seeing
+these:
+- a [[http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php][blog post by Arnaud Legrand]]
+- a [[https://www.youtube.com/watch?v=VIuOwIBL-ZU][YouTube video by Daniel Mai]]
+I already make notes on all my work and a lot of personal tasks throughout the day. This way I know I can confirm
+exactly what queries I executed or steps I took on a support request, or the methods I took at resolving a certain
+issue. Since I've been using org to do this, having org's power inside my editor configuration was a huge plus.
+
+This file makes a lot of use of the ~use-package~ function. This is a really nice way to keep the installation of a
+package, it's keybindings, configuration, packaged together in the config file. There's a good description on how it
+works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]] and you can see the project page [[https://github.com/jwiegley/use-package][here]].
+
+*Note*: Parts of this file are marked TODO. These are sections that require more work. They may not be properly
+documented, may be badly organised (maybe they should be part of other sections), or could be part of my old emacs
+configuration from before I used =org-mode= that I still haven't converted.
 * Installation instructions
-Copy this file (not the org-mode generated output) to =~/.emacs.d/config.org=.
+#+BEGIN_COMMENT
+I couldn't get org mode's publishing to handle this link nicely, so unfortunately it's in raw HTML.
+#+END_COMMENT
+
+#+BEGIN_HTML
+Copy the <a href="config.org">raw version of this file</a> to <code>~/.emacs.d/config.org</code>.
+#+END_HTML
 
 Then add ~(org-babel-load-file (concat user-emacs-directory "config.org"))~ to =~/.emacs=.
+
+Here is the contents of my =~/.emacs= file:
+
+#+BEGIN_SRC emacs-lisp :tangle ~/.emacs
+;; Martin's .emacs file
+;;
+;; Author: Martin Foot <martin@mfoot.com>
+
+;; Load the config
+(org-babel-load-file (concat user-emacs-directory "config.org"))
+#+END_SRC
+
+That's it.
+
+The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and
+executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package
+repositories]] section comes before any of the other non-standard config.
 * Package repositories
 I use Melpa and Marmalade for repositories.
 
 #+BEGIN_SRC emacs-lisp
 (require 'package)
-;(require 'cl)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
@@ -47,37 +90,62 @@ Then, since I use ~use-package~ for every package from the repositories, initial
   (require 'use-package))
 #+END_SRC
 * Parentheses
-Emacs will automatically highlight closing parentheses (also braces, curly braces).
+Use =electric-pair-mode= to automatically close inserted parentheses and braces. I explicitly disable this when using
+=org-mode= because when typing links it's annoying.
+
 #+BEGIN_SRC emacs-lisp
-(electric-pair-mode)		; Automatically complete parentheses when typed
+(electric-pair-mode)
+(add-hook 'org-mode-hook (lambda () (electric-pair-mode nil)))
+#+END_SRC
+
+=show-paren-mode= makes emacs highlight closing parentheses, braces, and curly braces.
+
+#+BEGIN_SRC emacs-lisp
 (show-paren-mode)			; Automatically highlight parenthesis pairs
 (setq show-paren-delay 0) ; show the paren match immediately
 #+END_SRC
 
-Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]= to highlight nested parentheses in different colours.
+Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]= to highlight nested parentheses in different colours. It has an annoying disclaimer that
+there's no global mode for it, so I've enabled it for org mode only. This conveniently applies to source code blocks
+inside org mode. This means I get the highlighting on any lisp configuration as well as code I'm working on from inside
+org mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
-  :config (rainbow-delimiters-mode)		; Highlight nested parentheses in different colours
+  :config (rainbow-delimiters-mode)
 )
+
+(add-hook 'org-mode-hook (lambda () (rainbow-delimiters-mode)))
 #+END_SRC
 * Fill columns and line highlighting
 I find a 120 character line length is best for modern screens. Individual languages/major modes can override this.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default fill-column 120)
+#+END_SRC
 
-(global-hl-line-mode)             ; Highlight the current cursor line horizontally
+I also like a highlight on the screen to show the current cursor line.
+
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode)
 #+END_SRC
 * Line numbering and cursor position
 I enable line numbers globally and enable the cursor position being shown in the bottom left.
 
-#+BEGIN_SRC emacs-lisp
-(global-linum-mode)                       ; Enable line numbers in everywhere
-(setq linum-format "%d ")                 ; Stick a space after the line numbers
+Note: Enabling line numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This
+doesn't really make sense. It would be nice to only do this for modes that are used when editing text. Is there
+something I can hook into to improve this?
 
-(column-number-mode)                      ; Show the column number in the cursor position in the bottom left
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode)
+(setq linum-format "%d ") ; Place a space after the line numbers so text doesn't begin instantly
+#+END_SRC
+
+I also show the current cursor position column number in the bottom left of the screen:
+
+#+BEGIN_SRC emacs-lisp
+(column-number-mode)
 #+END_SRC
 * Yes or no prompts
 Use 'y' or 'n' instead of 'yes' and 'no' in interactive prompts. This saves typing.
@@ -89,21 +157,29 @@ Use 'y' or 'n' instead of 'yes' and 'no' in interactive prompts. This saves typi
 By default emacs doesn't follow symlinks
 
 #+BEGIN_SRC emacs-lisp
-(setq vc-follow-symlinks t)             ; Automatically follow symlinks when visiting them
+(setq vc-follow-symlinks t)
 #+END_SRC
 * OS Clipboard integration
-Enable copy-paste from the OS clipboard
+Add proper support for the OS clipboard integrations. Only tested under X.
+
+First we enable the emacs copy buffer to be linked to the OS clipboard. Lines copied from the OS can be pasted into
+emacs and lines copied from emacs can be pasted into other OS windows.
 
 #+BEGIN_SRC emacs-lisp
 (setq x-select-enable-clipboard t)
+#+END_SRC
 
-;(setq select-active-regions nil)
-;(setq x-select-enable-primary t)
-;(setq x-select-enable-clipboard t)
-;(setq mouse-drag-copy-region t)
+Now we enable 'primary selection'. The clipboard config above is for the operating system copy buffer with =C-c= and
+=C-v=. Primary selection is the mouse select buffer that usually works as pasted with a middle click. Enabling this allows
+selected text in emacs to be copied there so I can select in the program and paste into somewhere else using X.
+
+#+BEGIN_SRC emacs-lisp
+(setq x-select-enable-primary t)
+(setq mouse-drag-copy-region t)
 #+END_SRC
 * Temporary backup files
-Don't make temporary backup files. These are more annoying than they are useful.
+Don't make temporary backup files. These are more annoying than they are useful. I tend to save a lot because I use
+version control for everything.
 
 #+BEGIN_SRC emacs-lisp
 (setq make-backup-files nil)
@@ -123,35 +199,41 @@ Add some keybindings to increase and decrease the font size
 #+END_SRC
 * Startup message
 Don't show the default emacs startup message when it's opened
+
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message t)
 #+END_SRC
 * Terminal bells
 Disable the terminal bell. Use a visible bell instead. A non-nil value causes emacs to try and flash the frame to
-  represent a bell.
+represent a bell.
 
 #+BEGIN_SRC emacs-lisp
 (setq visible-bell 1)
 #+END_SRC
 * Menu bar
-Don't show emacs' menu bar - I never use the mouse when running emacs in a window
+Don't show emacs' menu bar - I remember enough shortcuts and understand how to use the inbuilt help system if I don't
+remember the shortcut for something.
 
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
 #+END_SRC
 * Whitespace
 ** Trailing whitespace
-Inconsistent whitespace annoys me more than it should. At a minimum, highlight trailing whitespace.
+Highlight trailing whitespace on lines
 
 #+BEGIN_SRC emacs-lisp
 (setq-default show-trailing-whitespace t)
+#+END_SRC
 
-;(setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode
+I also don't like seeing tabs mixed with spaces. This section needs some work however so is currently commented out. I
+need to customise the faces that =whitespace-mode= uses.
+
+#+BEGIN_SRC
+;(setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode #+END_SRC
 #+END_SRC
 ** Default emacs backspace behaviour
-I also despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number
-of spaces and inserts tab-width -1 spaces. This leads to inconsistencies (tabs vs spaces). This should be handled by the
-relevant major mode.
+I despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number of
+spaces and inserts tab-width -1 spaces. This seems like an insane default.
 
 #+BEGIN_SRC emacs-lisp
 (setq backward-delete-char-untabify-method nil)
@@ -160,21 +242,21 @@ relevant major mode.
 Change the default tab settings to use four spaces. This controls how big a tab appears inside emacs.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default tab-width 4)
-  ;(setq-default tab-always-indent 'complete)
+(setq-default tab-width 4)
+;(setq-default tab-always-indent 'complete)
 #+END_SRC
 
 Set up the tab stop list. This is what emacs uses when it can't find an appropriate tab stop - i.e how much to try
 indenting when tab is hit.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default tab-stop-list (number-sequence 4 200 4))
+(setq-default tab-stop-list (number-sequence 4 200 4))
 #+END_SRC
 
 Insert tabs by default when auto-formatting.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode t)
 #+END_SRC
 ** TODO Highlighting font faces
 (custom-set-faces
@@ -208,8 +290,7 @@ Configure org-mode to log TODO state transitions into a draw so I can keep track
 I also configure a set of states.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords (quote
-  ((sequence "TODO(!)" "IN_PROGRESS(d!)" "|" "DONE(d!)"))))
+(setq org-todo-keywords (quote ((sequence "TODO(!)" "IN_PROGRESS(d!)" "|" "DONE(d!)"))))
 #+END_SRC
 
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
@@ -223,9 +304,9 @@ In =org-mode= we can use:
 - \~code\~ for code (~example~)
 - \*bold\* for bold (*example*)
 - \/italics\/ for emphasis (/example/)
-- _underline_ for underline (_example_)
+- \_underline\_ for underline (_example_)
 
-We don't want to see the markup for indentation, so disable it.
+When a block of text has some emphasis on it, get emacs to hide the markup characters:
 
 #+BEGIN_SRC emacs-lisp
 (setq org-hide-emphasis-markers t)
@@ -240,7 +321,7 @@ Ensure native syntax highlighting is used for inline source blocks in org files
 When emacs source-formats a code block, don't add spaces before it (it messes with syntax highlighting in major modes).
 
 #+BEGIN_SRC emacs-lisp
-(setq org-edit-src-content-indentation 2)
+(setq org-edit-src-content-indentation 0)
 #+END_SRC
 
 Configure the languages that Babel will automatically syntax highlight
@@ -279,19 +360,29 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 #+BEGIN_SRC emacs-lisp
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
-* Blog
+
+Since org mode is plain text, I also enable spell checking when I'm using it.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda () (flyspell-mode)))
+#+END_SRC
+
+I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
+the screen.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-image-actual-width 800)
+#+END_SRC
+* TODO Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
 posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll
-understands. This configuration is based on [[ http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
+understands. I can then run Jekyll normally and it will take these org-published files and convert them into the static
+website. The configuration here is based on [[ http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
 trying to understand this. I've adapted it slightly to work with the latest =org-mode= (the publishing functions changed
-name), but other than that it all comes from there.
-
-TODO: The next code block exists from some debugging, but right now everything works. Check if this is actually helping.
-#+BEGIN_SRC emacs-lisp
-;(setq org-export-in-background nil)
-(setq org-export-async-init-file "~/.emacs.d/org-export-async.el")
-#+END_SRC
+name). I've also added an third part of the project that handles exporting this org mode config file into a
+=/static/emacs-config= directory. Whenever I run ~org-publish-all~ the latest version of the config file gets pulled in and
+so the config file hosted on my blog is always as up-to-date as the latest blog post.
 
 Here we define a list of projects for org mode. When using the export processor (=C-c C-e=) a projects option now appears
 at the bottom from any file. Two projects are defined; one for the blog posts that get processed with the HTML
@@ -304,7 +395,7 @@ TODO: Describe folder structure. Link to GitHub?
 #+BEGIN_SRC emacs-lisp
 (setq org-publish-project-alist
   '(
-     ("org-mfoot"
+     ("org-mfoot" ; Export my blog to the Jekyll format for ~jekyll build~
        ;; Path to your org files.
        :base-directory "~/repositories/mfoot.com/org/"
        :base-extension "org"
@@ -313,13 +404,11 @@ TODO: Describe folder structure. Link to GitHub?
        :publishing-directory "~/repositories/mfoot.com/jekyll/"
        :recursive t
        :publishing-function org-html-publish-to-html
-       :headline-levels 4
        :html-extension "html"
        :body-only t ;; Only export section between <body> </body>
 
        :section-numbers nil
-       :headline-levels 4
-       :table-of-contents nil
+       :with-toc nil
        :auto-index nil
        :auto-preamble nil
        :body-only t
@@ -331,9 +420,35 @@ TODO: Describe folder structure. Link to GitHub?
           :base-extension "css\\|js\\|png\\|jpg\\|gif"
           :publishing-directory "~/repositories/mfoot.com/jekyll"
           :recursive t
-          :publishing-function org-publish-attachment)
+          :publishing-function org-publish-attachment
+    )
 
-    ("mfoot.com" :components ("org-mfoot" "org-static-mfoot"))
+    ("emacs-dotfiles-mfoot.com" ; Publish an HTML version of this file to the static folder.
+      :base-directory "~/repositories/dotfiles/.emacs.d/"
+      :base-extension "org"
+      :publishing-directory "~/repositories/mfoot.com/jekyll/static/emacs-config"
+      :exclude ".*"
+      :include ("config.org")
+      :publishing-function org-html-publish-to-html
+      :html-extension "html"
+    )
+
+    ("emacs-config.org-mfoot.com" ; Publish the raw version of this file alongside the HTML
+      :base-directory "~/repositories/dotfiles/.emacs.d/"
+      :base-extension "org"
+      :publishing-directory "~/repositories/mfoot.com/jekyll/static/emacs-config"
+      :exclude ".*"
+      :include ("config.org")
+      :publishing-function org-publish-attachment
+    )
+
+    ("mfoot.com" :components (
+      "org-mfoot"
+      "org-static-mfoot"
+      "emacs-dotfiles-mfoot.com"
+      "emacs-config.org-mfoot.com"
+    )
+  )
 ))
 #+END_SRC
 
@@ -354,14 +469,21 @@ Scroll smoothly rather than by paging
 (setq scroll-step 1)
 #+END_SRC
 
+When the cursor moves past the top or bottom of the window, scroll one line at a time rather than jumping. I don't like
+having to find my place in the file again.
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 10000)
+#+END_SRC
+
 Add vim-like navigation between panes in a window using windmove.
 
 #+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings)
-(global-set-key (kbd "C-c <left>")	'windmove-left)
+(global-set-key (kbd "C-c <left>") 'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>")	'windmove-up)
-(global-set-key (kbd "C-c <down>")	'windmove-down)
+(global-set-key (kbd "C-c <up>") 'windmove-up)
+(global-set-key (kbd "C-c <down>") 'windmove-down)
 #+END_SRC
 
 I use [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] for fast buffer navigation. It allows the use of =<space> <character to search for>= to highlight
@@ -382,39 +504,35 @@ jump targets of that character. This has to be configured in =evil-mode=.
 I swap branches a lot. =auto-reload-mode= will automatically reload opened buffers (prompting to save or not)
 
 #+BEGIN_SRC emacs-lisp
-  (global-auto-revert-mode t)
+(global-auto-revert-mode t)
 #+END_SRC
 * C
 At work we use BSD-style C/C++. We also set the default indentation to four spaces.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default c-basic-offset 4)
-  (setq-default c-default-style "bsd")
+(setq-default c-basic-offset 4)
+(setq-default c-default-style "bsd")
 #+END_SRC
-* Base editor configuration
+* TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
 #+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :height 90)
 
-    ;; Enable multiple windows like a graphical debugger then using GDB
-  (setq gdb-many-windows t)
-
-  (set-face-attribute 'default nil :height 90)
-
-  (tool-bar-mode -1)
-  ;; TODO: Try and get projectile-ag to work. Is git grep better?
-  (setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
-  (setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
-  (setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
-  (add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
-  (add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
-  ;; Human readable sizes in dired
-  (setq dired-listing-switches "-alh")
+(tool-bar-mode -1)
+;; TODO: Try and get projectile-ag to work. Is git grep better?
+(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
+(setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
+(setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
+(add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
+(add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
+;; Human readable sizes in dired
+(setq dired-listing-switches "-alh")
 
 
 #+END_SRC
 
-* Package installation
+* TODO Package installation
 All of the packages that I use get automatically installed. First we define ~required-packages~ and then a function that
 iterates over all of them, installing each one. My =~/.emacs= configures [[https://melpa.org/][Melpa]] and [[https://marmalade-repo.org/][Marmalade]] before this gets executed.
 
@@ -585,7 +703,6 @@ mechanism backed by external commands exists as well).
   :config (projectile-global-mode)		  ; Enable projectile everywhere
 )
 #+END_SRC
-
 ** Helm mode
 [[https://github.com/emacs-helm/helm][Helm]] is incremental completion and selection narrowing framework for Emacs. It will help steer you in the right
 direction when you're looking for stuff in Emacs (like buffers, files, etc). It's awesome when combined with
@@ -611,7 +728,6 @@ direction when you're looking for stuff in Emacs (like buffers, files, etc). It'
   :config (setq projectile-completion-system 'helm)
 )
 #+END_SRC
-
 ** Anzu
 [[https://github.com/syohex/emacs-anzu][Anzu]] shows how many strings match the regex you're replacing and show the effect of replacement as the substitution is
 typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in the buffer.
@@ -628,7 +744,6 @@ http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
   )
 )
 #+END_SRC
-
 ** Rainbow mode
 Highlights CSS colours in their actual colour. For instance (probably won't be visible in the export):
 
@@ -646,7 +761,6 @@ This is enabled globally:
   :config (rainbow-mode)
 )
 #+END_SRC
-
 ** Coffee mode
 Major mode for editing CoffeeScript files.
 
@@ -671,7 +785,7 @@ Major mode for editing CoffeeScript files.
   :config (setq ruby-deep-indent-paren nil)
 )
 #+END_SRC
-* Code snippet handling
+* TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
 #+BEGIN_SRC emacs-lisp
@@ -680,7 +794,7 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 ;   :config (yas-global-mode 1)
 ; )
 #+END_SRC
-* Other configuration
+* TODO Other configuration
 #+BEGIN_SRC emacs-lisp
 ; Indent guide - highlight current indent level vertically
 ; (indent-guide-global-mode)
@@ -772,6 +886,28 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
  '(custom-safe-themes
    (quote
 	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(send-mail-function (quote smtpmail-send-it)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(whitespace-hspace ((t (:foreground "black"))))
+ '(whitespace-space ((t (:foreground "dark slate gray" :slant italic))))
+ '(whitespace-tab ((t (:foreground "black")))))
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(custom-safe-themes
+   (quote
+	("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(fill-column 120)
  '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
