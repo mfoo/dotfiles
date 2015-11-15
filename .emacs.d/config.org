@@ -1,4 +1,4 @@
-#+TITLE: Martin's Emacs Configuration
+#+TITLE: Martin Foot's Emacs Configuration
 #+AUTHOR: Martin Foot
 #+EMAIL: martin.foot@du.co
 #+STARTUP: indent
