@@ -1,7 +1,8 @@
 #+TITLE: Martin Foot's Emacs Configuration
 #+AUTHOR: Martin Foot
-#+EMAIL: martin.foot@du.co
+#+EMAIL: martin@mfoot.com
 #+STARTUP: indent
+#+OPTIONS: ^:nil # Disable underscore causing subscript
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
