@@ -203,6 +203,19 @@ Don't show the default emacs startup message when it's opened
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message t)
 #+END_SRC
+
+Let's also show a fortune message in the scratch buffer when we start emacs:
+
+[[https://github.com/andschwa/fortune-cookie][Source here]]
+
+#+BEGIN_SRC emacs-lisp
+(use-package fortune-cookie
+  :ensure t
+  :config
+  (setq fortune-cookie-cowsay-enable nil) ; Disable cowsay
+  (fortune-cookie-mode)                   ; Enable fortune cookie mode
+)
+#+END_SRC
 * Terminal bells
 Disable the terminal bell. Use a visible bell instead. A non-nil value causes emacs to try and flash the frame to
 represent a bell.
@@ -223,6 +236,12 @@ Highlight trailing whitespace on lines
 
 #+BEGIN_SRC emacs-lisp
 (setq-default show-trailing-whitespace t)
+#+END_SRC
+
+Delete trailing whitespace automatically on save
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 I also don't like seeing tabs mixed with spaces. This section needs some work however so is currently commented out. I
@@ -291,6 +310,15 @@ I also configure a set of states.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords (quote ((sequence "TODO(!)" "IN_PROGRESS(d!)" "|" "DONE(d!)"))))
+#+END_SRC
+
+Tell org mode where my notes are usually kept. This allows the agenda view to index all my org notes for TODO items and
+scheduled items. Some of these directories won't exist on some machines so we filter the list at startup based on
+whether or not the file exists.
+
+#+BEGIN_SRC emacs-lisp
+(require 'cl) ; remove-if-not is inside the common-lisp package
+(setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life")))
 #+END_SRC
 
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
