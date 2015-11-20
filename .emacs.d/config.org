@@ -489,6 +489,25 @@ information.
 )
 #+END_SRC
 
+In order to get images to work both inside emacs and inside the generated output I need to register a custom image
+format. Emacs currently will only generate ~<a href />~ tags for images it can actually resolve on the filesystem. Since
+my images on my blog are hosted under =/images=, emacs will generate =file:///images= URLs which is not useful. The
+following allows me to use =img:../images/2015/11/photo.png= as an image reference and have both emacs and the html
+generator generate the correct paths. This is modified from [[http://stackoverflow.com/a/14841597][this StackOverflow answer]].
+
+#+BEGIN_SRC emacs-lisp
+(defun org-custom-link-img-follow (path)
+  (org-open-file-with-emacs
+   (format "../images/%s" path)))
+
+(defun org-custom-link-img-export (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<img src=\"/images/%s\" alt=\"%s\"/>" path desc))))
+
+(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+#+END_SRC
+
 TODO: Write some notes on how I publish this to S3 with s3-website. I always forget this and have to check my bash
 history.
 * Window navigation and scrolling
