@@ -17,8 +17,8 @@ is an excellent way to organise notes and, as it turns out, an excellent way to 
 intended to be used with ~org-babel-load-file~ which parses this file, generates a =config.el= file, then executes that
 during emacs startup. In this way my Emacs configuration serves as both the configuration settings /and/ a high level
 documentation of those settings. It provides an incredibly convenient way to organise configuration the full benefit of
-org mode's functionality available within the configuration file itself. More information can be found in the [[Installation
- instructions][Installation instructions]] section.
+org mode's functionality available within the configuration file itself. More information can be found in the
+[[Installation instructions][Installation instructions]] section.
 
 I am not a long term emacs user yet, having started in October 2015 after using vim for around 7 years. As such I use
 [[https://bitbucket.org/lyro/evil/wiki/Home][evil-mode]] all the time. This file is a work in progress that I try to keep organised. Like many people experiencing a
@@ -89,6 +89,11 @@ Then, since I use ~use-package~ for every package from the repositories, initial
 (eval-when-compile
   (require 'use-package))
 #+END_SRC
+* User information
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Martin Foot"
+      user-mail-address "martin@mfoot.com")
+#+END_SRC
 * Parentheses
 Use =electric-pair-mode= to automatically close inserted parentheses and braces. I explicitly disable this when using
 =org-mode= because when typing links it's annoying.
@@ -121,8 +126,11 @@ org mode.
 * Fill columns and line highlighting
 I find a 120 character line length is best for modern screens. Individual languages/major modes can override this.
 
+In text-based modes (non-programming modes) I enable automatic line wrapping also.
+
 #+BEGIN_SRC emacs-lisp
 (setq-default fill-column 120)
+(add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 I also like a highlight on the screen to show the current cursor line.
@@ -130,12 +138,24 @@ I also like a highlight on the screen to show the current cursor line.
 #+BEGIN_SRC emacs-lisp
 (global-hl-line-mode)
 #+END_SRC
-* Line numbering and cursor position
-I enable line numbers globally and enable the cursor position being shown in the bottom left.
+* Shortcut help
+It's very difficult to remember all the shortcuts available in emacs. The =guide-key= plugin pops up a list of available
+suggestions after a little while.
 
-Note: Enabling line numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This
-doesn't really make sense. It would be nice to only do this for modes that are used when editing text. Is there
-something I can hook into to improve this?
+#+BEGIN_SRC emacs-lisp
+(use-package guide-key
+  :defer t
+  :diminish guide-key-mode
+  :config
+  (progn
+  (setq guide-key/guide-key-sequence '("C-x" "C-c"))
+  (guide-key-mode 1)))  ; Enable guide-key-mode
+#+END_SRC
+* Line numbering and cursor position
+I enable line numbers globally and enable the cursor position being shown in the bottom left. Note: Enabling line
+numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
+sense. It would be nice to only do this for modes that are used when editing text. Is there something I can hook into to
+improve this?
 
 #+BEGIN_SRC emacs-lisp
 (global-linum-mode)
@@ -178,11 +198,23 @@ selected text in emacs to be copied there so I can select in the program and pas
 (setq mouse-drag-copy-region t)
 #+END_SRC
 * Temporary backup files
-Don't make temporary backup files. These are more annoying than they are useful. I tend to save a lot because I use
-version control for everything.
+Auto backup can be disabled in emacs with ~(setq maLOLke-backup-files nil)~ but rather than disabling them we can simply move
+the directory that they get placed in. This keeps them out of the way in case we need them.
+
+I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to keep backups.
 
 #+BEGIN_SRC emacs-lisp
-(setq make-backup-files nil)
+; From http://www.emacswiki.org/emacs/BackupDirectory
+; and http://stackoverflow.com/questions/151945/how-do-i-control-how-emacs-makes-backup-files
+(setq
+   backup-by-copying t ; Ensure backups are copied, not renamed. Important for symlinks
+   backup-directory-alist '(("" . "~/.emacs-backups")) ; Keep backups in ~/.emacs-backups, not the same directory tree
+   delete-old-versions t ; Delete old versions without prompting
+   kept-new-versions 10 ; Keep multiple versioned backup files
+   kept-old-versions 0 ; Don't keep any beyond that
+   version-control t) ; Use versioned backups
+
+(setq vc-make-backup-files t) ; Backup even when it's a version controlled project
 #+END_SRC
 * Font size
 Add some keybindings to increase and decrease the font size
@@ -191,11 +223,6 @@ Add some keybindings to increase and decrease the font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;; C-x C-0 restores the default font size
-#+END_SRC
-* User information
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Martin Foot"
-      user-mail-address "martin@mfoot.com")
 #+END_SRC
 * Startup message
 Don't show the default emacs startup message when it's opened
@@ -225,9 +252,15 @@ represent a bell.
 #+END_SRC
 * Menu bar
 Don't show emacs' menu bar - I remember enough shortcuts and understand how to use the inbuilt help system if I don't
-remember the shortcut for something.
+remember the shortcut for something. When we're using graphical emacs, also disable the tooltips for the mouse an the
+scroll bar.
 
 #+BEGIN_SRC emacs-lisp
+(when window-system
+  (tooltip-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+
 (menu-bar-mode -1)
 #+END_SRC
 * Whitespace
@@ -299,7 +332,17 @@ I use the excellent [[http://magit.vc/][magit]] for emacs git integration. This 
   :bind (("C-x g" . magit-status))
 )
 #+END_SRC
-* Org Mode
+* Region selection
+=expand-region= makes it really easy to quickly select regions of text getting larger.
+
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :ensure t
+  :defer t
+  :bind ("C-=" . er/expand-region)
+)
+#+END_SRC
+* TODO Org Mode
 Configure org-mode to log TODO state transitions into a draw so I can keep track of time.
 
 #+BEGIN_SRC emacs-lisp
@@ -319,6 +362,12 @@ whether or not the file exists.
 #+BEGIN_SRC emacs-lisp
 (require 'cl) ; remove-if-not is inside the common-lisp package
 (setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life")))
+#+END_SRC
+
+Set up a key binding for the org agenda
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
 
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
@@ -401,6 +450,18 @@ the screen.
 #+BEGIN_SRC emacs-lisp
 (setq org-image-actual-width 800)
 #+END_SRC
+
+I've been using a single TODO list file and using org-capture to capture todo items to my org agenda from anywhere. This
+tends to happen at home rather than at work as my work org files contain appropriate TODOs arranged by date headers. At
+home and in my blog I can capture TODO items and put them in this directory.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file "~/Dropbox/life/life.org")
+(define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
+TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
+is a HUGE wealth of information here.
 * TODO Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
@@ -567,6 +628,7 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 (set-face-attribute 'default nil :height 90)
 
 (tool-bar-mode -1)
+
 ;; TODO: Try and get projectile-ag to work. Is git grep better?
 (setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
 (setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
@@ -750,7 +812,10 @@ mechanism backed by external commands exists as well).
   :config (projectile-global-mode)		  ; Enable projectile everywhere
 )
 #+END_SRC
-** Helm mode
+** TODO Helm mode
+:LOGBOOK:
+- State "TODO"       from ""           [2015-11-21 Sat 10:01]
+:END:
 [[https://github.com/emacs-helm/helm][Helm]] is incremental completion and selection narrowing framework for Emacs. It will help steer you in the right
 direction when you're looking for stuff in Emacs (like buffers, files, etc). It's awesome when combined with
 [[http://tuhdo.github.io/helm-projectile.html][helm-projectile]] for jumping around projects and finding files within them.
@@ -775,6 +840,10 @@ direction when you're looking for stuff in Emacs (like buffers, files, etc). It'
   :config (setq projectile-completion-system 'helm)
 )
 #+END_SRC
+
+The TODO here is that helm is /awesome/. There are so many functions to learn. I need to find some easy-to-remember
+shortcuts for things like =helm-occur=. Spend some time reading
+http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline12.
 ** Anzu
 [[https://github.com/syohex/emacs-anzu][Anzu]] shows how many strings match the regex you're replacing and show the effect of replacement as the substitution is
 typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in the buffer.
@@ -850,7 +919,6 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 (defun common-text-editing-hook ()
   "Mode configuration for working with text files"
   (flyspell-mode)						; Automatic spell checking
-  (auto-fill-mode)						; Add line wraps up to fill-column automatically
   )
 
 (defun common-programming-language-hook ()
