@@ -198,7 +198,7 @@ selected text in emacs to be copied there so I can select in the program and pas
 (setq mouse-drag-copy-region t)
 #+END_SRC
 * Temporary backup files
-Auto backup can be disabled in emacs with ~(setq maLOLke-backup-files nil)~ but rather than disabling them we can simply move
+Auto backup can be disabled in emacs with ~(setq make-backup-files nil)~ but rather than disabling them we can simply move
 the directory that they get placed in. This keeps them out of the way in case we need them.
 
 I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to keep backups.
