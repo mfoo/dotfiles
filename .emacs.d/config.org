@@ -151,15 +151,22 @@ I also like a highlight on the screen to show the current cursor line.
 It's very difficult to remember all the shortcuts available in emacs. The =guide-key= plugin pops up a list of available
 suggestions after a little while.
 
+=:diminish guide-key-mode= configures the mode to not show up in the list of minor modes.
+
+I've configured it to wait 0.5 seconds before popping up the suggestions list.
+
 #+BEGIN_SRC emacs-lisp
 (use-package guide-key
-  :defer t
+  :ensure t
   :diminish guide-key-mode
+  :init
+  (setq guide-key/idle-delay 0.5)
   :config
-  (progn
   (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-  (guide-key-mode 1)))  ; Enable guide-key-mode
+  (guide-key-mode 1)
+)
 #+END_SRC
+
 * Line numbering and cursor position
 I enable line numbers globally and enable the cursor position being shown in the bottom left. Note: Enabling line
 numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
