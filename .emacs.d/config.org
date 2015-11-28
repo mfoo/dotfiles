@@ -103,6 +103,15 @@ Use =electric-pair-mode= to automatically close inserted parentheses and braces.
 (add-hook 'org-mode-hook (lambda () (electric-pair-mode nil)))
 #+END_SRC
 
+I also turn on emojis. I rarely use this but sometimes a sad face is necessary.
+
+#+BEGIN_SRC emacs-lisp
+;(use-package :emojify
+;  :ensure t
+;  :config (add-hook 'org-mode-hook (lambda () (emojify-mode)))
+;)
+#+END_SRC
+
 =show-paren-mode= makes emacs highlight closing parentheses, braces, and curly braces.
 
 #+BEGIN_SRC emacs-lisp
@@ -364,6 +373,17 @@ whether or not the file exists.
 (setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life")))
 #+END_SRC
 
+We also switch archive directories for work and home.
+
+#+BEGIN_SRC emacs-lisp
+;(setq org-archive-location
+;  (if (file-exists-p "~/Repositories/notes")
+;    "~/Repositories/notes/archive"
+;    "~/Dropbox/life/archive"
+;  )
+;)
+#+END_SRC
+
 Set up a key binding for the org agenda
 
 #+BEGIN_SRC emacs-lisp
@@ -458,6 +478,12 @@ home and in my blog I can capture TODO items and put them in this directory.
 #+BEGIN_SRC emacs-lisp
 (setq org-default-notes-file "~/Dropbox/life/life.org")
 (define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
+Customise the colours of TODO task priority indicators:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-priority-faces '((?A :foreground "dark orange") (?B :foreground "tomato") (?C :foreground "firebrick")))
 #+END_SRC
 
 TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
