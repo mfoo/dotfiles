@@ -348,6 +348,7 @@ I use the excellent [[http://magit.vc/][magit]] for emacs git integration. This 
   :bind (("C-x g" . magit-status))
 )
 #+END_SRC
+
 * Region selection
 =expand-region= makes it really easy to quickly select regions of text getting larger.
 
@@ -358,17 +359,41 @@ I use the excellent [[http://magit.vc/][magit]] for emacs git integration. This 
   :bind ("C-=" . er/expand-region)
 )
 #+END_SRC
-* TODO Org Mode
-Configure org-mode to log TODO state transitions into a draw so I can keep track of time.
+* IN_PROGRESS Org Mode
+When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
+more things it became larger and larger and I had to split it into subcategories.
+
+** Task tracking
+*** Task transition timing
+I like to see timestamps for task transitions but I don't want them filling up screen real estate. Logging these into
+drawers makes them easily expandable and collapsible.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-log-into-drawer t)
 #+END_SRC
-
-I also configure a set of states.
+*** \TODO State transitions
+Here states transitions are configured. This is largely based on [[http://doc.norang.ca/org-mode.html#TasksAndStates][this document]] but I use =IN_PROGRESS= instead of =NEXT=.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords (quote ((sequence "TODO(!)" "IN_PROGRESS(d!)" "|" "DONE(d!)"))))
+(setq org-todo-keywords
+  (quote ((sequence "TODO(t!)" "IN_PROGRESS(i!)" "|" "DONE(d!)")
+  (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+)
+#+END_SRC
+
+I have defined colours for each task state. TODO is red (bad), blocked is orange and magnta (somewhat bad), in progress
+is gold (OK) and complete is green.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keyword-faces
+  (quote (("TODO" :foreground "red" :weight bold)
+    ("IN_PROGRESS" :foreground "gold" :weight bold)
+    ("DONE" :foreground "forest green" :weight bold)
+    ("WAITING" :foreground "orange" :weight bold)
+    ("HOLD" :foreground "magenta" :weight bold)
+    ("CANCELLED" :foreground "forest green" :weight bold)
+  )
+)
 #+END_SRC
 
 Tell org mode where my notes are usually kept. This allows the agenda view to index all my org notes for TODO items and
