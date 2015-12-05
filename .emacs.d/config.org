@@ -416,9 +416,18 @@ is gold (OK) and complete is green.
     ("HOLD" :foreground "magenta" :weight bold)
     ("CANCELLED" :foreground "forest green" :weight bold)
   )
-)
+))
 #+END_SRC
 
+Since I have more than two states, moving between them with the default =S-<left>= and =S-<right>= is slow. This enables =C-c
+c t= as a shortcut for quickly choosing the state. some of the states below have an "@" symbol next to them. This lets me
+write a reason why a task is cancelled or blocked, or what it's waiting on. The buffer will appear when selecting such a
+state that lets me enter the reason.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-use-fast-todo-selection t)
+#+END_SRC
+** Agenda
 Tell org mode where my notes are usually kept. This allows the agenda view to index all my org notes for TODO items and
 scheduled items. Some of these directories won't exist on some machines so we filter the list at startup based on
 whether or not the file exists.
