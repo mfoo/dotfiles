@@ -146,6 +146,9 @@ suggestions after a little while.
 
 I've configured it to wait 0.5 seconds before popping up the suggestions list.
 
+- =C-c= :: Active mode specific commands
+- =C-x= :: Emacs commands
+
 #+BEGIN_SRC emacs-lisp
 (use-package guide-key
   :ensure t
@@ -157,15 +160,14 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
   (guide-key-mode 1)
 )
 #+END_SRC
-
 * Line numbering and cursor position
 I enable line numbers globally and enable the cursor position being shown in the bottom left. Note: Enabling line
 numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
-sense. It would be nice to only do this for modes that are used when editing text. Is there something I can hook into to
-improve this?
+sense.
 
 #+BEGIN_SRC emacs-lisp
-(global-linum-mode)
+(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'linum-mode)
 (setq linum-format "%d ") ; Place a space after the line numbers so text doesn't begin instantly
 #+END_SRC
 
