@@ -103,15 +103,6 @@ Use =electric-pair-mode= to automatically close inserted parentheses and braces.
 (add-hook 'org-mode-hook (lambda () (electric-pair-mode nil)))
 #+END_SRC
 
-I also turn on emojis. I rarely use this but sometimes a sad face is necessary.
-
-#+BEGIN_SRC emacs-lisp
-;(use-package :emojify
-;  :ensure t
-;  :config (add-hook 'org-mode-hook (lambda () (emojify-mode)))
-;)
-#+END_SRC
-
 =show-paren-mode= makes emacs highlight closing parentheses, braces, and curly braces.
 
 #+BEGIN_SRC emacs-lisp
@@ -520,6 +511,69 @@ Customise the colours of TODO task priority indicators:
 
 TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
 is a HUGE wealth of information here.
+*** Agenda notifications
+[[https://github.com/groksteve/org-alert][org-alert]] allows showing system notifications when agenda alerts are coming up.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-alert
+  :ensure t
+  :init
+  (setq alert-default-style 'libnotify)
+  (setq org-alert-notificatoin-title "Org Agenda Notification")
+  :config
+  (org-alert-enable)
+)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** Avoiding Weasel Words
+This makes use of Sacha Chua's [[https://github.com/sachac/artbollocks-mode][artbollocks-mode]] to highlight 'weasel words'. This should help improve my writing by
+stopping me from using pointless terms.
+
+The words here are initially stolen from Sacha's [[http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline38][org configuration]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package :artbollocks-mode
+  :defer t
+  :init
+  (setq artbollocks-weasel-words-regex
+    (concat "\\b" (regexp-opt
+      '("one of the"
+        "should"
+        "just"
+        "sort of"
+        "a lot"
+        "probably"
+        "maybe"
+        "perhaps"
+        "I think"
+        "really"
+        "pretty"
+        "nice"
+        "action"
+        "utilize"
+        "leverage") t) "\\b")
+  )
+  (setq artbollocks-passive-voice nil) ; Disable passive voice highlighting
+  ;(setq artbollocks-jargon nil)
+  :config
+  (add-hook 'text-mode-hook 'artbollocks-mode)
+)
+#+END_SRC
+** Emoji
+I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in
+interactive buffers.
+
+Example: :)
+
+#+BEGIN_SRC emacs-lisp
+(use-package emojify
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook 'emojify-mode))
+#+END_SRC
 * TODO Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
