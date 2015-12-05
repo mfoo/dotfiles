@@ -658,7 +658,6 @@ TODO: Describe folder structure. Link to GitHub?
 (setq org-publish-project-alist
   '(
      ("org-mfoot" ; Export my blog to the Jekyll format for ~jekyll build~
-       ;; Path to your org files.
        :base-directory "~/repositories/mfoot.com/org/"
        :base-extension "org"
 
@@ -787,7 +786,25 @@ I swap branches a lot. =auto-reload-mode= will automatically reload opened buffe
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode t)
 #+END_SRC
-* C
+* Programming language support
+I use flycheck mode for syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook (lambda () (flycheck-mode)))
+)
+#+END_SRC
+
+** YAML
+Add a major mode for yaml highlighting
+
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t
+)
+#+END_SRC
+** C
 At work we use BSD-style C/C++. We also set the default indentation to four spaces.
 
 #+BEGIN_SRC emacs-lisp
