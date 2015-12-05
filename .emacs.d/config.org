@@ -355,7 +355,37 @@ I use the excellent [[http://magit.vc/][magit]] for emacs git integration. This 
 * IN_PROGRESS Org Mode
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
 more things it became larger and larger and I had to split it into subcategories.
+** IN_PROGRESS Key bindings
+:LOGBOOK:
+- State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
+- State "TODO"       from ""           [2015-12-03 Thu 09:51]
+:END:
+This table lists (and defines) the key bindings that I often use. Most are set to the defaults but it provides both an
+easy way to set variables and a handy reference. Check the source for how the table is used.
 
+*Note* to future me: If the key is already bound and you're setting a default here, you can find out the name of the
+function with =C-h k <key combination>=.
+
+TODO: These are the header rows but they cause problems with org-babel evaluation. I would also like to use org's
+=monospace markup= but this is causing problems. I need to strip the "=" character out of the value in the table cells.
+
+| Key binding | Description | Function   |
+|-------------+-------------+------------|
+
+#+tblname: org-key-bindings
+| C-c a   | View agenda                                                   | org-agenda  |
+| C-c b   | Switch buffer between different org mode files                | org-switchb |
+| C-c C-t | Assign or modify a TODO state for the current node            | org-todo    |
+| C-c C-a | View current task attachments / attach a file to current task | org-attach  |
+
+#+BEGIN_SRC emacs-lisp :var org-key-bindings=org-key-bindings
+(defun mfoot-define-key-bindings (input)
+  (global-set-key (kbd (car input)) (last input)))
+  ; Handle using org's monospace markup (=example=)
+  ;(global-set-key (kbd (remove "=" (car input))) (remove "=" (last input))))
+
+(mapcar #'mfoot-define-key-bindings org-key-bindings)
+#+END_SRC
 ** Task tracking
 *** Task transition timing
 I like to see timestamps for task transitions but I don't want them filling up screen real estate. Logging these into
@@ -364,7 +394,7 @@ drawers makes them easily expandable and collapsible.
 #+BEGIN_SRC emacs-lisp
 (setq org-log-into-drawer t)
 #+END_SRC
-*** \TODO State transitions
+*** TODO State transitions
 Here states transitions are configured. This is largely based on [[http://doc.norang.ca/org-mode.html#TasksAndStates][this document]] but I use =IN_PROGRESS= instead of =NEXT=.
 
 #+BEGIN_SRC emacs-lisp
