@@ -546,6 +546,30 @@ Customise the colours of TODO task priority indicators:
 (setq org-priority-faces '((?A :foreground "dark orange") (?B :foreground "tomato") (?C :foreground "firebrick")))
 #+END_SRC
 
+I would like a custom agenda view that shows me unscheduled TODO tasks:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-custom-commands
+      '(("c" . "My Custom Agendas")
+        ("cu" "Unscheduled TODO"
+         ((todo ""
+                ((org-agenda-overriding-header "\nUnscheduled TODO")
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled)))))
+         nil
+         nil)))
+#+END_SRC
+
+#+RESULTS:
+
+We'll also make the agenda view appear in the current window, not in a right split. It messes up existing splits.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-window-setup 'current-window)
+#+END_SRC
+
+#+RESULTS:
+: current-window
+
 TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
 is a HUGE wealth of information here.
 *** Agenda notifications
