@@ -4,6 +4,7 @@
 ;; Author: Martin Foot <martin@mfoot.com>
 
 ;; Load the config
+(require 'org)
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
 (custom-set-variables
