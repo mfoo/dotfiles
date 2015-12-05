@@ -811,6 +811,20 @@ At work we use BSD-style C/C++. We also set the default indentation to four spac
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
 #+END_SRC
+** Go
+I've just started learning about Go so this is very basic. Enough to run through the tutorials.
+
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode
+  :ensure t
+)
+
+(setenv "GOPATH" "~/go")
+
+(add-hook 'go-mode-hook (lambda () (
+  (add-hook 'before-save-hook 'gofmt-before-save)
+)))
+#+END_SRC
 * TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
