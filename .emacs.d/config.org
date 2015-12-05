@@ -857,10 +857,6 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
     ;; Puppet flymake support with puppet-lint
     flymake-puppet
 
-	;; https://github.com/flycheck/flycheck
-	;;
-	;; Modern, on-the-fly syntax checking.
-	flycheck
 
 	;; https://github.com/purcell/whitespace-cleanup-mode
 	;;
@@ -1104,6 +1100,17 @@ Major mode for editing CoffeeScript files.
   :ensure t
   :config (setq ruby-deep-indent-paren nil)
 )
+#+END_SRC
+* Spell checking
+I have several modes that execute =flyspell-mode=. There's a problem with this with xemacs by default: middle clicking to
+save a correction also inadvertently pastes whatever was in the selection buffer. This can be fixed by swapping around
+the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-when-correcting-spelling-mistakes-using-flyspell][source]]).
+
+#+BEGIN_SRC emacs-lisp
+(eval-after-load "flyspell"
+  '(progn
+     (define-key flyspell-mouse-map [down-mouse-2] nil)
+     (define-key flyspell-mouse-map [mouse-2] #'flyspell-correct-word)))
 #+END_SRC
 * TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
