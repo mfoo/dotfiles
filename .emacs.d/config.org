@@ -437,21 +437,16 @@ whether or not the file exists.
 (setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life")))
 #+END_SRC
 
-We also switch archive directories for work and home.
-
-#+BEGIN_SRC emacs-lisp
-;(setq org-archive-location
-;  (if (file-exists-p "~/Repositories/notes")
-;    "~/Repositories/notes/archive"
-;    "~/Dropbox/life/archive"
-;  )
-;)
-#+END_SRC
-
 Set up a key binding for the org agenda
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c a") 'org-agenda)
+#+END_SRC
+
+=org-iswitchb= is a quick way to switch org mode buffers.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c b") 'org-iswitchb)
 #+END_SRC
 
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
@@ -498,6 +493,7 @@ Configure the languages that Babel will automatically syntax highlight
    (calc . t)
    (java . t)
    (emacs-lisp . t)
+   (ruby . t)
   )
 )
 #+END_SRC
