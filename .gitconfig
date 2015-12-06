@@ -8,7 +8,7 @@
   status = auto
 [core]
   autocrlf = false
-  editor = /usr/bin/vim
+  editor = emacs -nw
   excludesfile = ~/.gitignore
   whitespace = trailing-space,space-before-tab
 [advice]
