@@ -332,17 +332,6 @@ Insert tabs by default when auto-formatting.
 ;(global-whitespace-cleanup-mode)	; Enable whitespace-mode globally
 
 ;(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark)))
-** Git
-I use the excellent [[http://magit.vc/][magit]] for emacs git integration. This is bound to =C-x g=.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x g") 'magit-status)
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status))
-)
-#+END_SRC
-
 * Region selection
 =expand-region= makes it really easy to quickly select regions of text getting larger.
 
