@@ -843,11 +843,6 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 (tool-bar-mode -1)
 
 ;; TODO: Try and get projectile-ag to work. Is git grep better?
-(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
-(setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
-(setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
-(add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
-(add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
 ;; Human readable sizes in dired
 (setq dired-listing-switches "-alh")
 
