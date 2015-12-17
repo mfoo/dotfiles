@@ -821,6 +821,19 @@ I've just started learning about Go so this is very basic. Enough to run through
   (add-hook 'before-save-hook 'gofmt-before-save)
 )))
 #+END_SRC
+** SCSS
+When doing web development, SCSS is really useful. We use [[https://github.com/antonj/scss-mode][scss-mode]] for this. By default hitting tab will insert four
+spaces. We'll modify this to use two in the same format that Twitter's Bootstrap library uses.
+
+#+BEGIN_SRC emacs-lisp
+(use-package scss-mode
+  :ensure t
+  :config
+  (setq css-indent-offset 2)
+  (setq tab-always-indent nil) ; electric-indent-mode will insert tabs otherwise to minimise whitespace characters
+)
+#+END_SRC
+
 * TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
@@ -895,22 +908,6 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
 	;; Puppet Mode lets you edit Puppet 3 manifests with GNU Emacs 24.
 	puppet-mode
 
-
-
-	;; https://github.com/pezra/rspec-mode
-	;;
-	;; Enable running rspec tests from inside emacs
-	rspec-mode
-
-
-	;; https://github.com/rejeep/ruby-end.el
-	;;
-	;; Automatically insert 'end' blocks when 'do' is typed in ruby
-	ruby-end
-
-
-	;; https://github.com/antonj/scss-mode
-	scss-mode
 
   ) "a list of packages to ensure are installed at launch.")
 
