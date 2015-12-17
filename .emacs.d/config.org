@@ -1000,6 +1000,14 @@ mechanism backed by external commands exists as well).
   :config (projectile-global-mode)		  ; Enable projectile everywhere
 )
 #+END_SRC
+
+I use =helm-projectile-ag= quite a lot which requires the =ag= package.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ag
+  :ensure t
+)
+#+END_SRC
 ** TODO Helm mode
 :LOGBOOK:
 - State "TODO"       from ""           [2015-11-21 Sat 10:01]
@@ -1026,6 +1034,16 @@ direction when you're looking for stuff in Emacs (like buffers, files, etc). It'
   )
   :bind ("M-x" . helm-M-x)
   :config (setq projectile-completion-system 'helm)
+)
+#+END_SRC
+
+Use [[https://github.com/yasuyk/helm-git-grep][helm-git-grep]] for fast searches within the current git directory.
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-git-grep
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c g") 'helm-git-grep)
 )
 #+END_SRC
 
