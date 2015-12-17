@@ -1100,11 +1100,47 @@ Major mode for editing CoffeeScript files.
 (use-package dockerfile-mode :ensure t)
 #+END_SRC
 ** Ruby configuration
+Provide a =ruby-mode= for editing ruby files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package enh-ruby-mode
   :ensure t
   :config (setq ruby-deep-indent-paren nil)
+)
+#+END_SRC
+
+I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is very useful.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rspec-mode
+  :ensure t
+  :config
+  (setq rspec-use-rake-when-possible nil)
+  (setq rspec-use-bundler-when-possible t)
+  (setq rspec-use-rvm-when-possible t)
+  (setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
+  (setenv "PATH" (concat  "/home/martin/.rvm/rubies/ruby-2.1.5/bin" ":" "/home/martin/.rvm/gems/ruby-2.1.5/bin" ":" (getenv "PATH")))
+  (setenv "GEM_HOME" "/home/martin/.rvm/gems/ruby-2.1.5")
+  (add-to-list 'exec-path "/home/martin/.rvm/gems/ruby-2.1.5/bin")
+  (add-to-list 'exec-path "/home/martin/.rvm/rubies/ruby-2.1.5/bin")
+)
+#+END_SRC
+
+[[https://github.com/rejeep/ruby-end.el][ruby-end]] inserts =end= blocks whenever I type =do= automatically.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ruby-end
+  :ensure t
+)
+#+END_SRC
+
+The following allows using =binding.pry= in =rspec-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package inf-ruby
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 )
 #+END_SRC
 * Spell checking
@@ -1178,13 +1214,7 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 
 
 (add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
-(add-to-list 'auto-mode-alist '("\\.json.jbuilder$" . ruby-mode))
 
-
-
-(setq rspec-use-rake-when-possible nil)
-(setq rspec-use-bundler-when-possible nil)
-(setq rspec-use-rvm-when-possible t)
 
 
 (setq circe-network-options
