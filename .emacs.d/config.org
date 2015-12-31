@@ -96,12 +96,11 @@ Then, since I use ~use-package~ for every package from the repositories, initial
       user-mail-address "martin@mfoot.com")
 #+END_SRC
 * Parentheses
-Use =electric-pair-mode= to automatically close inserted parentheses and braces. I explicitly disable this when using
-=org-mode= because when typing links it's annoying.
+Use =electric-pair-mode= to automatically close inserted parentheses and braces. I don't have this enabled in text modes
+because when using =org-mode= it makes inserting links annoying.
 
 #+BEGIN_SRC emacs-lisp
-(electric-pair-mode)
-(add-hook 'org-mode-hook (lambda () (electric-pair-mode nil)))
+(add-hook 'prog-mode-hook (lambda () (electric-pair-mode)))
 #+END_SRC
 
 =show-paren-mode= makes emacs highlight closing parentheses, braces, and curly braces.
