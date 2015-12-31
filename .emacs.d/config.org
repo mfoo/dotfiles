@@ -111,19 +111,16 @@ Use =electric-pair-mode= to automatically close inserted parentheses and braces.
 (setq show-paren-delay 0) ; show the paren match immediately
 #+END_SRC
 
-Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]= to highlight nested parentheses in different colours. It has an annoying disclaimer that
-there's no global mode for it, so I've enabled it for org mode only. This conveniently applies to source code blocks
-inside org mode. This means I get the highlighting on any lisp configuration as well as code I'm working on from inside
-org mode.
+Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]= to highlight nested parentheses in different colours.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
   :ensure t
-  :config (rainbow-delimiters-mode)
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 )
-
-(add-hook 'org-mode-hook (lambda () (rainbow-delimiters-mode)))
 #+END_SRC
+
 * Fill columns and line highlighting
 I find a 120 character line length is best for modern screens. Individual languages/major modes can override this.
 
