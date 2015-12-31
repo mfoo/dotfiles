@@ -762,8 +762,8 @@ Add vim-like navigation between panes in a window using windmove.
 (global-set-key (kbd "C-c <down>") 'windmove-down)
 #+END_SRC
 
-I use [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] for fast buffer navigation. It allows the use of =<space> <character to search for>= to highlight
-jump targets of that character. This has to be configured in =evil-mode=.
+I use [[https://github.com/abo-abo/avy][avy-mode]] for fast buffer navigation. As I use =evil-mode= I've bound =gc= to goto-char and =gl= to goto-line. This makes
+for some really fast navigation of the visible buffer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ace-jump-mode
