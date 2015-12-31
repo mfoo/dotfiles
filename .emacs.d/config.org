@@ -1012,6 +1012,17 @@ I use =helm-projectile-ag= quite a lot which requires the =ag= package.
   :ensure t
 )
 #+END_SRC
+** Neotree
+Sometimes I need to see the directory structure for the current file. The [[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable
+pane that will pop up and disappear with the =F8= key.
+
+#+BEGIN_SRC emacs-lisp
+(use-package neotree
+  :ensure t
+  :bind
+  ([f8] . neotree-toggle)
+)
+#+END_SRC
 ** TODO Helm mode
 :LOGBOOK:
 - State "TODO"       from ""           [2015-11-21 Sat 10:01]
