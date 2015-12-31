@@ -430,7 +430,7 @@ whether or not the file exists.
 
 #+BEGIN_SRC emacs-lisp
 (require 'cl) ; remove-if-not is inside the common-lisp package
-(setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life")))
+(setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life" "~/repositories/life")))
 #+END_SRC
 
 Set up a key binding for the org agenda
