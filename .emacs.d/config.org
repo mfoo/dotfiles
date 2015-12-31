@@ -775,7 +775,9 @@ for some really fast navigation of the visible buffer.
       :ensure t
     )
   )
-  :config  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+  :config
+  (define-key evil-normal-state-map (kbd "gc") 'avy-goto-char)
+  (define-key evil-normal-state-map (kbd "gl") 'avy-goto-line)
 )
 #+END_SRC
 * Reloading files
@@ -1190,7 +1192,8 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 (defun common-programming-language-hook ()
   "Mode configuration for working with source code files"
   (flycheck-mode)
-  (flyspell-prog-mode))
+  (flyspell-prog-mode)
+)
 
 ;(defun projectile-custom-hook ()
 ;  "Mode configuration for helm-projectile"
