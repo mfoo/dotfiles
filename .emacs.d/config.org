@@ -514,10 +514,12 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
 
-Since org mode is plain text, I also enable spell checking when I'm using it.
+Since org mode is plain text, I also enable spell checking when I'm using it. Note that =flyspell-mode= isn't autoenabled
+in org mode when in batch mode. This is because I use ~org-batch-agenda~ to export my agenda and flyspell breaks in batch
+mode.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook (lambda () (flyspell-mode)))
+(add-hook 'org-mode-hook (lambda () (if (not noninteractive (flyspell-mode)))))
 #+END_SRC
 
 I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
