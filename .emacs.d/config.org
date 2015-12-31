@@ -143,7 +143,11 @@ I also like a highlight on the screen to show the current cursor line.
 When working with structured code it's nice to have an indentation guide.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'prog-mode-hook (lambda () (indent-guide-mode)))
+(use-package indent-guide
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook (lambda () (indent-guide-mode)))
+)
 #+END_SRC
 * Shortcut help
 It's very difficult to remember all the shortcuts available in emacs. The =guide-key= plugin pops up a list of available
