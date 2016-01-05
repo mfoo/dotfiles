@@ -768,7 +768,7 @@ I use [[https://github.com/abo-abo/avy][avy-mode]] for fast buffer navigation. A
 for some really fast navigation of the visible buffer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package ace-jump-mode
+(use-package avy
   :ensure t
   :init (progn
     (use-package evil
