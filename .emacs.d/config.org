@@ -351,7 +351,7 @@ Insert tabs by default when auto-formatting.
 * IN_PROGRESS Org Mode
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
 more things it became larger and larger and I had to split it into subcategories.
-** IN_PROGRESS Key bindings
+** Key bindings
 :LOGBOOK:
 - State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
 - State "TODO"       from ""           [2015-12-03 Thu 09:51]
@@ -369,10 +369,21 @@ TODO: These are the header rows but they cause problems with org-babel evaluatio
 |-------------+-------------+------------|
 
 #+tblname: org-key-bindings
-| C-c a   | View agenda                                                   | org-agenda  |
-| C-c b   | Switch buffer between different org mode files                | org-switchb |
-| C-c C-t | Assign or modify a TODO state for the current node            | org-todo    |
-| C-c C-a | View current task attachments / attach a file to current task | org-attach  |
+| C-c a   | View agenda                                                                  | org-agenda                        |
+| C-c b   | Switch buffer between different org mode files                               | org-switchb                       |
+| C-c C-t | Assign or modify a TODO state for the current node                           | org-todo                          |
+| C-c C-a | View current task attachments / attach a file to current task                | org-attach                        |
+| C-c C-b | Move to previous heading at the same level                                   | org-backwards-heading-same-level  |
+| C-c C-d | Set the deadline for a task                                                  | org-deadline                      |
+| C-c C-e | Launch the org export dialog                                                 | org-export-dispatch               |
+| C-c C-w | Refile (move subtree elsewhere in document)                                  | org-refile                        |
+| C-c C-s | Schedule current note/task                                                   | org-schedule                      |
+| C-c C-t | Toggle todo state to any allowed                                             | org-todo                          |
+| C-c C-o | Open link at point                                                           | org-open-at-point                 |
+| C-c $   | Archive the subtree to the archive file (useful as large org files are slow) | org-archive-subtree               |
+| C-c '   | Edit the current code block in buffer in the correct major mode              | org-edit-special                  |
+| C-c *   | Recalculate formulas on an org mode table                                    | org-ctrl-c-star                   |
+| C-c {   | Enable the debugger for table formulas                                       | org-table-toggle-formula-debugger |
 
 #+BEGIN_SRC emacs-lisp :var org-key-bindings=org-key-bindings
 (defun mfoot-define-key-bindings (input)
