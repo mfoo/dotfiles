@@ -167,16 +167,15 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
 - =C-x= :: Emacs commands
 
 #+BEGIN_SRC emacs-lisp
-(use-package guide-key
+(use-package which-key
   :ensure t
-  :diminish guide-key-mode
+  :diminish which-key-mode
   :init
-  (setq guide-key/idle-delay 0.5)
-  :config
-  (setq guide-key/guide-key-sequence '("C-x" "C-c"))
-  (guide-key-mode 1)
+  (setq which-key-idle-delay 0.5)
+  (which-key-mode)
 )
 #+END_SRC
+
 * Line numbering and cursor position
 I enable line numbers globally and enable the cursor position being shown in the bottom left. Note: Enabling line
 numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
