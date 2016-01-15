@@ -135,6 +135,16 @@ I also like a highlight on the screen to show the current cursor line.
 #+BEGIN_SRC emacs-lisp
 (global-hl-line-mode)
 #+END_SRC
+
+I also like to highlight git changes in buffers in a git repository:
+
+#+BEGIN_SRC emacs-lisp
+(use-package git-gutter+
+  :ensure t
+  :config
+  (global-git-gutter+-mode)
+)
+#+END_SRC
 * Indentation guides
 When working with structured code it's nice to have an indentation guide.
 
