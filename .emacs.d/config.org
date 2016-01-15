@@ -198,6 +198,12 @@ Use 'y' or 'n' instead of 'yes' and 'no' in interactive prompts. This saves typi
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
+
+I also configure emacs to ask me if I really want to quit when hitting =C-x C-c= because I find this way too easy to do.
+
+#+BEGIN_SRC emacs-lisp
+(setq confirm-kill-emacs 'y-or-n-p)
+#+END_SRC
 * Symbolic links
 By default emacs doesn't follow symlinks
 
@@ -290,13 +296,8 @@ scroll bar.
 #+END_SRC
 * Whitespace
 ** Trailing whitespace
-Highlight trailing whitespace on lines
-
-#+BEGIN_SRC emacs-lisp
-(setq-default show-trailing-whitespace t)
-#+END_SRC
-
-Delete trailing whitespace automatically on save
+Delete trailing whitespace automatically on save. I used to configure editors to highlight trailing whitespace, but it's
+pointless if it can be auto-deleted on save.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -534,14 +535,6 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
 
-Since org mode is plain text, I also enable spell checking when I'm using it. Note that =flyspell-mode= isn't autoenabled
-in org mode when in batch mode. This is because I use ~org-batch-agenda~ to export my agenda and flyspell breaks in batch
-mode.
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook (lambda () (if (not noninteractive (flyspell-mode)))))
-#+END_SRC
-
 I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
 the screen.
 
@@ -554,7 +547,11 @@ tends to happen at home rather than at work as my work org files contain appropr
 home and in my blog I can capture TODO items and put them in this directory.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-default-notes-file "~/Dropbox/life/life.org")
+(if (file-exists-p "~/Dropbox/life/life.org")
+  (setq org-default-notes-file "~/Dropbox/life/life.org")
+  (setq org-default-notes-file "~/repositories/notes/notes.org")
+)
+
 (define-key global-map "\C-cc" 'org-capture)
 #+END_SRC
 
@@ -853,8 +850,43 @@ spaces. We'll modify this to use two in the same format that Twitter's Bootstrap
 (use-package scss-mode
   :ensure t
   :config
-  (setq css-indent-offset 2)
+  (setq tab-width 2) ; Use two spaces for indents
   (setq tab-always-indent nil) ; electric-indent-mode will insert tabs otherwise to minimise whitespace characters
+  (setq indent-tabs-mode nil) ; Always use spaces for scss
+)
+#+END_SRC
+* Autocompletion
+I use [[http://company-mode.github.io/][company-mode]] for autocompletion. It's bound to =C-<space>= in a similar way to eclipse. Since I use =evil-mode= I
+don't use emacs' default mark combo.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :init
+  (use-package helm-company
+    :ensure t
+    :config
+    (define-key company-mode-map (kbd "C-SPC") 'helm-company)
+    (define-key company-active-map (kbd "C-SPC") 'helm-company)
+  )
+  :config
+  (add-hook 'prog-mode-hook 'company-mode)
+  (progn
+  ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
+  ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
+  ;; Add yasnippet support for all company backends
+  ;; https://github.com/syl20bnr/spacemacs/pull/179
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  )
 )
 #+END_SRC
 
@@ -1140,7 +1172,9 @@ Provide a =ruby-mode= for editing ruby files.
 #+BEGIN_SRC emacs-lisp
 (use-package enh-ruby-mode
   :ensure t
-  :config (setq ruby-deep-indent-paren nil)
+  :mode "\\.rb\\'"
+  :config
+  (setq enh-ruby-deep-indent-paren nil) ; Don't indent ruby function parameters at column index of function parentheses
 )
 #+END_SRC
 
@@ -1176,6 +1210,23 @@ The following allows using =binding.pry= in =rspec-mode=.
   :ensure t
   :init
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  :bind
+  ("C-c r r" . inf-ruby)
+)
+
+(use-package robe
+  :ensure t
+  :init
+  (add-hook 'enh-ruby-mode-hook 'robe-mode)
+  :config
+  (push 'company-robe company-backends)
+)
+#+END_SRC
+
+** CMake
+#+BEGIN_SRC emacs-lisp
+(use-package cmake-mode
+  :ensure t
 )
 #+END_SRC
 * Spell checking
@@ -1183,7 +1234,21 @@ I have several modes that execute =flyspell-mode=. There's a problem with this w
 save a correction also inadvertently pastes whatever was in the selection buffer. This can be fixed by swapping around
 the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-when-correcting-spelling-mistakes-using-flyspell][source]]).
 
+Flyspell is only enabled when the buffer is interactive, since it breaks my =org-batch-agenda= calls (see the Blog)
+section when run from a cron-job.
+
 #+BEGIN_SRC emacs-lisp
+(defun common-text-editing-hook ()
+  "Mode configuration for working with text files"
+  (if (not noninteractive (flyspell-mode)))
+)
+
+(defun common-programming-language-hook ()
+  "Mode configuration for working with source code files"
+  (flycheck-mode)
+  (flyspell-prog-mode)
+)
+
 (eval-after-load "flyspell"
   '(progn
      (define-key flyspell-mouse-map [down-mouse-2] nil)
@@ -1193,28 +1258,16 @@ the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-w
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
 #+BEGIN_SRC emacs-lisp
-; (use-package yasnippet
-;   :ensure t
-;   :config (yas-global-mode 1)
-; )
+ (use-package yasnippet
+   :ensure t
+   :config (yas-global-mode 1)
+ )
 #+END_SRC
 * TODO Other configuration
 #+BEGIN_SRC emacs-lisp
 ; Indent guide - highlight current indent level vertically
 ; (indent-guide-global-mode)
 ; (setq indent-guide-recursive t)
-
-(defun common-text-editing-hook ()
-  "Mode configuration for working with text files"
-  (flyspell-mode)						; Automatic spell checking
-  )
-
-(defun common-programming-language-hook ()
-  "Mode configuration for working with source code files"
-  (flycheck-mode)
-  (flyspell-prog-mode)
-)
-
 ;(defun projectile-custom-hook ()
 ;  "Mode configuration for helm-projectile"
 ;  (global-set-key (kbd "C-c p g") 'helm-projectile-grep))
@@ -1268,11 +1321,6 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 
 (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
 (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-
-(setq yas-snippet-dirs
-      '(
-		"~/Dropbox/snippets"                 ;; personal snippets
-		))
 
 (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
 
