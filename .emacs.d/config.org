@@ -649,7 +649,22 @@ Example: :)
   :init
   (add-hook 'org-mode-hook 'emojify-mode))
 #+END_SRC
-* TODO Blog
+** Improved bullet point styles
+The =org-bullets= package allows pretty unicode bullet points.
+
+These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :init
+  (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+)
+#+END_SRC
+
+* Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
 posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll
