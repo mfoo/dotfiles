@@ -629,7 +629,18 @@ These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-a
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
 #+END_SRC
+** Screenshot attachment
+I use a package called [[https://github.com/dfeich/org-screenshot][org-attach-screenshot]] which is awesome. Calling the function hides emacs and allows you to grab a
+section of the screen to insert, where it uses =org-attach= to save it, embeds it at the cursor position, and calls
+=org-redisplay-inline-images=. This is great for capturing issues at work.
 
+#+BEGIN_SRC emacs-lisp
+(use-package org-attach-screenshot
+  :ensure t
+  :bind
+  (("C-c S" . org-attach-screenshot))
+)
+#+END_SRC
 * Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
