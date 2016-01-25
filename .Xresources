@@ -1,5 +1,5 @@
 ! -- Fonts -- !
-URxvt.letterSpace                : -1
+!URxvt.letterSpace                : -1
 !URxvt.font:xft:droid sans mono slashed:size=10.5
 !URxvt.boldFont:xft:droid sans mono slashed:size=10.5
 !URxvt*font:    xft:Dejavu Sans Mono:pixelsize=10.5
@@ -12,8 +12,8 @@ URxvt.letterSpace                : -1
 !URxvt.boldFont:xft:envy code r:medium:size=11
 !URxvt.font:xft:inconsolata:medium:size=13
 !URxvt.boldFont:xft:inconsolata:medium:size=13
-URxvt.font:xft:source code pro:medium:size=8
-URxvt.boldFont:xft:source code pro:bold:size=8
+!URxvt.font:xft:source code pro:medium:size=8
+!URxvt.boldFont:xft:source code pro:bold:size=8
 
 ! Molokai theme
 *xterm*background: #101010

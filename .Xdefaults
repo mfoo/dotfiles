@@ -28,16 +28,16 @@ URxvt.lineSpace:            0
 
 ! Fonts
 URxvt.allow_bold:           false
-/* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
+!URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1
 !URxvt*font: xft:Monospace:pixelsize=14
 !URxvt*boldFont: xft:Monospace:pixelsize=14
 
 URxvt*font: xft:Inconsolata\-dz for Powerline:pixelsize=14
-!URxvt*boldFont: xft:Inconsolata-dz-Powerline:pixelsize=12
+URxvt*boldFont: xft:Inconsolata-dz-Powerline:pixelsize=12
 
 
 ! Fix font space
-URxvt*letterSpace: -1
+!URxvt*letterSpace: -1
 
 ! Scrollbar
 URxvt.scrollStyle:          rxvt
@@ -97,4 +97,3 @@ URxvt.pointerBlank:         true
 !! white dark/light
 *color7: #eee8d5
 *color15: #fdf6e3
-
