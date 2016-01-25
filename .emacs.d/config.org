@@ -603,40 +603,6 @@ is a HUGE wealth of information here.
 #+RESULTS:
 : t
 
-** Avoiding Weasel Words
-This makes use of Sacha Chua's [[https://github.com/sachac/artbollocks-mode][artbollocks-mode]] to highlight 'weasel words'. This should help improve my writing by
-stopping me from using pointless terms.
-
-The words here are initially stolen from Sacha's [[http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline38][org configuration]].
-
-#+BEGIN_SRC emacs-lisp
-(use-package :artbollocks-mode
-  :defer t
-  :init
-  (setq artbollocks-weasel-words-regex
-    (concat "\\b" (regexp-opt
-      '("one of the"
-        "should"
-        "just"
-        "sort of"
-        "a lot"
-        "probably"
-        "maybe"
-        "perhaps"
-        "I think"
-        "really"
-        "pretty"
-        "nice"
-        "action"
-        "utilize"
-        "leverage") t) "\\b")
-  )
-  (setq artbollocks-passive-voice nil) ; Disable passive voice highlighting
-  ;(setq artbollocks-jargon nil)
-  :config
-  (add-hook 'text-mode-hook 'artbollocks-mode)
-)
-#+END_SRC
 ** Emoji
 I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in
 interactive buffers.
