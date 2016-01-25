@@ -36,3 +36,10 @@
 *xterm*color14: #4eb4fa
 *xterm*color15: #d0d0d0
 !from https://gist.github.com/vreon/845878
+
+
+! Change the default browser to Firefox
+URxvt.url-launcher: /usr/bin/firefox
+
+! Disable the keycap input
+URxvt*iso14755: False
