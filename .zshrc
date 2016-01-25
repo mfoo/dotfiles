@@ -124,7 +124,7 @@ export PATH=$PATH:~/bin/play-2.2.1
 function git-find-file () {
 for branch in $(git rev-list --all)
 do
-    if (git ls-tree -r --name-only $branch | grep --quiet "$1") 
+    if (git ls-tree -r --name-only $branch | grep --quiet "$1")
         then
            echo $branch
         fi
