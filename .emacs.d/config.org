@@ -342,8 +342,14 @@ Insert tabs by default when auto-formatting.
 (setq-default indent-tabs-mode t)
 #+END_SRC
 ** TODO Highlighting font faces
-I've made some changes using custom-set-faces and they've probably crept into =~/.emacs=.
+Highlighting colours for whitespace indicators:
 
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces
+ '(whitespace-hspace ((t (:foreground "black"))))
+ '(whitespace-space ((t (:foreground "dark slate gray" :slant italic))))
+ '(whitespace-tab ((t (:foreground "black")))))
+#+END_SRC
 ** Highlighting long lines
 I have whitespace mode configured to show lines longer than 120 characters.
 
@@ -359,14 +365,6 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 #+END_SRC
 
 ** Highlighting colours
-Highlighting colours for whitespace
-
-#+BEGIN_SRC emacs-lisp
-(custom-set-faces
- '(whitespace-hspace ((t (:foreground "black"))))
- '(whitespace-space ((t (:foreground "dark slate gray" :slant italic))))
- '(whitespace-tab ((t (:foreground "black")))))
-#+END_SRC
 * Region selection
 =expand-region= makes it really easy to quickly select regions of text getting larger.
 
