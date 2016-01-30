@@ -54,7 +54,7 @@ Then add ~(org-babel-load-file (concat user-emacs-directory "config.org"))~ to =
 
 Here is the contents of my =~/.emacs= file:
 
-#+BEGIN_SRC emacs-lisp :tangle ~/.emacs
+#+BEGIN_SRC emacs-lisp :results none :tangle ~/.emacs
 ;; Martin's .emacs file
 ;;
 ;; Author: Martin Foot <martin@mfoot.com>
@@ -72,7 +72,7 @@ repositories]] section comes before any of the other non-standard config.
 * Package repositories
 I use Melpa and Marmalade for repositories.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -81,7 +81,7 @@ I use Melpa and Marmalade for repositories.
 
 Then, since I use ~use-package~ for every package from the repositories, initialise this first.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -90,7 +90,7 @@ Then, since I use ~use-package~ for every package from the repositories, initial
   (require 'use-package))
 #+END_SRC
 * User information
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq user-full-name "Martin Foot"
       user-mail-address "martin@mfoot.com")
 #+END_SRC
@@ -98,20 +98,20 @@ Then, since I use ~use-package~ for every package from the repositories, initial
 Use =electric-pair-mode= to automatically close inserted parentheses and braces. I don't have this enabled in text modes
 because when using =org-mode= it makes inserting links annoying.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (electric-pair-mode)))
 #+END_SRC
 
 =show-paren-mode= makes emacs highlight closing parentheses, braces, and curly braces.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (show-paren-mode)			; Automatically highlight parenthesis pairs
 (setq show-paren-delay 0) ; show the paren match immediately
 #+END_SRC
 
 Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]= to highlight nested parentheses in different colours.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package rainbow-delimiters
   :ensure t
   :config
@@ -124,20 +124,20 @@ I find a 120 character line length is best for modern screens. Individual langua
 
 In text-based modes (non-programming modes) I enable automatic line wrapping also.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq-default fill-column 120)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 I also like a highlight on the screen to show the current cursor line.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (global-hl-line-mode)
 #+END_SRC
 
 I also like to highlight git changes in buffers in a git repository:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package git-gutter+
   :ensure t
   :config
@@ -147,7 +147,7 @@ I also like to highlight git changes in buffers in a git repository:
 * Indentation guides
 When working with structured code it's nice to have an indentation guide.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package indent-guide
   :ensure t
   :config
@@ -165,7 +165,7 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
 - =C-c= :: Active mode specific commands
 - =C-x= :: Emacs commands
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package which-key
   :ensure t
   :diminish which-key-mode
@@ -180,7 +180,7 @@ I enable line numbers globally and enable the cursor position being shown in the
 numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
 sense.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'text-mode-hook 'linum-mode)
 (add-hook 'prog-mode-hook 'linum-mode)
 (setq linum-format "%d ") ; Place a space after the line numbers so text doesn't begin instantly
@@ -188,25 +188,25 @@ sense.
 
 I also show the current cursor position column number in the bottom left of the screen:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (column-number-mode)
 #+END_SRC
 * Yes or no prompts
 Use 'y' or 'n' instead of 'yes' and 'no' in interactive prompts. This saves typing.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 I also configure emacs to ask me if I really want to quit when hitting =C-x C-c= because I find this way too easy to do.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq confirm-kill-emacs 'y-or-n-p)
 #+END_SRC
 * Symbolic links
 By default emacs doesn't follow symlinks
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq vc-follow-symlinks t)
 #+END_SRC
 * OS Clipboard integration
@@ -215,7 +215,7 @@ Add proper support for the OS clipboard integrations. Only tested under X.
 First we enable the emacs copy buffer to be linked to the OS clipboard. Lines copied from the OS can be pasted into
 emacs and lines copied from emacs can be pasted into other OS windows.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq x-select-enable-clipboard t)
 #+END_SRC
 
@@ -223,7 +223,7 @@ Now we enable 'primary selection'. The clipboard config above is for the operati
 =C-v=. Primary selection is the mouse select buffer that usually works as pasted with a middle click. Enabling this allows
 selected text in emacs to be copied there so I can select in the program and paste into somewhere else using X.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq x-select-enable-primary t)
 (setq mouse-drag-copy-region t)
 #+END_SRC
@@ -233,7 +233,7 @@ the directory that they get placed in. This keeps them out of the way in case we
 
 I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to keep backups.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 ; From http://www.emacswiki.org/emacs/BackupDirectory
 ; and http://stackoverflow.com/questions/151945/how-do-i-control-how-emacs-makes-backup-files
 (setq
@@ -249,7 +249,7 @@ I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to ke
 * Font size
 Add some keybindings to increase and decrease the font size
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;; C-x C-0 restores the default font size
@@ -257,7 +257,7 @@ Add some keybindings to increase and decrease the font size
 * Startup message
 Don't show the default emacs startup message when it's opened
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq inhibit-startup-message t)
 #+END_SRC
 
@@ -265,7 +265,7 @@ Let's also show a fortune message in the scratch buffer when we start emacs:
 
 [[https://github.com/andschwa/fortune-cookie][Source here]]
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package fortune-cookie
   :ensure t
   :config
@@ -277,7 +277,7 @@ Let's also show a fortune message in the scratch buffer when we start emacs:
 Disable the terminal bell. Use a visible bell instead. A non-nil value causes emacs to try and flash the frame to
 represent a bell.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq visible-bell 1)
 #+END_SRC
 * Menu bar
@@ -285,7 +285,7 @@ Don't show emacs' menu bar - I remember enough shortcuts and understand how to u
 remember the shortcut for something. When we're using graphical emacs, also disable the tooltips for the mouse an the
 scroll bar.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (when window-system
   (tooltip-mode -1)
   (tool-bar-mode -1)
@@ -296,7 +296,7 @@ scroll bar.
 * Whitespace
 Whitespace mode is enabled for all programming and text buffers.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
 (add-hook 'text-mode-hook (lambda () (whitespace-mode)))
 #+END_SRC
@@ -304,27 +304,27 @@ Whitespace mode is enabled for all programming and text buffers.
 Delete trailing whitespace automatically on save. I used to configure editors to highlight trailing whitespace, but it's
 pointless if it can be auto-deleted on save.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 I also don't like seeing tabs mixed with spaces. This section needs some work however so is currently commented out. I
 need to customise the faces that =whitespace-mode= uses.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode
 #+END_SRC
 ** Default emacs backspace behaviour
 I despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number of
 spaces and inserts tab-width -1 spaces. This seems like an insane default.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq backward-delete-char-untabify-method nil)
 #+END_SRC
 ** Tabs
 Change the default tab settings to use four spaces. This controls how big a tab appears inside emacs.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq-default tab-width 4)
 ;(setq-default tab-always-indent 'complete)
 #+END_SRC
@@ -332,19 +332,19 @@ Change the default tab settings to use four spaces. This controls how big a tab 
 Set up the tab stop list. This is what emacs uses when it can't find an appropriate tab stop - i.e how much to try
 indenting when tab is hit.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq-default tab-stop-list (number-sequence 4 200 4))
 #+END_SRC
 
 Insert tabs by default when auto-formatting.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq-default indent-tabs-mode t)
 #+END_SRC
 ** TODO Highlighting font faces
 Highlighting colours for whitespace indicators:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (custom-set-faces
  '(whitespace-hspace ((t (:foreground "black"))))
  '(whitespace-space ((t (:foreground "dark slate gray" :slant italic))))
@@ -353,14 +353,14 @@ Highlighting colours for whitespace indicators:
 ** Highlighting long lines
 I have whitespace mode configured to show lines longer than 120 characters.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq whitespace-line-column 120)
 #+END_SRC
 
 ** Showing mixed tabs-spaces
 I highlight mixed spaces and tabs, and have whitespace mode clean out blank lines at the beginning and end of files.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq whitespace-style (quote (face space-before-tab empty space-after-tab)))
 #+END_SRC
 
@@ -368,7 +368,7 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 * Region selection
 =expand-region= makes it really easy to quickly select regions of text getting larger.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package expand-region
   :ensure t
   :defer t
@@ -412,7 +412,7 @@ TODO: These are the header rows but they cause problems with org-babel evaluatio
 | C-c *   | Recalculate formulas on an org mode table                                    | org-ctrl-c-star                   |
 | C-c {   | Enable the debugger for table formulas                                       | org-table-toggle-formula-debugger |
 
-#+BEGIN_SRC emacs-lisp :var org-key-bindings=org-key-bindings
+#+BEGIN_SRC emacs-lisp :results none :var org-key-bindings=org-key-bindings
 (defun mfoot-define-key-bindings (input)
   (global-set-key (kbd (car input)) (last input)))
   ; Handle using org's monospace markup (=example=)
@@ -425,13 +425,13 @@ TODO: These are the header rows but they cause problems with org-babel evaluatio
 I like to see timestamps for task transitions but I don't want them filling up screen real estate. Logging these into
 drawers makes them easily expandable and collapsible.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-log-into-drawer t)
 #+END_SRC
 *** TODO State transitions
 Here states transitions are configured. This is largely based on [[http://doc.norang.ca/org-mode.html#TasksAndStates][this document]] but I use =IN_PROGRESS= instead of =NEXT=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-todo-keywords
   (quote ((sequence "TODO(t!)" "IN_PROGRESS(i!)" "|" "DONE(d!)")
   (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
@@ -441,7 +441,7 @@ Here states transitions are configured. This is largely based on [[http://doc.no
 I have defined colours for each task state. TODO is red (bad), blocked is orange and magnta (somewhat bad), in progress
 is gold (OK) and complete is green.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-todo-keyword-faces
   (quote (("TODO" :foreground "red" :weight bold)
     ("IN_PROGRESS" :foreground "gold" :weight bold)
@@ -458,7 +458,7 @@ c t= as a shortcut for quickly choosing the state. some of the states below have
 write a reason why a task is cancelled or blocked, or what it's waiting on. The buffer will appear when selecting such a
 state that lets me enter the reason.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-use-fast-todo-selection t)
 #+END_SRC
 ** Agenda
@@ -466,51 +466,51 @@ Tell org mode where my notes are usually kept. This allows the agenda view to in
 scheduled items. Some of these directories won't exist on some machines so we filter the list at startup based on
 whether or not the file exists.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (require 'cl) ; remove-if-not is inside the common-lisp package
 (setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life" "~/repositories/life")))
 #+END_SRC
 
 Set up a key binding for the org agenda
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
 
 =org-iswitchb= is a quick way to switch org mode buffers.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 #+END_SRC
 
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-pretty-entities t)
 #+END_SRC
 
 In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some
 emphasis on it, get emacs to hide the markup characters:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-hide-emphasis-markers t)
 #+END_SRC
 
 Ensure native syntax highlighting is used for inline source blocks in org files
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-src-fontify-natively t)
 #+END_SRC
 
 When emacs source-formats a code block, don't add spaces before it (it messes with syntax highlighting in major modes).
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-edit-src-content-indentation 0)
 #+END_SRC
 
 Configure the languages that Babel will automatically syntax highlight
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -528,7 +528,7 @@ Configure the languages that Babel will automatically syntax highlight
 
 When we're using a GUI emacs we can display embedded images on startup
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 (add-hook 'org-mode-hook 'org-display-inline-images)
 (add-hook 'org-mode-hook 'org-babel-result-hide-all)
@@ -536,20 +536,20 @@ When we're using a GUI emacs we can display embedded images on startup
 
 When exporting to HTML change check boxes into actual HTML check boxes.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-html-checkbox-type 'html)
 #+END_SRC
 
 I use =ditaa= for block diagrams. This executes a java program and needs to know where to find the jar.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
 
 I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
 the screen.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-image-actual-width 800)
 #+END_SRC
 
@@ -557,7 +557,7 @@ I've been using a single TODO list file and using org-capture to capture todo it
 tends to happen at home rather than at work as my work org files contain appropriate TODOs arranged by date headers. At
 home and in my blog I can capture TODO items and put them in this directory.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (if (file-exists-p "~/Dropbox/life/life.org")
   (setq org-default-notes-file "~/Dropbox/life/life.org")
   (setq org-default-notes-file "~/repositories/notes/notes.org")
@@ -568,13 +568,13 @@ home and in my blog I can capture TODO items and put them in this directory.
 
 Customise the colours of TODO task priority indicators:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-priority-faces '((?A :foreground "dark orange") (?B :foreground "tomato") (?C :foreground "firebrick")))
 #+END_SRC
 
 I would like a custom agenda view that shows me unscheduled TODO tasks:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-agenda-custom-commands
       '(("c" . "My Custom Agendas")
         ("cu" "Unscheduled TODO"
@@ -587,19 +587,16 @@ I would like a custom agenda view that shows me unscheduled TODO tasks:
 
 We'll also make the agenda view appear in the current window, not in a right split. It messes up existing splits.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq org-agenda-window-setup 'current-window)
 #+END_SRC
-
-#+RESULTS:
-: current-window
 
 TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
 is a HUGE wealth of information here.
 *** Agenda notifications
 [[https://github.com/groksteve/org-alert][org-alert]] allows showing system notifications when agenda alerts are coming up.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package org-alert
   :ensure t
   :init
@@ -609,17 +606,13 @@ is a HUGE wealth of information here.
   (org-alert-enable)
 )
 #+END_SRC
-
-#+RESULTS:
-: t
-
 ** Emoji
 I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in
 interactive buffers.
 
 Example: :)
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package emojify
   :ensure t
   :init
@@ -630,7 +623,7 @@ The =org-bullets= package allows pretty unicode bullet points.
 
 These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package org-bullets
   :ensure t
   :init
@@ -644,7 +637,7 @@ I use a package called [[https://github.com/dfeich/org-screenshot][org-attach-sc
 section of the screen to insert, where it uses =org-attach= to save it, embeds it at the cursor position, and calls
 =org-redisplay-inline-images=. This is great for capturing issues at work.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package org-attach-screenshot
   :ensure t
   :bind
@@ -675,7 +668,7 @@ purposes. Everybody likes cool statistics. To do this I define a custom HTML exp
 HTML export. It includes a translation function that calls the default HTML template renderer then uses string
 manipulation to insert the Google Analytics code at the end of the =<body>= tag.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (defun mfoot-append-google-analytics-tag (template info)
   "Appends my Google Analytics script segment to the body"
   (let ((html-template (org-html-template template info)))
@@ -705,8 +698,8 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
   (plist filename pub-dir)
   "Export current buffer to an blog HTML file"
   (let* ((extension (concat "." org-html-extension))
-	 (org-export-coding-system org-html-coding-system))
-   (org-publish-org-to 'mfoot-html-with-google-analytics filename extension plist pub-dir)))
+    (org-export-coding-system org-html-coding-system))
+    (org-publish-org-to 'mfoot-html-with-google-analytics filename extension plist pub-dir)))
 
 (setq org-publish-project-alist
   '(
@@ -769,7 +762,7 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
 In addition, I need to install the =htmlize= package to provide syntax highlighting when exporting HTML. See [[http://stackoverflow.com/questions/24082430/org-mode-no-syntax-highlighting-in-exported-html-page][here]] for more
 information.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package htmlize
   :ensure t
 )
@@ -781,7 +774,7 @@ my images on my blog are hosted under =/images=, emacs will generate =file:///im
 following allows me to use =img:../images/2015/11/photo.png= as an image reference and have both emacs and the html
 generator generate the correct paths. This is modified from [[http://stackoverflow.com/a/14841597][this StackOverflow answer]].
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (defun org-custom-link-img-follow (path)
   (org-open-file-with-emacs
    (format "../images/%s" path)))
@@ -798,20 +791,20 @@ TODO: Write some notes on how I publish this to S3 with s3-website. I always for
 history.
 * Window navigation and scrolling
 Scroll smoothly rather than by paging
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq scroll-step 1)
 #+END_SRC
 
 When the cursor moves past the top or bottom of the window, scroll one line at a time rather than jumping. I don't like
 having to find my place in the file again.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq scroll-conservatively 10000)
 #+END_SRC
 
 Add vim-like navigation between panes in a window using windmove.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (windmove-default-keybindings)
 (global-set-key (kbd "C-c <left>") 'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
@@ -822,7 +815,7 @@ Add vim-like navigation between panes in a window using windmove.
 I use [[https://github.com/abo-abo/avy][avy-mode]] for fast buffer navigation. As I use =evil-mode= I've bound =gc= to goto-char and =gl= to goto-line. This makes
 for some really fast navigation of the visible buffer.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package avy
   :ensure t
   :init (progn
@@ -838,12 +831,12 @@ for some really fast navigation of the visible buffer.
 * Reloading files
 I swap branches a lot. =auto-reload-mode= will automatically reload opened buffers (prompting to save or not)
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (global-auto-revert-mode t)
 #+END_SRC
 * Programming language support
 I use flycheck mode for syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package flycheck
   :ensure t
   :init
@@ -854,7 +847,7 @@ I use flycheck mode for syntax highlighting and linting when programming. See ht
 ** YAML
 Add a major mode for yaml highlighting
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package yaml-mode
   :ensure t
 )
@@ -862,14 +855,14 @@ Add a major mode for yaml highlighting
 ** C
 At work we use BSD-style C/C++. We also set the default indentation to four spaces.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
 #+END_SRC
 ** Go
 I've just started learning about Go so this is very basic. Enough to run through the tutorials.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package go-mode
   :ensure t
 )
@@ -884,7 +877,7 @@ I've just started learning about Go so this is very basic. Enough to run through
 When doing web development, SCSS is really useful. We use [[https://github.com/antonj/scss-mode][scss-mode]] for this. By default hitting tab will insert four
 spaces. We'll modify this to use two in the same format that Twitter's Bootstrap library uses.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package scss-mode
   :ensure t
   :config
@@ -899,7 +892,7 @@ spaces. We'll modify this to use two in the same format that Twitter's Bootstrap
 I use [[http://company-mode.github.io/][company-mode]] for autocompletion. It's bound to =C-<space>= in a similar way to eclipse. Since I use =evil-mode= I
 don't use emacs' default mark combo.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package company
   :ensure t
   :init
@@ -933,7 +926,7 @@ don't use emacs' default mark combo.
 * TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (set-face-attribute 'default nil :height 90)
 
 (tool-bar-mode -1)
@@ -949,7 +942,7 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 All of the packages that I use get automatically installed. First we define ~required-packages~ and then a function that
 iterates over all of them, installing each one. My =~/.emacs= configures [[https://melpa.org/][Melpa]] and [[https://marmalade-repo.org/][Marmalade]] before this gets executed.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (defvar required-packages
   '(
     ;; https://github.com/benprew/flymake-puppet
@@ -1028,7 +1021,7 @@ machine. Use =bash= when connecting to a remote host.
 TODO: This sets my local shell also. I don't really use =M-x shell= yet, but if I move further into the "everything inside
 emacs" way, something like [[https://github.com/bbatsov/projectile/issues/921][this]] (with hostname-specificity removed) might be useful.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (setq shell-file-name "/bin/bash")
 #+END_SRC
 * Themes and visual config
@@ -1037,7 +1030,7 @@ emacs" way, something like [[https://github.com/bbatsov/projectile/issues/921][t
 Emacs requires used themes to be whitelisted. This section contains all of the hash identifiers of themes I'm OK with
 loading.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (custom-set-variables
 '(custom-safe-themes
    (quote
@@ -1052,7 +1045,7 @@ Smart Mode Line is a sexy mode-line for Emacs. It aims to be easy to read from s
 a prefix feature, and smart truncation.
 #+END_QUOTE
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
   (use-package smart-mode-line
     :ensure t
     :config
@@ -1077,7 +1070,7 @@ a prefix feature, and smart truncation.
 is an emacs wrapper of Tim Pope's [[https://github.com/tpope/vim-surround][vim-surround]] plugin. [[https://github.com/krisajenkins/evil-tabs][Evil-tabs]] is an emacs mode that allows tabs with vim's tab
 keybindings.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package evil
   :ensure t
   :config (evil-mode) ; Enable evil mode globally
@@ -1096,7 +1089,7 @@ keybindings.
 
 By default emacs doesn't tab indent to the current level when you hit return. Move to vim style.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
   (define-key global-map (kbd "RET") 'newline-and-indent)
 #+END_SRC
 ** Projectile
@@ -1105,16 +1098,17 @@ project level without introducing external dependencies(when feasible). For inst
 portable implementation written in pure Emacs Lisp without the use of GNU find (but for performance sake an indexing
 mechanism backed by external commands exists as well).
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package projectile
   :ensure t
-  :config (projectile-global-mode)		  ; Enable projectile everywhere
+  :config
+  (projectile-global-mode)
 )
 #+END_SRC
 
 I use =helm-projectile-ag= quite a lot which requires the =ag= package.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package ag
   :ensure t
 )
@@ -1123,7 +1117,7 @@ I use =helm-projectile-ag= quite a lot which requires the =ag= package.
 Sometimes I need to see the directory structure for the current file. The [[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable
 pane that will pop up and disappear with the =F8= key.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package neotree
   :ensure t
   :bind
@@ -1138,7 +1132,7 @@ pane that will pop up and disappear with the =F8= key.
 direction when you're looking for stuff in Emacs (like buffers, files, etc). It's awesome when combined with
 [[http://tuhdo.github.io/helm-projectile.html][helm-projectile]] for jumping around projects and finding files within them.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package helm
   :ensure t
   :init (progn
@@ -1161,7 +1155,7 @@ direction when you're looking for stuff in Emacs (like buffers, files, etc). It'
 
 Use [[https://github.com/yasuyk/helm-git-grep][helm-git-grep]] for fast searches within the current git directory.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package helm-git-grep
   :ensure t
   :config
@@ -1178,7 +1172,7 @@ typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in 
 
 http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package anzu
   :ensure t
   :init (global-anzu-mode)
@@ -1199,7 +1193,7 @@ div.example {
 
 This is enabled globally:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package rainbow-mode
   :ensure t
   :config
@@ -1210,7 +1204,7 @@ This is enabled globally:
 ** Coffee mode
 Major mode for editing CoffeeScript files.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package coffee-mode
   :ensure t
   :config (setq coffee-tab-width 2)
@@ -1224,14 +1218,14 @@ Major mode for editing CoffeeScript files.
 #+END_SRC
 
 ** Docker
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package docker :ensure t)
 (use-package dockerfile-mode :ensure t)
 #+END_SRC
 ** Ruby configuration
 Provide a =ruby-mode= for editing ruby files.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package enh-ruby-mode
   :ensure t
   :mode "\\.rb\\'"
@@ -1242,7 +1236,7 @@ Provide a =ruby-mode= for editing ruby files.
 
 I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is very useful.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package rspec-mode
   :ensure t
   :config
@@ -1262,7 +1256,7 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 
 [[https://github.com/rejeep/ruby-end.el][ruby-end]] inserts =end= blocks whenever I type =do= automatically.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package ruby-end
   :ensure t
 )
@@ -1270,7 +1264,7 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 
 The following allows using =binding.pry= in =rspec-mode=.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package inf-ruby
   :ensure t
   :init
@@ -1289,7 +1283,7 @@ The following allows using =binding.pry= in =rspec-mode=.
 #+END_SRC
 
 ** CMake
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package cmake-mode
   :ensure t
 )
@@ -1298,7 +1292,7 @@ The following allows using =binding.pry= in =rspec-mode=.
 I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax
 checking for known languages. Some languages also provide linting as well via flycheck.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (flycheck-mode)))
 #+END_SRC
 * Spell checking
@@ -1308,7 +1302,7 @@ the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-w
 
 I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGIN_SRC..END_SRC= blocks.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode)))
 (add-hook 'text-mode-hook (lambda () (flyspell-mode)))
 
@@ -1324,7 +1318,7 @@ I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGI
 * Presenting
 I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presentations.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (use-package ox-reveal
   :ensure t
   :defer t
@@ -1336,7 +1330,7 @@ I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presenta
 * TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
  (use-package yasnippet
    :ensure t
    :config (yas-global-mode 1)
@@ -1346,7 +1340,7 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 This section holds configuration from before I moved to using =org-babel= (i.e. it lived directly inside =~/.emacs=). It is
 here just because I haven't had the time or the impetus to categorise and document it.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 ;(add-hook 'projectile-mode-hook 'projectile-custom-hook)
 ;(add-hook 'helm-projectile-mode-hook 'projectile-custom-hook)
 
