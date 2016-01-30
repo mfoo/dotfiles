@@ -1371,9 +1371,12 @@ here just because I haven't had the time or the impetus to categorise and docume
 
 (add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
 
-;; Things that are not in melpa
-(add-to-list 'load-path "~/Dropbox/lisp/")
-(require 'flymake-easy)
+;;; Things that are not in melpa
+; NOTE: flymake-easy now is in melpa. What am I using that requires it? Is it one of the linters? Does it come in as a dependency? Check if this works without it.
+;(add-to-list 'load-path "~/Dropbox/lisp/")
+;(require 'flymake-easy)
 
 (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
 #+END_SRC
+
+#  LocalWords:  whitespace
