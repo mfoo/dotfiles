@@ -312,7 +312,7 @@ I also don't like seeing tabs mixed with spaces. This section needs some work ho
 need to customise the faces that =whitespace-mode= uses.
 
 #+BEGIN_SRC emacs-lisp
-(setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode #+END_SRC
+(setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode
 #+END_SRC
 ** Default emacs backspace behaviour
 I despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number of
