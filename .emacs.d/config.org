@@ -377,7 +377,7 @@ Highlighting colours for whitespace
   :bind ("C-=" . er/expand-region)
 )
 #+END_SRC
-* IN_PROGRESS Org Mode
+* Org Mode
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
 more things it became larger and larger and I had to split it into subcategories.
 ** Key bindings
@@ -491,14 +491,8 @@ Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
 (setq org-pretty-entities t)
 #+END_SRC
 
-In =org-mode= we can use:
-- \=fixed\= for fixed-width (=example=)
-- \~code\~ for code (~example~)
-- \*bold\* for bold (*example*)
-- \/italics\/ for emphasis (/example/)
-- \_underline\_ for underline (_example_)
-
-When a block of text has some emphasis on it, get emacs to hide the markup characters:
+In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some
+emphasis on it, get emacs to hide the markup characters:
 
 #+BEGIN_SRC emacs-lisp
 (setq org-hide-emphasis-markers t)
@@ -592,8 +586,6 @@ I would like a custom agenda view that shows me unscheduled TODO tasks:
          nil
          nil)))
 #+END_SRC
-
-#+RESULTS:
 
 We'll also make the agenda view appear in the current window, not in a right split. It messes up existing splits.
 
@@ -690,7 +682,7 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
   "Appends my Google Analytics script segment to the body"
   (let ((html-template (org-html-template template info)))
     (let ((pos (string-match (regexp-quote "</body>") html-template)))
-      (concat (substring html-template 0 (+ 7 pos))
+      (concat (substring html-template 0 pos)
         "<script type=\"text/javascript\">
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -701,7 +693,7 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
           ga('send', 'pageview');
 
         </script>"
-        (substring html-template (+ 7 pos))))))
+        (substring html-template pos)))))
 
 (require 'ox-html)
 (org-export-define-derived-backend 'mfoot-html-with-google-analytics 'html
@@ -713,10 +705,10 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
 
 (defun mfoot-export-emacs-config-to-file
   (plist filename pub-dir)
-  "Export current buffer to an blog HTML buffer."
+  "Export current buffer to an blog HTML file"
   (let* ((extension (concat "." org-html-extension))
 	 (org-export-coding-system org-html-coding-system))
-   (org-publish-org-to 'mfoot-html-with-google-analytics filename ".html" plist pub-dir)))
+   (org-publish-org-to 'mfoot-html-with-google-analytics filename extension plist pub-dir)))
 
 (setq org-publish-project-alist
   '(
@@ -1353,6 +1345,9 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
  )
 #+END_SRC
 * TODO Other configuration
+This section holds configuration from before I moved to using =org-babel= (i.e. it lived directly inside =~/.emacs=). It is
+here just because I haven't had the time or the impetus to categorise and document it.
+
 #+BEGIN_SRC emacs-lisp
 ;(add-hook 'projectile-mode-hook 'projectile-custom-hook)
 ;(add-hook 'helm-projectile-mode-hook 'projectile-custom-hook)
