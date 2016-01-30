@@ -1330,7 +1330,7 @@ I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presenta
   :defer t
   :config
   (setq org-reveal-root (concat user-emacs-directory "org-reveal/reveal.js"))
-  (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal))
+  (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
 )
 #+END_SRC
 * TODO Code snippet handling
