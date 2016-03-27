@@ -9,6 +9,7 @@
 ;; a literate way.  See https://www.mfoot.com/static/emacs-config/config.html for the latest version of these settings.
 
 ;;; Code:
+
 (require 'org)
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 

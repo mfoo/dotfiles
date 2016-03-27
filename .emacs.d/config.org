@@ -322,7 +322,7 @@ spaces and inserts tab-width -1 spaces. This seems like an insane default.
 (setq backward-delete-char-untabify-method nil)
 #+END_SRC
 ** Tabs
-Change the default tab settings to use four spaces. This controls how big a tab appears inside emacs.
+Display tabs as four spaces:
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq-default tab-width 4)
@@ -341,6 +341,13 @@ Insert tabs by default when auto-formatting.
 #+BEGIN_SRC emacs-lisp :results none
 (setq-default indent-tabs-mode t)
 #+END_SRC
+
+=electric-indent-mode= is used to automatically indent a new line when RET is typed.
+
+#+BEGIN_SRC emacs-lisp :results none
+(electric-indent-mode)
+#+END_SRC
+
 ** TODO Highlighting font faces
 Highlighting colours for whitespace indicators:
 
@@ -377,7 +384,11 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 #+END_SRC
 * Org Mode
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
-more things it became larger and larger and I had to split it into subcategories.
+more things it became larger and larger and I had to split i    t into subcategories.
+
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+#+END_SRC
 ** Key bindings
 :LOGBOOK:
 - State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
@@ -593,19 +604,6 @@ We'll also make the agenda view appear in the current window, not in a right spl
 
 TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
 is a HUGE wealth of information here.
-*** Agenda notifications
-[[https://github.com/groksteve/org-alert][org-alert]] allows showing system notifications when agenda alerts are coming up.
-
-#+BEGIN_SRC emacs-lisp :results none
-(use-package org-alert
-  :ensure t
-  :init
-  (setq alert-default-style 'libnotify)
-  (setq org-alert-notificatoin-title "Org Agenda Notification")
-  :config
-  (org-alert-enable)
-)
-#+END_SRC
 ** Emoji
 I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in
 interactive buffers.
@@ -644,6 +642,17 @@ section of the screen to insert, where it uses =org-attach= to save it, embeds i
   (("C-c S" . org-attach-screenshot))
 )
 #+END_SRC
+** Presentations
+I use =org-reveal= for HTML/JS presentations.
+
+TODO: Get org-reveal installed.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/org-reveal/")
+(setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
+(add-hook 'org-mode-hook (lambda () (load-library "ox-reveal")))
+#+END_SRC
+
 * Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
@@ -881,10 +890,11 @@ spaces. We'll modify this to use two in the same format that Twitter's Bootstrap
 (use-package scss-mode
   :ensure t
   :config
-  (setq css-indent-offset 2)
-  (setq tab-width 2) ; Use two spaces for indents
-  (setq tab-always-indent nil) ; electric-indent-mode will insert tabs otherwise to minimise whitespace characters
-  (setq indent-tabs-mode nil) ; Always use spaces for scss
+  (add-hook 'scss-mode-hook (lambda () (
+    (setq css-indent-offset 2)
+    (setq tab-always-indent nil) ; electric-indent-mode will insert tabs otherwise to minimise whitespace characters
+    (setq indent-tabs-mode nil) ; Always use spaces for scss
+  )))
 )
 #+END_SRC
 
@@ -923,6 +933,17 @@ don't use emacs' default mark combo.
 )
 #+END_SRC
 
+* Git
+[[https://github.com/magit/magit][Magit]] is awesome. It's git integration with emacs and it's incredibly well made. Taking the time to learn it is highly
+advised.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package magit
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status)
+)
+#+END_SRC
 * TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
@@ -1089,8 +1110,10 @@ keybindings.
 
 By default emacs doesn't tab indent to the current level when you hit return. Move to vim style.
 
+Note: actually electric-indent-mode is used for this.
+
 #+BEGIN_SRC emacs-lisp :results none
-  (define-key global-map (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "RET") 'newline-and-indent)
 #+END_SRC
 ** Projectile
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to provide a nice set of features operating on a
@@ -1318,15 +1341,15 @@ I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGI
 * Presenting
 I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presentations.
 
-#+BEGIN_SRC emacs-lisp :results none
-(use-package ox-reveal
-  :ensure t
-  :defer t
-  :config
-  (setq org-reveal-root (concat user-emacs-directory "org-reveal/reveal.js"))
-  (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
-)
-#+END_SRC
+##+BEGIN_SRC emacs-lisp :results none
+#(use-package ox-reveal
+#  :ensure t
+#  :defer t
+#  :config
+#  (setq org-reveal-root (concat user-emacs-directory "reveal-js/reveal.js"))
+#  (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
+#)
+##+END_SRC
 * TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
