@@ -384,7 +384,7 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 #+END_SRC
 * Org Mode
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
-more things it became larger and larger and I had to split i    t into subcategories.
+more things it became larger and larger and I had to split it into subcategories.
 
 #+BEGIN_SRC emacs-lisp
 (require 'org)
@@ -1067,23 +1067,20 @@ a prefix feature, and smart truncation.
 #+END_QUOTE
 
 #+BEGIN_SRC emacs-lisp :results none
-  (use-package smart-mode-line
-    :ensure t
-    :config
-    (progn
-      (setq sml/no-confirm-load-theme t)
-      (setq sml/theme 'powerline)
-      (sml/setup)
-    )
-  )
+(use-package solarized-theme
+  :ensure t
+  :init (load-theme 'solarized-dark)
+)
 
-  (use-package smart-mode-line-powerline-theme
-    :ensure t
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (progn
+    (setq sml/no-confirm-load-theme t)
+    (setq sml/theme 'solarized)
+    (sml/setup)
   )
-
-  (use-package solarized-theme
-    :ensure t
-    :init (load-theme 'solarized-dark))
+)
 #+END_SRC
 * Editor augmentation
 ** Vim customisations
