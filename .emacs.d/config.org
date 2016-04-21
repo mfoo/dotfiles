@@ -1080,19 +1080,18 @@ Smart Mode Line is a sexy mode-line for Emacs. It aims to be easy to read from s
 a prefix feature, and smart truncation.
 #+END_QUOTE
 
+This is customised to use the =solarized= theme.
+
 #+BEGIN_SRC emacs-lisp :results none
 (use-package solarized-theme
-  :ensure t
-  :init (load-theme 'solarized-dark)
-)
-
-(use-package smart-mode-line
-  :ensure t
-  :config
-  (progn
-    (setq sml/no-confirm-load-theme t)
-    (setq sml/theme 'solarized)
-    (sml/setup)
+  :init
+  (load-theme 'solarized-dark)
+  (use-package smart-mode-line
+    :config
+    (progn
+      (setq sml/no-confirm-load-theme t)
+      (sml/setup)
+    )
   )
 )
 #+END_SRC
