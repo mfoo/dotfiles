@@ -87,12 +87,38 @@ Then, since I use ~use-package~ for every package from the repositories, initial
   (package-install 'use-package))
 
 (eval-when-compile
-  (require 'use-package))
+  (setq use-package-always-ensure t)
+  (require 'use-package)
+)
 #+END_SRC
+
+=use-package= has support for removing minor modes from the bottom. This requires the =diminish= package.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package diminish)
+#+END_SRC
+* Startup time benchmarking
+It's possible to benchmark startup time in emacs. This is useful if evaluating this gets too slow. I keep these lines
+commented as it's not something I do generally. It also isn't safe to run on every machine since the =benchmark-init-el=
+package needs to be downloaded manually.
+
+#+BEGIN_SRC emacs-lisp :results none
+;(add-to-list 'load-path "/home/martinfoot/repositories/benchmark-init-el/")
+;(require 'benchmark-init-loaddefs)
+;(benchmark-init/activate)
+#+END_SRC
+* Load path
+TODO: Fix this!
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/org-mode/lisp/")
+#+END_SRC
+
 * User information
 #+BEGIN_SRC emacs-lisp :results none
-(setq user-full-name "Martin Foot"
-      user-mail-address "martin@mfoot.com")
+;(setq user-full-name "Martin Foot"
+;      user-mail-address "martin@mfoot.com")
+(setq user-full-name ""
+      user-mail-address "")
 #+END_SRC
 * Parentheses
 Use =electric-pair-mode= to automatically close inserted parentheses and braces. I don't have this enabled in text modes
@@ -113,7 +139,6 @@ Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rainbow-delimiters
-  :ensure t
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 )
@@ -139,7 +164,6 @@ I also like to highlight git changes in buffers in a git repository:
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package git-gutter+
-  :ensure t
   :config
   (global-git-gutter+-mode)
 )
@@ -149,7 +173,6 @@ When working with structured code it's nice to have an indentation guide.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package indent-guide
-  :ensure t
   :config
   (add-hook 'prog-mode-hook (lambda () (indent-guide-mode)))
 )
@@ -167,7 +190,6 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package which-key
-  :ensure t
   :diminish which-key-mode
   :init
   (setq which-key-idle-delay 0.5)
@@ -267,7 +289,6 @@ Let's also show a fortune message in the scratch buffer when we start emacs:
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package fortune-cookie
-  :ensure t
   :config
   (setq fortune-cookie-cowsay-enable nil) ; Disable cowsay
   (fortune-cookie-mode)                   ; Enable fortune cookie mode
@@ -377,7 +398,6 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package expand-region
-  :ensure t
   :defer t
   :bind ("C-=" . er/expand-region)
 )
@@ -612,23 +632,29 @@ Example: :)
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package emojify
-  :ensure t
   :init
   (add-hook 'org-mode-hook 'emojify-mode))
 #+END_SRC
 ** Improved bullet point styles
+*** Section headers
 The =org-bullets= package allows pretty unicode bullet points.
 
 These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package org-bullets
-  :ensure t
   :init
   (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
-  :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
+#+END_SRC
+*** Bullet point lists
+For bullet lists, I use a slightly modified (removed =*= chars) versino of Howard Abrams' [[http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html][Better bullets]] changes.
+
+#+BEGIN_SRC emacs-lisp
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\(-\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+END_SRC
 ** Screenshot attachment
 I use a package called [[https://github.com/dfeich/org-screenshot][org-attach-screenshot]] which is awesome. Calling the function hides emacs and allows you to grab a
@@ -637,7 +663,6 @@ section of the screen to insert, where it uses =org-attach= to save it, embeds i
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package org-attach-screenshot
-  :ensure t
   :bind
   (("C-c S" . org-attach-screenshot))
 )
@@ -772,9 +797,7 @@ In addition, I need to install the =htmlize= package to provide syntax highlight
 information.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package htmlize
-  :ensure t
-)
+(use-package htmlize)
 #+END_SRC
 
 In order to get images to work both inside emacs and inside the generated output I need to register a custom image
@@ -826,11 +849,8 @@ for some really fast navigation of the visible buffer.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package avy
-  :ensure t
   :init (progn
-    (use-package evil
-      :ensure t
-    )
+    (use-package evil)
   )
   :config
   (define-key evil-normal-state-map (kbd "gc") 'avy-goto-char)
@@ -847,7 +867,6 @@ I swap branches a lot. =auto-reload-mode= will automatically reload opened buffe
 I use flycheck mode for syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
 #+BEGIN_SRC emacs-lisp :results none
 (use-package flycheck
-  :ensure t
   :init
   (add-hook 'prog-mode-hook (lambda () (flycheck-mode)))
 )
@@ -857,9 +876,7 @@ I use flycheck mode for syntax highlighting and linting when programming. See ht
 Add a major mode for yaml highlighting
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package yaml-mode
-  :ensure t
-)
+(use-package yaml-mode)
 #+END_SRC
 ** C
 At work we use BSD-style C/C++. We also set the default indentation to four spaces.
@@ -872,9 +889,7 @@ At work we use BSD-style C/C++. We also set the default indentation to four spac
 I've just started learning about Go so this is very basic. Enough to run through the tutorials.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package go-mode
-  :ensure t
-)
+(use-package go-mode)
 
 (setenv "GOPATH" "~/go")
 
@@ -888,7 +903,6 @@ spaces. We'll modify this to use two in the same format that Twitter's Bootstrap
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package scss-mode
-  :ensure t
   :config
   (add-hook 'scss-mode-hook (lambda () (
     (setq css-indent-offset 2)
@@ -904,10 +918,8 @@ don't use emacs' default mark combo.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package company
-  :ensure t
   :init
   (use-package helm-company
-    :ensure t
     :config
     (define-key company-mode-map (kbd "C-SPC") 'helm-company)
     (define-key company-active-map (kbd "C-SPC") 'helm-company)
@@ -939,7 +951,6 @@ advised.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package magit
-  :ensure t
   :config
   (global-set-key (kbd "C-x g") 'magit-status)
 )
@@ -1090,17 +1101,14 @@ keybindings.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package evil
-  :ensure t
   :config (evil-mode) ; Enable evil mode globally
 )
 
 (use-package evil-surround
-  :ensure t
   :config (global-evil-surround-mode t)
 )
 
 (use-package evil-tabs
-  :ensure t
   :config (global-evil-tabs-mode t)
 )
 #+END_SRC
@@ -1120,7 +1128,6 @@ mechanism backed by external commands exists as well).
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package projectile
-  :ensure t
   :config
   (projectile-global-mode)
 )
@@ -1139,7 +1146,6 @@ pane that will pop up and disappear with the =F8= key.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package neotree
-  :ensure t
   :bind
   ([f8] . neotree-toggle)
 )
@@ -1154,21 +1160,17 @@ direction when you're looking for stuff in Emacs (like buffers, files, etc). It'
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package helm
-  :ensure t
   :init (progn
     (require 'helm-config)
     (use-package helm-projectile
-      :ensure t
       :commands helm-projectile
     )
-    (use-package helm-ag :ensure t)
+    (use-package helm-ag)
     (helm-mode 1)
-    ;;(require 'helm-ls-git)
-    ;(setq projectile-completion-system 'helm) ; Use helm as the projectile completion system
-    ;; Enable Helm completion and suggestions
-    (helm-autoresize-mode 1)
   )
-  :bind ("M-x" . helm-M-x)
+  :bind
+  ("M-x" . helm-M-x)
+  ("C-x b" . helm-mini)
   :config (setq projectile-completion-system 'helm)
 )
 #+END_SRC
@@ -1177,7 +1179,6 @@ Use [[https://github.com/yasuyk/helm-git-grep][helm-git-grep]] for fast searches
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package helm-git-grep
-  :ensure t
   :config
   (global-set-key (kbd "C-c g") 'helm-git-grep)
 )
@@ -1194,7 +1195,6 @@ http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package anzu
-  :ensure t
   :init (global-anzu-mode)
   :bind (
     ("M-%" . anzu-query-replace)
@@ -1215,7 +1215,6 @@ This is enabled globally:
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rainbow-mode
-  :ensure t
   :config
   (rainbow-mode)
   (add-hook 'scss-mode-hook (lambda () (rainbow-mode)))
@@ -1226,12 +1225,10 @@ Major mode for editing CoffeeScript files.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package coffee-mode
-  :ensure t
   :config (setq coffee-tab-width 2)
 )
 
 (use-package flymake-coffee
-  :ensure t
   :init
   (add-hook 'coffee-mode-hook 'flymake-coffee-load)
 )
@@ -1239,15 +1236,14 @@ Major mode for editing CoffeeScript files.
 
 ** Docker
 #+BEGIN_SRC emacs-lisp :results none
-(use-package docker :ensure t)
-(use-package dockerfile-mode :ensure t)
+(use-package docker)
+(use-package dockerfile-mode)
 #+END_SRC
 ** Ruby configuration
 Provide a =ruby-mode= for editing ruby files.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package enh-ruby-mode
-  :ensure t
   :mode "\\.rb\\'"
   :config
   (setq enh-ruby-deep-indent-paren nil) ; Don't indent ruby function parameters at column index of function parentheses
@@ -1258,7 +1254,6 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rspec-mode
-  :ensure t
   :config
   (setq rspec-use-rake-when-possible nil)
   (setq rspec-use-bundler-when-possible t)
@@ -1277,16 +1272,13 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 [[https://github.com/rejeep/ruby-end.el][ruby-end]] inserts =end= blocks whenever I type =do= automatically.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package ruby-end
-  :ensure t
-)
+(use-package ruby-end)
 #+END_SRC
 
 The following allows using =binding.pry= in =rspec-mode=.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package inf-ruby
-  :ensure t
   :init
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   :bind
@@ -1294,7 +1286,6 @@ The following allows using =binding.pry= in =rspec-mode=.
 )
 
 (use-package robe
-  :ensure t
   :init
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
   :config
@@ -1304,9 +1295,7 @@ The following allows using =binding.pry= in =rspec-mode=.
 
 ** CMake
 #+BEGIN_SRC emacs-lisp :results none
-(use-package cmake-mode
-  :ensure t
-)
+(use-package cmake-mode)
 #+END_SRC
 * Syntax highlighting and static analysis
 I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax
@@ -1352,7 +1341,6 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
 
 #+BEGIN_SRC emacs-lisp :results none
  (use-package yasnippet
-   :ensure t
    :config (yas-global-mode 1)
  )
 #+END_SRC
