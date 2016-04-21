@@ -202,9 +202,12 @@ I enable line numbers globally and enable the cursor position being shown in the
 numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
 sense.
 
+This uses the [[http://elpa.gnu.org/packages/nlinum.html][nlinum-mode]], which is a more performant version of the built-in =linum-mode=. This is necessary when
+working on large files such as my org-mode notes files.
+
 #+BEGIN_SRC emacs-lisp :results none
-(add-hook 'text-mode-hook 'linum-mode)
-(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'text-mode-hook 'nlinum-mode)
+(add-hook 'prog-mode-hook 'nlinum-mode)
 (setq linum-format "%d ") ; Place a space after the line numbers so text doesn't begin instantly
 #+END_SRC
 
