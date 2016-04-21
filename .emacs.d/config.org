@@ -1138,8 +1138,19 @@ mechanism backed by external commands exists as well).
 I use =helm-projectile-ag= quite a lot which requires the =ag= package.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package ag
-  :ensure t
+(use-package ag)
+#+END_SRC
+** Recentf mode
+As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows recently opened files in the buffer list for fast
+switching to them.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package recentf
+  :diminish
+  :config
+  (recentf-mode)
+  :bind
+  ("C-x C-r" . recentf-open-files)
 )
 #+END_SRC
 ** Neotree
