@@ -409,9 +409,10 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
 more things it became larger and larger and I had to split it into subcategories.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results none
 (require 'org)
 #+END_SRC
+
 ** Key bindings
 :LOGBOOK:
 - State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
@@ -723,13 +724,17 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
         </script>"
         (substring html-template pos)))))
 
-(require 'ox-html)
-(org-export-define-derived-backend 'mfoot-html-with-google-analytics 'html
-  :translate-alist
-  '(
-    (template . mfoot-append-google-analytics-tag)
-  )
-)
+;(eval-after-load "org"
+;  '(progn
+;    (require 'ox-html)
+;    (org-export-define-derived-backend 'mfoot-html-with-google-analytics 'html
+;      :translate-alist
+;      '(
+;        (template . mfoot-append-google-analytics-tag)
+;      )
+;    )
+;  )
+;)
 
 (defun mfoot-export-emacs-config-to-file
   (plist filename pub-dir)
