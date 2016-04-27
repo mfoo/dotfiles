@@ -198,18 +198,9 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
 #+END_SRC
 
 * Line numbering and cursor position
-I enable line numbers globally and enable the cursor position being shown in the bottom left. Note: Enabling line
-numbers globally is not perfect as it includes things like lists of files when using =C-x f=. This doesn't really make
-sense.
-
-This uses the [[http://elpa.gnu.org/packages/nlinum.html][nlinum-mode]], which is a more performant version of the built-in =linum-mode=. This is necessary when
-working on large files such as my org-mode notes files.
-
-#+BEGIN_SRC emacs-lisp :results none
-(add-hook 'text-mode-hook 'nlinum-mode)
-(add-hook 'prog-mode-hook 'nlinum-mode)
-(setq linum-format "%d ") ; Place a space after the line numbers so text doesn't begin instantly
-#+END_SRC
+I've had a slight change of heart. Typically I would show line numbers everywhere, but now, instead, I leave them turned
+off to save space. If I need to jump to a specific line, I'm using Avy mode to enable =g l= for go to line. This is just
+as fast. See my [[file:config.org::*Window navigation and scrolling][Window navigation and scrolling section]].
 
 I also show the current cursor position column number in the bottom left of the screen:
 
@@ -681,13 +672,12 @@ TODO: Get org-reveal installed.
 (setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
 (add-hook 'org-mode-hook (lambda () (load-library "ox-reveal")))
 #+END_SRC
-
 * Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
 posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll
 understands. I can then run Jekyll normally and it will take these org-published files and convert them into the static
-website. The configuration here is based on [[ http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
+website. The configuration here is based on [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
 trying to understand this. I've adapted it slightly to work with the latest =org-mode= (the publishing functions changed
 name). I've also added an third part of the project that handles exporting this org mode config file into a
 =/static/emacs-config= directory. Whenever I run ~org-publish-all~ the latest version of the config file gets pulled in and
@@ -977,7 +967,13 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 
 
 #+END_SRC
+** Mouse support for terminals
+Enable the mouse when running in a terminal.
 
+#+BEGIN_SRC emacs-lisp :results none
+(when (not (window-system))
+  (xterm-mouse-mode +1))
+#+END_SRC
 * TODO Package installation
 All of the packages that I use get automatically installed. First we define ~required-packages~ and then a function that
 iterates over all of them, installing each one. My =~/.emacs= configures [[https://melpa.org/][Melpa]] and [[https://marmalade-repo.org/][Marmalade]] before this gets executed.
@@ -1099,6 +1095,13 @@ This is customised to use the =solarized= theme.
     )
   )
 )
+#+END_SRC
+** Displaying the time
+Displaying the time in the bottom right of the mode line is useful. This displays the time, system load over the last
+minute, and if I have new emails.
+
+#+BEGIN_SRC emacs-lisp :results none
+(display-time-mode 1)
 #+END_SRC
 * Editor augmentation
 ** Vim customisations
@@ -1314,6 +1317,14 @@ The following allows using =binding.pry= in =rspec-mode=.
 ** CMake
 #+BEGIN_SRC emacs-lisp :results none
 (use-package cmake-mode)
+#+END_SRC
+
+** MySQL
+Emacs has a built-in MySQL client. When using it, I want to disable line wrapping. I can use standard text navigation
+features to see what I need ([[https://zeekat.nl/articles/making-emacs-work-for-me.html][source]]).
+
+#+BEGIN_SRC emacs-lisp :results none
+(add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
 #+END_SRC
 * Syntax highlighting and static analysis
 I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax
