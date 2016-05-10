@@ -8,3 +8,4 @@ dist
 .vim/.netrwhist
 *#
 .emacs.d/recentf
+.emacs.d/bookmarks
