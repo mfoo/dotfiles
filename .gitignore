@@ -9,3 +9,6 @@ dist
 *#
 .emacs.d/recentf
 .emacs.d/bookmarks
+
+# These get downloaded by emacs on request
+.emacs.d/emojis
