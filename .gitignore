@@ -7,3 +7,4 @@ build
 dist
 .vim/.netrwhist
 *#
+.emacs.d/recentf
