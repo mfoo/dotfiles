@@ -1,0 +1,236 @@
+#+TITLE: Martin's Dotfiles
+#+AUTHOR: Martin Foot
+#+EMAIL: martin.foot@du.co
+#+STARTUP: indent
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+
+#+HTML_HEAD: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+#+HTML_HEAD: <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+
+#+STARTUP: overview
+#+STARTUP: indent
+#+STARTUP: inlineimages
+
+#+OPTIONS: toc:3
+#+OPTIONS: ^:nil
+
+I'm in the process of adding all of my dotfiles into this document.
+
+I have dotfiles for several applications, each in my dotfiles repository with a one-time setup task for new machines to
+symlink all the files from the repository. Recently I started using emacs and shortly after that I
+[[https://www.mfoot.com/blog/2015/11/22/literate-emacs-configuration-with-org-mode/][discovered org mode for my emacs configuration files]]. This document is the logical extension - it tracks all of my
+config files rather than just the emacs ones, using [[http://orgmode.org/manual/Extracting-source-code.html][org-babel's tangling feature]]. To set up a new machine, I clone my
+dotfiles repo, open this file and type =C-v t= (and the symlink =~/.emacs.d= for my emacs config).
+
+* Tmux
+
+I use tmux extensively for terminal multiplexing, preferring it to screen for everything except talking RS232 over
+serial ports.
+
+The following settings all end up in =~/.tmux.conf=.
+
+** Prefix key
+I set the prefix key to =C-a= a long time ago rather than =C-b= for screen compatibility, and have since gotten used to
+typing =C-a= twice if I want =C-a=. I don't recommend making this change if you're new to tmux.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+# Remap the prefix key to Control-a as in GNU Screen.
+set -g prefix C-a
+unbind C-b
+
+# Also allow us to send C-a to applications running in the shell through C-a
+# C-a.
+bind C-a send-prefix
+#+END_SRC
+
+** Vi keybindings
+I use vim a lot, so vim keybindings make sense. One less thing to remember.
+
+*** Pane navigation
+ #+BEGIN_SRC conf :tangle ~/.tmux.conf
+ bind h select-pane -L
+ bind j select-pane -D
+ bind k select-pane -U
+ bind l select-pane -R
+#+END_SRC
+
+*** Resizing windows
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+#+END_SRC
+
+** Multi-session handling
+Normally when you have attach a second tmux session it shrinks the window to the size of the smallest client.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+# Stop the session size from being constrained to that of the smallest
+# connected client
+setw -g aggressive-resize on
+#+END_SRC
+
+** Keypress rates
+If you hold down a key, set the amount of time before it starts writing multiple copies of that key to 1 second.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+set -sg escape-time 1
+#+END_SRC
+
+** Pane numbering
+ Set pane and window numbering to start at 1 rather than 0 since 0 is far away on the keyboard and I jump around by
+ pane/window number a lot.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+set -g base-index 1
+setw -g pane-base-index 1
+#+END_SRC
+
+** Custom function keybindings
+When testing new configuration settings it's handy to have =<prefix> r= bound to config reload.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+# Map Prefix r to reload the tmux conf for the current session, useful for
+# testing.
+bind r source-file ~/.tmux.conf
+#+END_SRC
+
+** Colours
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+set -g default-terminal screen-256color
+#+END_SRC
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+ #### COLOUR
+ # Solarized color scheme by Ethan Schoonover adapted to tmux settings by
+ # Sebastian Tramp (https://github.com/seebi/tmux-colors-solarized)
+
+ # default statusbar colors
+ set-option -g status-bg colour235 #base02
+ set-option -g status-fg colour136 #yellow
+ set-option -g status-attr default
+
+ # default window title colors
+ set-window-option -g window-status-fg colour244
+ set-window-option -g window-status-bg default
+ #set-window-option -g window-status-attr dim
+
+ # active window title colors
+ set-window-option -g window-status-current-fg colour166 #orange
+ set-window-option -g window-status-current-bg default
+ #set-window-option -g window-status-current-attr bright
+
+ # Set windows with activity to use bold fonts
+ set -g window-status-activity-attr bold
+
+ # pane border
+ set-option -g pane-border-fg colour235 #base02
+ set-option -g pane-active-border-fg colour240 #base01
+
+ # message text
+ set-option -g message-bg colour235 #base02
+ set-option -g message-fg colour166 #orange
+
+ # pane number display
+ set-option -g display-panes-active-colour colour33 #blue
+ set-option -g display-panes-colour colour166 #orange
+
+ # clock
+ set-window-option -g clock-mode-colour colour64 #green
+
+ # Use the proper shell, hopefully zsh
+ set-option -g default-shell $SHELL
+
+ # Ensure window splits open a new shell in the CWD
+ bind '"' split-window -c "#{pane_current_path}"
+ bind % split-window -h -c "#{pane_current_path}"
+ bind c new-window -c "#{pane_current_path}"
+ #+END_SRC
+
+
+** TODO Mouse Support
+ I disabled mouse support. I don't remember why I did this, presumably it caused problems with selection and
+ copy/paste. I should revisit this setting.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+set -g mode-mouse off
+#+END_SRC
+
+** Menu bar customisations
+ #+BEGIN_SRC conf :tangle ~/.tmux.conf
+ # Show the hostname in the left of the status window
+ set -g status-left "#h |"
+ set -g status-left-length 40
+ set -g status-justify centre
+
+ # Allow visual activity notifications from other windows in the session
+ setw -g monitor-activity on
+ set -g visual-activity on
+#+END_SRC
+
+
+** Unicode support
+ #+BEGIN_SRC conf :tangle ~/.tmux.conf
+ set -g status-utf8 on
+#+END_SRC
+
+* Rubygems
+This file defines parameters for rubygems. These settings all end up in =~/.gemrc=.
+
+#+BEGIN_SRC conf :tangle ~/.gemrc
+gem: --no-rdoc --no-ri --local-install
+#+END_SRC
+
+* Git
+This is the contents of =~/.gitconfig=
+
+#+BEGIN_SRC conf :tangle ~/.gitconfig
+[user]
+  name = Martin Foot
+  email = martin@mfoot.com
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[core]
+  autocrlf = false
+  editor = emacs
+  excludesfile = ~/.gitignore
+  whitespace = trailing-space,space-before-tab
+[advice]
+  statusHints = false
+[diff]
+  renames = copies
+[branch]
+  autosetupmerge = true
+[push]
+  default = current
+[rerere]
+  enabled = true
+[merge]
+  stat = true
+#+END_SRC
+
+* Bash
+
+** =~/.bash_profile=
+This file is nice and small. If just configures [[https:rvm.io][rvm]] if it is available and makes sure all the settings are the same as
+in an interactive bash shell.
+
+I'm fairly sure that sourcing =~/bashrc= from inside =~/.bash_profile= is a bad idea and an indication of an incorrectly
+configured terminal editor though.
+
+#+BEGIN_SRC conf :tangle ~/.bash_profile
+# Make sure to apply bash configurations to login shells
+source ~/.bashrc
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#+END_SRC
+
+** TODO =~/.bashrc=
