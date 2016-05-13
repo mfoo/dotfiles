@@ -944,6 +944,16 @@ don't use emacs' default mark combo.
 )
 #+END_SRC
 
+* Code folding
+I've discovered =yafolding-mode= for all my code folding needs.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package yafolding
+  :config
+  (add-hook 'prog-mode-hook (lambda()  (yafolding-mode)))
+)
+#+END_SRC
+
 * Git
 [[https://github.com/magit/magit][Magit]] is awesome. It's git integration with emacs and it's incredibly well made. Taking the time to learn it is highly
 advised.
