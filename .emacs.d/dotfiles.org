@@ -152,7 +152,6 @@ set -g default-terminal screen-256color
  bind c new-window -c "#{pane_current_path}"
  #+END_SRC
 
-
 ** TODO Mouse Support
  I disabled mouse support. I don't remember why I did this, presumably it caused problems with selection and
  copy/paste. I should revisit this setting.
@@ -172,7 +171,6 @@ set -g mode-mouse off
  setw -g monitor-activity on
  set -g visual-activity on
 #+END_SRC
-
 
 ** Unicode support
  #+BEGIN_SRC conf :tangle ~/.tmux.conf
@@ -267,6 +265,7 @@ alias -s cpp=vim
 alias -s log=less -R
 alias emacs='emacs -nw'
 alias capp='cap production'
+alias gcp='git cherry-pick'
 #+END_SRC
 
 ** Grep configuration
