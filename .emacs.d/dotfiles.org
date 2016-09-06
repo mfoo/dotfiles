@@ -225,17 +225,11 @@ source $ZSH/oh-my-zsh.sh
 #+END_SRC
 
 ** =$TERM=, =$LANG=, and =$PATH=
-   #+BEGIN_SRC conf :tangle ~/.zshrc
-
- # Customize to your needs...
- export TERM=screen-256color
-
- export LANG=en_GB.utf8
-
- export PATH=/home/martin/bin/:$PATH
-
-   #+END_SRC
-
+#+BEGIN_SRC conf :tangle ~/.zshrc
+export TERM=screen-256color
+export LANG=en_GB.utf8
+export PATH=/home/martin/bin/:$PATH
+#+END_SRC
 ** Autojump
 [[https://github.com/joelthelion/autojump][Autojump]] makes life so much easier. I use this many many times a day.
 
