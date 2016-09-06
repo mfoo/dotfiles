@@ -219,6 +219,18 @@ I also configure emacs to ask me if I really want to quit when hitting =C-x C-c=
 #+BEGIN_SRC emacs-lisp :results none
 (setq confirm-kill-emacs 'y-or-n-p)
 #+END_SRC
+* Multiple cursors
+[[https://github.com/magnars/multiple-cursors.el][Multiple cursors]] is cool.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package multiple-cursors
+  :diminish multiple-cursors-mode
+  :init
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+)
+#+END_SRC
 * Symbolic links
 By default emacs doesn't follow symlinks
 
