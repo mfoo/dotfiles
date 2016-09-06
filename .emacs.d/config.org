@@ -502,26 +502,26 @@ Set up a key binding for the org agenda
 #+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
-
+** Switching buffers
 =org-iswitchb= is a quick way to switch org mode buffers.
 
 #+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 #+END_SRC
-
+** LaTeX entities
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-pretty-entities t)
 #+END_SRC
-
+** Emphasis and italics
 In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some
 emphasis on it, get emacs to hide the markup characters:
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-hide-emphasis-markers t)
 #+END_SRC
-
+** Syntax highlighting for code blocks
 Ensure native syntax highlighting is used for inline source blocks in org files
 
 #+BEGIN_SRC emacs-lisp :results none
@@ -549,10 +549,11 @@ Configure the languages that Babel will automatically syntax highlight
    (emacs-lisp . t)
    (ruby . t)
    (python . t)
+   (gnuplot . t)
   )
 )
 #+END_SRC
-
+** Displaying images referenced in org files
 When we're using a GUI emacs we can display embedded images on startup
 
 #+BEGIN_SRC emacs-lisp :results none
@@ -561,25 +562,25 @@ When we're using a GUI emacs we can display embedded images on startup
 (add-hook 'org-mode-hook 'org-babel-result-hide-all)
 #+END_SRC
 
-When exporting to HTML change check boxes into actual HTML check boxes.
-
-#+BEGIN_SRC emacs-lisp :results none
-(setq org-html-checkbox-type 'html)
-#+END_SRC
-
-I use =ditaa= for block diagrams. This executes a java program and needs to know where to find the jar.
-
-#+BEGIN_SRC emacs-lisp :results none
-(setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
-#+END_SRC
-
 I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
 the screen.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-image-actual-width 800)
 #+END_SRC
+** Export org's checkboxes as HTML checkboxes on HTML export
+When exporting to HTML change check boxes into actual HTML check boxes.
 
+#+BEGIN_SRC emacs-lisp :results none
+(setq org-html-checkbox-type 'html)
+#+END_SRC
+** Ditaa (generating images from textual block diagrams)
+I use =ditaa= for block diagrams. This executes a java program and needs to know where to find the jar.
+
+#+BEGIN_SRC emacs-lisp :results none
+(setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
+#+END_SRC
+** To Do list and agenda
 I've been using a single TODO list file and using org-capture to capture todo items to my org agenda from anywhere. This
 tends to happen at home rather than at work as my work org files contain appropriate TODOs arranged by date headers. At
 home and in my blog I can capture TODO items and put them in this directory.
