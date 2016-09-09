@@ -468,6 +468,13 @@ URxvt.pointerBlank:         true
 
 * Xresources
 
+Make links open in the default browser.
+
+#+BEGIN_SRC conf :tangle ~/.Xresources
+URxvt.url-launcher: /usr/bin/xdg-open
+#+END_SRC
+
+
 #+BEGIN_SRC conf :tangle ~/.Xresources
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
