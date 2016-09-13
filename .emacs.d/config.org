@@ -1177,7 +1177,6 @@ keybindings.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package evil
-  :defer t
   :diminish
   :config (evil-mode) ; Enable evil mode globally
 )
