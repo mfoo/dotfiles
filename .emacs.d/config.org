@@ -1388,8 +1388,10 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package ruby-end
-  :mode "\\.rb"
+  :defer t
   :diminish
+  :init
+  (add-hook 'ruby-mode-hook #'ruby-end-mode)
 )
 #+END_SRC
 
