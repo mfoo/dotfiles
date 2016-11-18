@@ -54,14 +54,18 @@ Then add ~(org-babel-load-file (concat user-emacs-directory "config.org"))~ to =
 
 Here is the contents of my =~/.emacs= file:
 
-#+BEGIN_SRC emacs-lisp :results none :tangle ~/.emacs
+#+BEGIN_SRC lisp :results none :exports code
 ;; Martin's .emacs file
 ;;
 ;; Author: Martin Foot <martin@mfoot.com>
 
+; Limit garbage collection to speed up startup (TODO revert this after the config is loaded)
+(setq gc-cons-threshold 100000000)
+
 ;; Load the config
-(require 'org)
 (org-babel-load-file (concat user-emacs-directory "config.org"))
+
+(setq gc-cons-threshold 800000)
 #+END_SRC
 
 That's it.
@@ -69,11 +73,18 @@ That's it.
 The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and
 executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package
 repositories]] section comes before any of the other non-standard config.
+
+Small note for readers of the source file: The example above uses the org babel source language of ~lisp~ rather than
+~emacs-lisp~, meaning that it won't be executed by ~org-babel-load-file~ on startup. Initially I had a ~tangle~ block here so
+=~/.emacs.d/.emacs= would be written conveniently by org, but it adds to the startup time of every emacs load. Removing
+the ~tangle~ block meant a recursive load, so my workaround is to change the source language. ~org-babel-load-file~ will
+only evaluate ~emacs-lisp~ blocks.
 * Package repositories
-I use Melpa and Marmalade for repositories.
+I use Melpa and Marmalade for repositories as well as Org's official repository.
 
 #+BEGIN_SRC emacs-lisp :results none
 (require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
@@ -88,6 +99,7 @@ Then, since I use ~use-package~ for every package from the repositories, initial
 
 (eval-when-compile
   (setq use-package-always-ensure t)
+  (setq use-package-verbose t) ; Put slow loading packages / config warnings in the *Messages* buffer
   (require 'use-package)
 )
 #+END_SRC
@@ -112,7 +124,7 @@ package needs to be downloaded manually.
 * Load path
 TODO: Fix this!
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/org-mode/lisp/")
+;;(add-to-list 'load-path "~/org-mode/lisp/")
 #+END_SRC
 
 * User information
@@ -474,7 +486,7 @@ drawers makes them easily expandable and collapsible.
 (setq org-log-into-drawer t)
 #+END_SRC
 *** TODO State transitions
-Here states transitions are configured. This is largely based on [[http://doc.norang.ca/org-mode.html#TasksAndStates][this document]] but I use =IN_PROGRESS= instead of =NEXT=.
+State transitions are largely based on [[http://doc.norang.ca/org-mode.html#TasksAndStates][this document]] but I use =IN_PROGRESS= instead of =NEXT=.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-todo-keywords
@@ -695,9 +707,9 @@ I use =org-reveal= for HTML/JS presentations.
 TODO: Get org-reveal installed.
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/org-reveal/")
-(setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
-(add-hook 'org-mode-hook (lambda () (load-library "ox-reveal")))
+;(add-to-list 'load-path "~/.emacs.d/org-reveal/")
+;(setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
+;(add-hook 'org-mode-hook (lambda () (load-library "ox-reveal"))) ;
 #+END_SRC
 * Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
@@ -960,16 +972,7 @@ don't use emacs' default mark combo.
 (use-package company
   :defer t
   :diminish
-  :init
-  (use-package helm-company
-    :defer t
-    :diminish
-    :config
-    (define-key company-mode-map (kbd "C-SPC") 'helm-company)
-    (define-key company-active-map (kbd "C-SPC") 'helm-company)
-  )
   :config
-  (add-hook 'prog-mode-hook 'company-mode)
   (progn
     ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
     ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
@@ -983,8 +986,9 @@ don't use emacs' default mark combo.
           backend
         (append (if (consp backend) backend (list backend))
                 '(:with company-yasnippet))))
-
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+    (global-company-mode)
   )
 )
 #+END_SRC
@@ -1009,6 +1013,8 @@ advised.
 (use-package magit
   :diminish
   :bind (("C-x g" . magit-status))
+  :config
+  (setq magit-completing-read-function 'ivy-completing-read)
 )
 #+END_SRC
 * TODO Base editor configuration
@@ -1022,8 +1028,6 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 ;; TODO: Try and get projectile-ag to work. Is git grep better?
 ;; Human readable sizes in dired
 (setq dired-listing-switches "-alh")
-
-
 #+END_SRC
 ** Mouse support for terminals
 Enable the mouse when running in a terminal.
@@ -1088,24 +1092,6 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
 
 
   ) "a list of packages to ensure are installed at launch.")
-
-
-;; method to check if all packages are installed
-;(defun packages-installed-p ()
-;  (loop for p in required-packages
-;		when (not (package-installed-p p)) do (return nil)
-;	finally (return t)))
-;
-;; if not all packages are installed, check one by one and install the missing ones.
-;(unless (packages-installed-p)
-;  ; check for new packages (package versions)
-;  (message "%s" "Emacs is now refreshing its package database...")
-;  (package-refresh-contents)
-;  (message "%s" " done.")
-;  ; install the missing packages
-;  (dolist (p required-packages)
-;	(when (not (package-installed-p p))
-;   (package-install p))))
 #+END_SRC
 
 * Remote shells
@@ -1242,51 +1228,33 @@ pane that will pop up and disappear with the =F8= key.
   ([f8] . neotree-toggle)
 )
 #+END_SRC
-** TODO Helm mode
-:LOGBOOK:
-- State "TODO"       from ""           [2015-11-21 Sat 10:01]
-:END:
-[[https://github.com/emacs-helm/helm][Helm]] is incremental completion and selection narrowing framework for Emacs. It will help steer you in the right
-direction when you're looking for stuff in Emacs (like buffers, files, etc). It's awesome when combined with
-[[http://tuhdo.github.io/helm-projectile.html][helm-projectile]] for jumping around projects and finding files within them.
+** Swiper
+I've switched to Swiper from Helm.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package helm
-  :diminish
-  :init (progn
-    (require 'helm-config)
-    (use-package helm-projectile
-      :defer t
-      :diminish
-      :commands helm-projectile
-    )
-    (use-package helm-ag
-      :defer t
-      :diminish
-    )
-    (helm-mode 1)
-  )
-  :bind
-  ("M-x" . helm-M-x)
-  ("C-x b" . helm-mini)
-  :config (setq projectile-completion-system 'helm)
+(use-package counsel
+  :ensure t
 )
-#+END_SRC
 
-Use [[https://github.com/yasuyk/helm-git-grep][helm-git-grep]] for fast searches within the current git directory.
-
-#+BEGIN_SRC emacs-lisp :results none
-(use-package helm-git-grep
-  :defer t
-  :diminish
+(use-package swiper
+  :ensure t
   :config
-  (global-set-key (kbd "C-c g") 'helm-git-grep)
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (global-set-key "\C-s" 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+  (setq projectile-completion-system 'ivy)
 )
 #+END_SRC
 
-The TODO here is that helm is /awesome/. There are so many functions to learn. I need to find some easy-to-remember
-shortcuts for things like =helm-occur=. Spend some time reading
-http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline12.
 ** Anzu
 [[https://github.com/syohex/emacs-anzu][Anzu]] shows how many strings match the regex you're replacing and show the effect of replacement as the substitution is
 typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in the buffer.
@@ -1296,7 +1264,8 @@ http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
 #+BEGIN_SRC emacs-lisp :results none
 (use-package anzu
   :diminish
-  :init (global-anzu-mode)
+  :defer t
+  :config (global-anzu-mode)
   :bind (
     ("M-%" . anzu-query-replace)
     ("C-M-%" . anzu-query-replace-regexp)
@@ -1364,7 +1333,7 @@ I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is ve
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rspec-mode
-  :mode "_spec.rb"
+  :mode "_spec.rb$"
   :config
   (setq rspec-use-rake-when-possible nil)
   (setq rspec-use-bundler-when-possible t)
@@ -1407,6 +1376,22 @@ The following allows using =binding.pry= in =rspec-mode=.
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
   (with-eval-after-load 'company (add-to-list 'company-backends 'company-robe))
 )
+
+(defun mfoot/rdb ()
+  "Run rake db:rdb."
+  (interactive)
+  (let ((default-directory "~/repositories/cube/src/webapp"))
+	(async-shell-command "bundle exec rake db:rdb" "*Bundle exec*")))
+
+(defun mfoot/trdb ()
+  "Run rake db:trdb."
+  (interactive)
+  (let ((default-directory "~/repositories/cube/src/webapp"))
+	(async-shell-command "bundle exec rake db:trdb" "*Bundle exec*")))
+
+(add-hook 'enh-ruby-mode-hook
+  (lambda () (local-set-key (kbd "C-x r t") 'mfoot/trdb))
+  (lambda () (local-set-key (kbd "C-x r d") 'mfoot/rdb)))
 #+END_SRC
 
 [[https://github.com/asok/projectile-rails][projectile-rails]] provides quick jump-to-model and jump-to-helper support for rails projects.
@@ -1464,15 +1449,15 @@ I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGI
 * Presenting
 I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presentations.
 
-##+BEGIN_SRC emacs-lisp :results none
-#(use-package ox-reveal
-#  :ensure t
-#  :defer t
-#  :config
-#  (setq org-reveal-root (concat user-emacs-directory "reveal-js/reveal.js"))
-#  (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
-#)
-##+END_SRC
+#+BEGIN_SRC emacs-lisp :results none
+;; (use-package ox-reveal
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (setq org-reveal-root (concat user-emacs-directory "reveal-js/reveal.js"))
+;;   (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
+;; )
+#+END_SRC
 * TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
@@ -1488,13 +1473,6 @@ This section holds configuration from before I moved to using =org-babel= (i.e. 
 here just because I haven't had the time or the impetus to categorise and document it.
 
 #+BEGIN_SRC emacs-lisp :results none
-;(add-hook 'projectile-mode-hook 'projectile-custom-hook)
-;(add-hook 'helm-projectile-mode-hook 'projectile-custom-hook)
-
-;(global-unset-key (kbd "C-c p g"))
-;(global-set-key (kbd "C-c p g") 'helm-projectile-grep)
-;(define-key projectile-command-map (kbd "C-c p g") 'helm-projectile-grep)
-
 ;; If we're at the end of a word and hit TAB, run the expand command
 ;; for tab completion. If we're not at the end of a word, run the
 ;; normal tab command
