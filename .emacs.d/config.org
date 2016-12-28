@@ -573,7 +573,7 @@ Configure the languages that Babel will automatically syntax highlight
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((sql . t)
-   (sh . t)
+   (shell . t)
    (ditaa . t)
    (dot . t)
    (calc . t)
