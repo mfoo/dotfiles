@@ -117,8 +117,8 @@ commented as it's not something I do generally. It also isn't safe to run on eve
 package needs to be downloaded manually.
 
 #+BEGIN_SRC emacs-lisp :results none
-(add-to-list 'load-path "/home/martinfoot/repositories/benchmark-init-el/")
-(require 'benchmark-init-loaddefs)
+;(add-to-list 'load-path "/home/martinfoot/repositories/benchmark-init-el/")
+;(require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
 #+END_SRC
 * Load path
