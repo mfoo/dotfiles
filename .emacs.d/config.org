@@ -92,16 +92,18 @@ I use Melpa and Marmalade for repositories as well as Org's official repository.
 
 Then, since I use ~use-package~ for every package from the repositories, initialise this first.
 
-#+BEGIN_SRC emacs-lisp :results none
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+Note this is currently commented, it exists in =.emacs=.
 
-(eval-when-compile
-  (setq use-package-always-ensure t)
-  (setq use-package-verbose t) ; Put slow loading packages / config warnings in the *Messages* buffer
-  (require 'use-package)
-)
+#+BEGIN_SRC emacs-lisp :results none
+;(unless (package-installed-p 'use-package)
+;  (package-refresh-contents)
+;  (package-install 'use-package))
+;
+;(eval-when-compile
+;  (setq use-package-always-ensure t)
+;  (setq use-package-verbose t) ; Put slow loading packages / config warnings in the *Messages* buffer
+;  (require 'use-package)
+;)
 #+END_SRC
 
 =use-package= has support for removing minor modes from the bottom. This requires the =diminish= package.
