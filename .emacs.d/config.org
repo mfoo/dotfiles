@@ -525,7 +525,15 @@ whether or not the file exists.
 
 #+BEGIN_SRC emacs-lisp :results none
 (require 'cl) ; remove-if-not is inside the common-lisp package
-(setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes" "~/Dropbox/life" "~/repositories/life")))
+(setq org-agenda-files
+  (remove-if-not
+    'file-exists-p
+    '(
+      "~/Repositories/notes"
+      "~/repositories/notes"
+      "~/repositories/life"
+      "~/repositories/life/projects"
+      "~/repositories/life/tasks")))
 ;(setq org-agenda-files (remove-if-not 'file-exists-p '("~/Repositories/notes" "~/repositories/notes")))
 #+END_SRC
 
