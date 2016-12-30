@@ -119,7 +119,7 @@ package needs to be downloaded manually.
 #+BEGIN_SRC emacs-lisp :results none
 ;(add-to-list 'load-path "/home/martinfoot/repositories/benchmark-init-el/")
 ;(require 'benchmark-init-loaddefs)
-(benchmark-init/activate)
+;(benchmark-init/activate)
 #+END_SRC
 * Load path
 TODO: Fix this!
