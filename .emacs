@@ -1,17 +1,29 @@
-;;; .emacs --- Martin's Emacs config file
 
+;; Martin's .emacs file
+;;
 ;; Author: Martin Foot <martin@mfoot.com>
-;; URL: https://github.com/mfoo/dotfiles/blob/master/.emacs
 
-;;; Commentary:
+(setq gc-cons-threshold 100000000)
 
-;; This file contains my Emacs configuration.  It uses org-babel-load-file so that my configuration can be described in
-;; a literate way.  See https://www.mfoot.com/static/emacs-config/config.html for the latest version of these settings.
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
 
-;;; Code:
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(require 'org)
+(eval-when-compile
+  (setq use-package-always-ensure t)
+  (setq use-package-verbose t) ; Put slow loading packages / config warnings in the *Messages* buffer
+  (require 'use-package)
+)
+
+; Ensure the latest org-mode version
+(use-package org-plus-contrib
+  :ensure t
+)
+
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
-(provide 'emacs)
-;;; .emacs ends here
+(setq gc-cons-threshold 800000)
