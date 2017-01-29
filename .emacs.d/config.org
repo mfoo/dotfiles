@@ -763,17 +763,17 @@ manipulation to insert the Google Analytics code at the end of the =<body>= tag.
         </script>"
         (substring html-template pos)))))
 
-;(eval-after-load "org"
-;  '(progn
-;    (require 'ox-html)
-;    (org-export-define-derived-backend 'mfoot-html-with-google-analytics 'html
-;      :translate-alist
-;      '(
-;        (template . mfoot-append-google-analytics-tag)
-;      )
-;    )
-;  )
-;)
+(eval-after-load "org"
+  '(progn
+    (require 'ox-html)
+    (org-export-define-derived-backend 'mfoot-html-with-google-analytics 'html
+      :translate-alist
+      '(
+        (template . mfoot-append-google-analytics-tag)
+      )
+    )
+  )
+)
 
 (defun mfoot-export-emacs-config-to-file
   (plist filename pub-dir)
