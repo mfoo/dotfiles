@@ -595,6 +595,7 @@ Configure the languages that Babel will automatically syntax highlight
    (python . t)
    (gnuplot . t)
    (latex . t)
+   (elasticsearch . t)
   )
 )
 #+END_SRC
