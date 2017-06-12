@@ -1042,6 +1042,15 @@ I came from Vim and some of the default emacs functionality felt weird to me.
 ;; Human readable sizes in dired
 (setq dired-listing-switches "-alh")
 #+END_SRC
+
+I also prefer a line rather than a box for a cursor, and blinking helps to find it.
+
+#+BEGIN_SRC emacs-lisp :results none
+(setq-default cursor-type '(bar . 3))
+(blink-cursor-mode)
+#+END_SRC
+
+
 ** Mouse support for terminals
 Enable the mouse when running in a terminal.
 
