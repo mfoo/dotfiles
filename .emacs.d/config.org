@@ -1502,6 +1502,18 @@ I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presenta
 ;;   (add-hook 'org-mode-hook (lambda () (load-library 'ox-reveal)))
 ;; )
 #+END_SRC
+* Elasticsearch
+I use Elasticsearch at work, and =es-mode= has some very useful tools for monitoring an elasticsearch cluster also.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package es-mode
+  :ensure t
+  :defer t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.es$" . es-mode))
+)
+#+END_SRC
+
 * TODO Code snippet handling
 I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet handling. This is enabled globally.
 
