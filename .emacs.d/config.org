@@ -112,7 +112,9 @@ Note this is currently commented, it exists in =.emacs=.
 (use-package diminish
   :defer t
 )
-#+END_SRC
+(diminish 'undo-tree-mode)
+(diminish 'auto-fill-mode)
++END_SRC
 * Startup time benchmarking
 It's possible to benchmark startup time in emacs. This is useful if evaluating this gets too slow. I keep these lines
 commented as it's not something I do generally. It also isn't safe to run on every machine since the =benchmark-init-el=
