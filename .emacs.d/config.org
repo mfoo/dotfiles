@@ -1345,7 +1345,19 @@ Provide a =ruby-mode= for editing ruby files.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package enh-ruby-mode
-  :mode "\\.rb$"
+  :mode (("\\.rb\\'"       . enh-ruby-mode)
+         ("\\.ru\\'"       . enh-ruby-mode)
+         ("\\.jbuilder\\'" . enh-ruby-mode)
+         ("\\.gemspec\\'"  . enh-ruby-mode)
+         ("\\.rake\\'"     . enh-ruby-mode)
+         ("Rakefile\\'"    . enh-ruby-mode)
+         ("Gemfile\\'"     . enh-ruby-mode)
+         ("Guardfile\\'"   . enh-ruby-mode)
+         ("Capfile\\'"     . enh-ruby-mode)
+         ("\\.erb$"        . enh-ruby-mode)
+         ("Vagrantfile"    . enh-ruby-mode)
+  )
+  :interpreter "ruby"
   :config
   (setq enh-ruby-deep-indent-paren nil) ; Don't indent ruby function parameters at column index of function parentheses
 )
