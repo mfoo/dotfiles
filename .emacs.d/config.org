@@ -1438,6 +1438,16 @@ The following allows using =binding.pry= in =rspec-mode=.
   (add-hook 'projectile-mode-hook 'projectile-rails-on)
 )
 #+END_SRC
+
+I use =rubocop= for Ruby static analysis:
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package rubocop
+  :ensure t
+  :defer t
+  :init (add-hook 'ruby-mode-hook 'rubocop-mode)
+)
+#+END_SRC
 ** CMake
 #+BEGIN_SRC emacs-lisp :results none
 (use-package cmake-mode
