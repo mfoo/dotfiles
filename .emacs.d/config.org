@@ -197,8 +197,9 @@ When working with structured code it's nice to have an indentation guide.
 (use-package indent-guide
   :defer t
   :diminish
-  :config
+  :init
   (add-hook 'prog-mode-hook (lambda () (indent-guide-mode)))
+  (add-hook 'org-mode-hook (lambda () (indent-guide-mode)))
 )
 #+END_SRC
 * Shortcut help
