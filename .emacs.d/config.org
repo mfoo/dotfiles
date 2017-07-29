@@ -724,6 +724,23 @@ TODO: Get org-reveal installed.
 ;(setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
 ;(add-hook 'org-mode-hook (lambda () (load-library "ox-reveal"))) ;
 #+END_SRC
+** Linting Prose
+Source: http://unconj.ca/blog/linting-prose-in-emacs.html
+#+BEGIN_SRC emacs-lisp :results none
+(add-hook 'flycheck-mode-hook (lambda()
+  (flycheck-define-checker proselint
+  "A linter for prose."
+  :command ("proselint" source-inplace)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ":" column ": "
+          (id (one-or-more (not (any " "))))
+          (message) line-end))
+  :modes (text-mode markdown-mode gfm-mode org-mode))
+
+  (add-to-list 'flycheck-checkers 'proselint)
+))
+#+END_SRC
+
 * Blog
 [[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
 host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
@@ -927,7 +944,10 @@ I use flycheck mode for syntax highlighting and linting when programming. See ht
   :defer t
   :diminish
   :config
+  ;; Bump the maximum number of errors that can be displayed to 5000 (default 400).
+  (setq flycheck-error-threshold 5000)
   (add-hook 'prog-mode-hook (lambda () (flycheck-mode)))
+  (add-hook 'org-mode-hook (lambda () (flycheck-mode)))
 )
 #+END_SRC
 
