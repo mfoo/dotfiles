@@ -353,8 +353,13 @@ scroll bar.
 Whitespace mode is enabled for all programming and text buffers.
 
 #+BEGIN_SRC emacs-lisp :results none
-(add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
-(add-hook 'text-mode-hook (lambda () (whitespace-mode)))
+(use-package whitespace
+  :diminish ws
+  :init
+  (add-hook 'prog-mode-hook (lambda () (whitespace-mode)))
+  (add-hook 'text-mode-hook (lambda () (whitespace-mode)))
+)
+
 #+END_SRC
 ** Trailing whitespace
 Delete trailing whitespace automatically on save. I used to configure editors to highlight trailing whitespace, but it's
