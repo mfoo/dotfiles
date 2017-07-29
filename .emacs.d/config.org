@@ -159,11 +159,11 @@ Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 (use-package rainbow-delimiters
   :diminish
   :defer t
-  :config
+  :init
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'org-mode-hook 'rainbow-delimiters-mode)
 )
 #+END_SRC
-
 * Fill columns and line highlighting
 I find a 120 character line length is best for modern screens. Individual languages/major modes can override this.
 
