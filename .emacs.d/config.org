@@ -1511,6 +1511,12 @@ features to see what I need ([[https://zeekat.nl/articles/making-emacs-work-for-
 #+BEGIN_SRC emacs-lisp :results none
 (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
 #+END_SRC
+** Bats
+Bats is a bash testing framework. I want to ensure we use sh-mode when opening these files for syntax highlighting.
+
+#+BEGIN_SRC emacs-lisp :results none
+(add-to-list 'auto-mode-alist '("\\.bats$" . sh-mode))
+#+END_SRC
 * Syntax highlighting and static analysis
 I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax
 checking for known languages. Some languages also provide linting as well via flycheck.
