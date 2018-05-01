@@ -561,11 +561,25 @@ Set up a key binding for the org agenda
 #+BEGIN_SRC emacs-lisp :results none
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 #+END_SRC
-** LaTeX entities
+** LaTeX
+*** Entities
 Enable pretty entities - shows e.g. \alpha \beta \gamma as UTF-8 characters.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-pretty-entities t)
+#+END_SRC
+*** Source highlighting
+From [[http://joat-programmer.blogspot.co.uk/2013/07/org-mode-version-8-and-pdf-export-with.html][this post]].
+
+#+BEGIN_SRC emacs-lisp :results none
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
+
+;; Let the exporter use the -shell-escape option to let latex
+;; execute external programs.
+;; This obviously and can be dangerous to activate!
+(setq org-latex-pdf-process
+      '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 ** Emphasis and italics
 In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some
