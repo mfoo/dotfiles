@@ -1403,24 +1403,30 @@ Provide a =ruby-mode= for editing ruby files.
   :interpreter "ruby"
   :config
   (setq enh-ruby-deep-indent-paren nil) ; Don't indent ruby function parameters at column index of function parentheses
+  (rspec-mode)
 )
 #+END_SRC
+
+#+RESULTS:
 
 I use rspec a lot, and [[https://github.com/pezra/rspec-mode][rspec-mode]] is very useful.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rspec-mode
-  :mode "_spec.rb$"
   :config
-  (setq rspec-use-rake-when-possible nil)
-  (setq rspec-use-bundler-when-possible t)
-  (setq rspec-use-rvm-when-possible t)
-  (setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
-  (eval-after-load "rspec-mode"
-    '(progn
-      (setenv "PAGER" (executable-find "cat"))
-      (inf-ruby-switch-setup)
-      (define-key global-map (kbd "M-T") 'rspec-toggle-spec-and-target)
+  (progn
+    (setq rspec-use-rake-when-possible nil)
+    (setq rspec-use-bundler-when-possible t)
+    (setq rspec-use-rvm-when-possible t)
+    (setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
+    ; The mode specification for rspec-mode is more specific than that of enh-ruby-mode, which prevents enh-ruby-mode from
+    ; loading for _spec files. This forces it to load when rspec-mode starts
+    (eval-after-load "rspec-mode"
+      '(progn
+        (setenv "PAGER" (executable-find "cat"))
+        (inf-ruby-switch-setup)
+        (define-key global-map (kbd "M-T") 'rspec-toggle-spec-and-target)
+      )
     )
   )
 )
