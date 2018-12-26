@@ -1093,7 +1093,12 @@ I also prefer a line rather than a box for a cursor, and blinking helps to find 
 (blink-cursor-mode)
 #+END_SRC
 
+I never use Linux's mail system so I don't want emacs to tell me if I have new emails. This removes the "Mail" link from
+the mode line indirectly:
 
+#+BEGIN_SRC emacs-lisp :results none
+(display-time-mode -1)
+#+END_SRC
 ** Mouse support for terminals
 Enable the mouse when running in a terminal.
 
