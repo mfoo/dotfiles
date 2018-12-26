@@ -1316,6 +1316,16 @@ pane that will pop up and disappear with the =F8= key.
   ([f8] . neotree-toggle)
 )
 #+END_SRC
+** Improving search with ace-isearch
+[[https://github.com/tam17aki/ace-isearch][ace-ijump]] mode switches search tool based on the length of the search string. By default, if you use isearch for a
+single character it'll jump into =ace-jump-mode= or =avy=, for 1-6 characters it will use normal isearch, and if you start
+typing longer search strings it'll jump into either =helm-swoop= or =swiper=, depending on which is available.
+
+#+BEGIN_SRC emacs-lisp :results none
+(use-package ace-isearch
+  :config
+  (global-ace-isearch-mode t))
+#+END_SRC
 ** Swiper
 I've switched to Swiper from Helm.
 
