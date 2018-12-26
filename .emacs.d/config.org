@@ -649,19 +649,6 @@ I use =ditaa= for block diagrams. This executes a java program and needs to know
 (setq org-ditaa-jar-path "/home/martin/bin/ditaa0_9.jar")
 #+END_SRC
 ** To Do list and agenda
-I've been using a single TODO list file and using org-capture to capture todo items to my org agenda from anywhere. This
-tends to happen at home rather than at work as my work org files contain appropriate TODOs arranged by date headers. At
-home and in my blog I can capture TODO items and put them in this directory.
-
-#+BEGIN_SRC emacs-lisp :results none
-(if (file-exists-p "~/Dropbox/life/life.org")
-  (setq org-default-notes-file "~/Dropbox/life/life.org")
-  (setq org-default-notes-file "~/repositories/notes/notes.org")
-)
-
-(define-key global-map "\C-cc" 'org-capture)
-#+END_SRC
-
 Customise the colours of TODO task priority indicators:
 
 #+BEGIN_SRC emacs-lisp :results none
@@ -1072,6 +1059,14 @@ advised.
   (setq magit-completing-read-function 'ivy-completing-read)
 )
 #+END_SRC
+
+As per the [[https://magit.vc/manual/magit.html#Essential-Settings][Magit User Manual]], I also switch off Emacs' built-in =vc= (version control) system. I only use =git= and don't
+need =vc= to be doing work that =magit= should be doing.
+
+#+BEGIN_SRC emacs-lisp :results none
+(setq vc-handled-backends nil)
+#+END_SRC
+
 * TODO Base editor configuration
 I came from Vim and some of the default emacs functionality felt weird to me.
 
