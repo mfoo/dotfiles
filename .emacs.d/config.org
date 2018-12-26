@@ -1258,7 +1258,9 @@ mechanism backed by external commands exists as well).
 (use-package projectile
   :diminish
   :config
-  (projectile-global-mode)
+  (projectile-mode)
+  :bind
+  ("C-c p" . projectile-command-map)
 )
 #+END_SRC
 
