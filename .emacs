@@ -9,9 +9,11 @@
 
 ; Org mode is a bit of a pain, it's the only bit that needs to be inside .emacs, since org is necessary to parse my
 ; config. I need to make sure it's the correct version.
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
+
 
 ; If use-package isn't installed, install it
 (unless (package-installed-p 'use-package)
