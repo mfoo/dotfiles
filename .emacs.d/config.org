@@ -310,11 +310,11 @@ Add some keybindings to increase and decrease the font size
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;; C-x C-0 restores the default font size
 #+END_SRC
-* Startup message
-Don't show the default emacs startup message when it's opened
+* Startup screen
+Don't show the default emacs startup screen when it's opened
 
 #+BEGIN_SRC emacs-lisp :results none
-(setq inhibit-startup-message t)
+(setq inhibit-startup-screen t)
 #+END_SRC
 
 Let's also show a fortune message in the scratch buffer when we start emacs:
