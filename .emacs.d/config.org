@@ -1041,14 +1041,21 @@ I've discovered =yafolding-mode= for all my code folding needs.
 #+BEGIN_SRC emacs-lisp :results none
 (use-package yafolding
   :defer t
+  :commands (yafolding-mode)
   :diminish
-  :config
-  (add-hook 'prog-mode-hook (lambda()  (yafolding-mode)))
+  :mode
+  (
+    ("\\.rb$" . yafolding-mode)
+  )
+  :bind
+  (
+    ("<C-return>" . yafolding-toggle-element)
+  )
 )
 #+END_SRC
 
 * Git
-[[https://github.com/magit/magit][Magit]] is awesome. It's git integration with emacs and it's incredibly well made. Taking the time to learn it is highly
+[[https://github.com/magit/magit][Magit]] is awesome. It's =git= integration with Emacs and it's incredibly well made. Taking the time to learn it is highly
 advised.
 
 #+BEGIN_SRC emacs-lisp :results none
