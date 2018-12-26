@@ -129,11 +129,11 @@ package needs to be downloaded manually.
 ;(benchmark-init/activate)
 #+END_SRC
 * Load path
-TODO: Fix this!
-#+BEGIN_SRC emacs-lisp
-;;(add-to-list 'load-path "~/org-mode/lisp/")
-#+END_SRC
+I have a directory for lisp functions that aren't available in the package repositories.
 
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+#+END_SRC
 * User information
 #+BEGIN_SRC emacs-lisp :results none
 (setq user-full-name "Martin Foot"
@@ -306,9 +306,12 @@ I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to ke
 Add some keybindings to increase and decrease the font size
 
 #+BEGIN_SRC emacs-lisp :results none
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-;; C-x C-0 restores the default font size
+(require 'frame-cmds)
+(require 'zoom-frm)
+
+(global-set-key (kbd "C-+") 'zoom-in/out)
+(global-set-key (kbd "C--") 'zoom-in/out)
+(global-set-key (kbd "C-0") 'zoom-in/out)
 #+END_SRC
 * Startup screen
 Don't show the default emacs startup screen when it's opened
@@ -1080,7 +1083,7 @@ source file is included in =.emacs.d= in this repository.
 
 #+BEGIN_SRC emacs-lisp :results none
 (autoload 'git-commit-jira-prefix-init
-          (concat user-emacs-directory "git-commit-jira-prefix.el"))
+          (concat user-emacs-directory "lisp/" "git-commit-jira-prefix.el"))
 
 (with-eval-after-load 'git-commit
   (git-commit-jira-prefix-init))
