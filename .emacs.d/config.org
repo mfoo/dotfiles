@@ -1080,11 +1080,7 @@ source file is included in =.emacs.d= in this repository.
 
 #+BEGIN_SRC emacs-lisp :results none
 (autoload 'git-commit-jira-prefix-init
-          (expand-file-name
-            "git-commit-jira-prefix.el"
-            user-emacs-directory
-          )
-)
+          (concat user-emacs-directory "git-commit-jira-prefix.el"))
 
 (with-eval-after-load 'git-commit
   (git-commit-jira-prefix-init))
