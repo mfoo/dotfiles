@@ -1283,6 +1283,7 @@ I use =helm-projectile-ag= quite a lot which requires the =ag= package.
 (use-package ag
   :defer t
   :diminish
+  :bind (("C-c g" . helm-git-grep))
 )
 #+END_SRC
 ** Recentf mode
