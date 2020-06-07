@@ -106,58 +106,55 @@ set -g default-terminal screen-256color
 #+END_SRC
 
 #+BEGIN_SRC conf :tangle ~/.tmux.conf
- #### COLOUR
- # Solarized color scheme by Ethan Schoonover adapted to tmux settings by
- # Sebastian Tramp (https://github.com/seebi/tmux-colors-solarized)
+#### COLOUR
+# Solarized color scheme by Ethan Schoonover adapted to tmux settings by
+# Sebastian Tramp (https://github.com/seebi/tmux-colors-solarized)
 
- # default statusbar colors
- set-option -g status-bg colour235 #base02
- set-option -g status-fg colour136 #yellow
- set-option -g status-attr default
+# default statusbar colors
+set-option -g status-bg colour235 #base02
+set-option -g status-fg colour136 #yellow
 
- # default window title colors
- set-window-option -g window-status-fg colour244
- set-window-option -g window-status-bg default
- #set-window-option -g window-status-attr dim
+# default window title colors
+set-window-option -g window-status-style fg=colour244
+set-window-option -g window-status-style bg=default
+#set-window-option -g window-status-attr dim
 
- # active window title colors
- set-window-option -g window-status-current-fg colour166 #orange
- set-window-option -g window-status-current-bg default
- #set-window-option -g window-status-current-attr bright
+# active window title colors
+set-window-option -g window-status-current-style fg=colour166
+set-window-option -g window-status-current-style bg=default
+#set-window-option -g window-status-current-attr bright
 
- # Set windows with activity to use bold fonts
- set -g window-status-activity-attr bold
+# Set windows with activity to use bold fonts
+set -g window-status-activity-style bold
 
- # pane border
- set-option -g pane-border-fg colour235 #base02
- set-option -g pane-active-border-fg colour240 #base01
+# pane border
+set-option -g pane-border-style fg=colour235 #base02
+set-option -g pane-active-border-style fg=colour240 #base01
 
- # message text
- set-option -g message-bg colour235 #base02
- set-option -g message-fg colour166 #orange
+# message text
+set-option -g message-style bg=colour235,fg=colour166 # base02, orange
 
- # pane number display
- set-option -g display-panes-active-colour colour33 #blue
- set-option -g display-panes-colour colour166 #orange
+# pane number display
+set-option -g display-panes-active-colour colour33 #blue
+set-option -g display-panes-colour colour166 #orange
 
- # clock
- set-window-option -g clock-mode-colour colour64 #green
+# clock
+set-window-option -g clock-mode-colour colour64 #green
 
- # Use the proper shell, hopefully zsh
- set-option -g default-shell $SHELL
+# Use the proper shell, hopefully zsh
+set-option -g default-shell $SHELL
 
- # Ensure window splits open a new shell in the CWD
- bind '"' split-window -c "#{pane_current_path}"
- bind % split-window -h -c "#{pane_current_path}"
- bind c new-window -c "#{pane_current_path}"
- #+END_SRC
+# Ensure window splits open a new shell in the CWD
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+#+END_SRC
 
-** TODO Mouse Support
- I disabled mouse support. I don't remember why I did this, presumably it caused problems with selection and
- copy/paste. I should revisit this setting.
+** Mouse Support
+Disable mouse support in tmux. It doesn't really provide much and I need to hold shift to select text.
 
 #+BEGIN_SRC conf :tangle ~/.tmux.conf
-set -g mode-mouse off
+set -g mouse off
 #+END_SRC
 
 ** Menu bar customisations
@@ -172,11 +169,6 @@ set -g mode-mouse off
  set -g visual-activity on
 #+END_SRC
 
-** Unicode support
-#+BEGIN_SRC conf :tangle ~/.tmux.conf
-setw -g utf8 on
-set -g status-utf8 on
-#+END_SRC
 
 ** Scroll buffer
 Computers are powerful. Up the scroll buffer size to make life easier when it's needed.
