@@ -265,29 +265,6 @@ alias capp='cap production'
 alias gcp='git cherry-pick'
 #+END_SRC
 
-** Grep configuration
-I always want certain options when grepping.
-
-Firstly, make sure we always highlight colours:
-
-#+BEGIN_SRC conf :tangle ~/.zshrc
-GREP_OPTIONS=' --color=auto --exclude=*.o'
-#+END_SRC
-
-Then let's excluded version control directories from grepping.
-
-#+BEGIN_SRC conf :tangle ~/.zshrc
-for PATTERN in .cvs .git .hg .svn docs; do
-  GREP_OPTIONS="$GREP_OPTIONS --exclude-dir=$PATTERN"
-done
-#+END_SRC
-
-Make it so:
-
-#+BEGIN_SRC conf :tangle ~/.zshrc
-export GREP_OPTIONS
-#+END_SRC
-
 ** Extracting files
 I am woefully bad at remembering the options to =tar=. Here's a useful function I found on [[https://indlovu.wordpress.com/2010/07/26/useful-bash-functions][StackOverflow]].
 
