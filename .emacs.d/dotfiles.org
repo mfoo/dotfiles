@@ -228,11 +228,14 @@ plugins=(
 #+END_SRC
 
 *** The magic
+This bit enables oh-my-zsh. It must be run after any variables it uses are set.
 #+BEGIN_SRC conf :tangle ~/.zshrc
 source $ZSH/oh-my-zsh.sh
 #+END_SRC
 
 ** =$TERM=, =$LANG=, and =$PATH=
+I always keep executables in =~/bin=. =TERM= is set to allow 256 colour support.
+
 #+BEGIN_SRC conf :tangle ~/.zshrc
 export TERM=screen-256color
 export LANG=en_GB.utf8
