@@ -173,8 +173,16 @@ set -g mode-mouse off
 #+END_SRC
 
 ** Unicode support
- #+BEGIN_SRC conf :tangle ~/.tmux.conf
- set -g status-utf8 on
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+setw -g utf8 on
+set -g status-utf8 on
+#+END_SRC
+
+** Scroll buffer
+Computers are powerful. Up the scroll buffer size to make life easier when it's needed.
+
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+set -g history-limit 100000
 #+END_SRC
 
 * ZSH
