@@ -216,6 +216,8 @@ plugins=(
   gitfast                 # Enable fast zsh git completion
   git-extras              # Enable git-extras command completion
   jira
+  zsh-autosuggestions     # Enable autosuggestion fish-style
+  zsh-syntax-highlighting # Syntax highlighting for zsh
 )
 #+END_SRC
 
