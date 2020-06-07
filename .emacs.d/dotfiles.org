@@ -210,20 +210,20 @@ COMPLETION_WAITING_DOTS="true"
 
 #+BEGIN_SRC conf :tangle ~/.zshrc
 plugins=(
-git                     # Add a large number of git aliasses
-rails                   # Add rails3 commands rc (rails console), rs (rails server)
-bundler                 # Adds be (bundle exec), bu (bundle update) and bi (bundle install)
-redis-cli               # Completion for redis-cli
-tmux                    # Configuration options for tmux with zsh
-mvn                     # Add command line completion for maven
-rake
-autojump                # Enables autojump if installed
-vagrant                 # Adds vagrant command autocompletion
-web-search              # Adds support for "google foo" opening a google search
-command-not-found       # If a command can't be found, check apt to see which package contains it
-gitfast                 # Enable fast zsh git completion
-git-extras              # Enable git-extras command completion
-jira
+  git                     # Add a large number of git aliasses
+  rails                   # Add rails3 commands rc (rails console), rs (rails server)
+  bundler                 # Adds be (bundle exec), bu (bundle update) and bi (bundle install)
+  redis-cli               # Completion for redis-cli
+  tmux                    # Configuration options for tmux with zsh
+  mvn                     # Add command line completion for maven
+  rake
+  autojump                # Enables autojump if installed
+  vagrant                 # Adds vagrant command autocompletion
+  web-search              # Adds support for "google foo" opening a google search
+  command-not-found       # If a command can't be found, check apt to see which package contains it
+  gitfast                 # Enable fast zsh git completion
+  git-extras              # Enable git-extras command completion
+  jira
 )
 #+END_SRC
 
