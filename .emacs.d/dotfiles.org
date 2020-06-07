@@ -331,6 +331,15 @@ stty start undef stop undef
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 #+END_SRC
+
+** Automatically time slow processes
+This is a really cool =zsh= feature. The =REPORTTIME= variable will automatically output timing statistics for slow
+programs. Here I set it to do that if the program takes more than 10 seconds to run.
+
+#+BEGIN_SRC conf :tangle ~/.zshrc
+REPORTTIME=10
+#+END_SRC
+
 * Rubygems
 This file defines parameters for rubygems. These settings all end up in =~/.gemrc=.
 
