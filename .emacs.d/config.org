@@ -84,11 +84,11 @@ only evaluate ~emacs-lisp~ blocks.
 I use Melpa and Marmalade for repositories as well as Org's official repository.
 
 #+BEGIN_SRC emacs-lisp :results none
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
 #+END_SRC
 
 Then, since I use ~use-package~ for every package from the repositories, initialise this first.
