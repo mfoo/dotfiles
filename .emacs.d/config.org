@@ -726,16 +726,6 @@ section of the screen to insert, where it uses =org-attach= to save it, embeds i
   (("C-c S" . org-attach-screenshot))
 )
 #+END_SRC
-** Presentations
-I use =org-reveal= for HTML/JS presentations.
-
-TODO: Get org-reveal installed.
-
-#+BEGIN_SRC emacs-lisp
-;(add-to-list 'load-path "~/.emacs.d/org-reveal/")
-;(setq org-reveal-root (expand-file-name (concat user-emacs-directory "reveal.js")))
-;(add-hook 'org-mode-hook (lambda () (load-library "ox-reveal"))) ;
-#+END_SRC
 ** Linting Prose
 Source: http://unconj.ca/blog/linting-prose-in-emacs.html
 #+BEGIN_SRC emacs-lisp :results none
