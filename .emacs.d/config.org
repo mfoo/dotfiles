@@ -737,7 +737,7 @@ These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-a
 )
 #+END_SRC
 *** Bullet point lists
-For bullet lists, I use a slightly modified (removed =*= chars) versino of Howard Abrams' [[http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html][Better bullets]] changes.
+For bullet lists, I use a slightly modified (removed =*= chars) version of Howard Abrams' [[http://www.howardism.org/Technical/Emacs/orgmode-wordprocessor.html][Better bullets]] changes.
 
 #+BEGIN_SRC emacs-lisp
 (font-lock-add-keywords 'org-mode
