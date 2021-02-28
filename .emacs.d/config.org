@@ -12,36 +12,18 @@
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
 
-This file stores my emacs configuration. The latest version can be found [[https://github.com/mfoo/dotfiles/blob/master/.emacs.d/config.org][on GitHub]]. It is written using [[http://orgmode.org/][org-mode]] which
-is an excellent way to organise notes and, as it turns out, an excellent way to organise my configuration file. It is
-intended to be used with ~org-babel-load-file~ which parses this file, generates a =config.el= file, then executes that
-during emacs startup. In this way my Emacs configuration serves as both the configuration settings /and/ a high level
-documentation of those settings. It provides an incredibly convenient way to organise configuration the full benefit of
-org mode's functionality available within the configuration file itself. More information can be found in the
-[[Installation instructions][Installation instructions]] section.
+This file stores my emacs configuration. The latest version can be found [[https://github.com/mfoo/dotfiles/blob/master/.emacs.d/config.org][on GitHub]]. It is written using [[http://orgmode.org/][org-mode]] which is an excellent way to organise notes and, as it turns out, an excellent way to organise my configuration file. It is intended to be used with ~org-babel-load-file~ which parses this file, generates a =config.el= file, then executes that during emacs startup. In this way my Emacs configuration serves as both the configuration settings /and/ a high level documentation of those settings. It provides an incredibly convenient way to organise configuration the full benefit of org mode's functionality available within the configuration file itself. More information can be found in the [[Installation instructions][Installation instructions]] section.
 
-I am not a long term emacs user yet, having started in October 2015 after using vim for around 7 years. As such I use
-[[https://bitbucket.org/lyro/evil/wiki/Home][evil-mode]] all the time. This file is a work in progress that I try to keep organised. Like many people experiencing a
-new editor rather than spending an extended period of time reading emacs' extensive documentation, the configuration
-here has been a mix of searching and reading other people's =.emacs= files. I would recommend taking small parts of it and
-asking the inbuilt help system what each command does. I've tried to keep each section documented. You can do this with
-=C-h a=.
+I am not a long term emacs user yet, having started in October 2015 after using vim for around 7 years. As such I use [[https://bitbucket.org/lyro/evil/wiki/Home][evil-mode]] all the time. This file is a work in progress that I try to keep organised. Like many people experiencing a new editor rather than spending an extended period of time reading emacs' extensive documentation, the configuration here has been a mix of searching and reading other people's =.emacs= files. I would recommend taking small parts of it and asking the inbuilt help system what each command does. I've tried to keep each section documented. You can do this with =C-h a=.
 
-Organising my configuration in this way came about after a general interest in literate programming and after seeing
-these:
+Organising my configuration in this way came about after a general interest in literate programming and after seeing these:
 - a [[http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php][blog post by Arnaud Legrand]]
 - a [[https://www.youtube.com/watch?v=VIuOwIBL-ZU][YouTube video by Daniel Mai]]
-I already make notes on all my work and a lot of personal tasks throughout the day. This way I know I can confirm
-exactly what queries I executed or steps I took on a support request, or the methods I took at resolving a certain
-issue. Since I've been using org to do this, having org's power inside my editor configuration was a huge plus.
+I already make notes on all my work and a lot of personal tasks throughout the day. This way I know I can confirm exactly what queries I executed or steps I took on a support request, or the methods I took at resolving a certain issue. Since I've been using org to do this, having org's power inside my editor configuration was a huge plus.
 
-This file makes a lot of use of the ~use-package~ function. This is a really nice way to keep the installation of a
-package, it's keybindings, configuration, packaged together in the config file. There's a good description on how it
-works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]] and you can see the project page [[https://github.com/jwiegley/use-package][here]].
+This file makes a lot of use of the ~use-package~ function. This is a really nice way to keep the installation of a package, it's keybindings, configuration, packaged together in the config file. There's a good description on how it works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]] and you can see the project page [[https://github.com/jwiegley/use-package][here]].
 
-*Note*: Parts of this file are marked =TODO=. These are sections that require more work. They may not be properly
-documented, may be badly organised (maybe they should be part of other sections), or could be part of my old emacs
-configuration from before I used =org-mode= that I still haven't converted.
+*Note*: Parts of this file are marked =TODO=. These are sections that require more work. They may not be properly documented, may be badly organised (maybe they should be part of other sections), or could be part of my old emacs configuration from before I used =org-mode= that I still haven't converted.
 * Installation instructions
 #+BEGIN_COMMENT
 I couldn't get org mode's publishing to handle this link nicely, so unfortunately it's in raw HTML.
@@ -71,15 +53,9 @@ Here is the contents of my =~/.emacs= file:
 
 That's it.
 
-The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and
-executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package
-repositories]] section comes before any of the other non-standard config.
+The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package repositories]] section comes before any of the other non-standard config.
 
-Small note for readers of the source file: The example above uses the org babel source language of ~lisp~ rather than
-~emacs-lisp~, meaning that it won't be executed by ~org-babel-load-file~ on startup. Initially I had a ~tangle~ block here so
-=~/.emacs.d/.emacs= would be written conveniently by org, but it adds to the startup time of every emacs load. Removing
-the ~tangle~ block meant a recursive load, so my workaround is to change the source language. ~org-babel-load-file~ will
-only evaluate ~emacs-lisp~ blocks.
+Small note for readers of the source file: The example above uses the org babel source language of ~lisp~ rather than ~emacs-lisp~, meaning that it won't be executed by ~org-babel-load-file~ on startup. Initially I had a ~tangle~ block here so =~/.emacs.d/.emacs= would be written conveniently by org, but it adds to the startup time of every emacs load. Removing the ~tangle~ block meant a recursive load, so my workaround is to change the source language. ~org-babel-load-file~ will only evaluate ~emacs-lisp~ blocks.
 * Package repositories
 I use Melpa and Marmalade for repositories as well as Org's official repository.
 
@@ -119,9 +95,7 @@ Note this is currently commented, it exists in =.emacs=.
 #+END_SRC
 
 * Startup time benchmarking
-It's possible to benchmark startup time in emacs. This is useful if evaluating this gets too slow. I keep these lines
-commented as it's not something I do generally. It also isn't safe to run on every machine since the =benchmark-init-el=
-package needs to be downloaded manually.
+It's possible to benchmark startup time in emacs. This is useful if evaluating this gets too slow. I keep these lines commented as it's not something I do generally. It also isn't safe to run on every machine since the =benchmark-init-el= package needs to be downloaded manually.
 
 #+BEGIN_SRC emacs-lisp :results none
 ;(add-to-list 'load-path "/home/martinfoot/repositories/benchmark-init-el/")
@@ -140,8 +114,7 @@ I have a directory for lisp functions that aren't available in the package repos
       user-mail-address "martin@mfoot.com")
 #+END_SRC
 * Parentheses
-Use =electric-pair-mode= to automatically close inserted parentheses and braces. I don't have this enabled in text modes
-because when using =org-mode= it makes inserting links annoying.
+Use =electric-pair-mode= to automatically close inserted parentheses and braces. I don't have this enabled in text modes because when using =org-mode= it makes inserting links annoying.
 
 #+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (electric-pair-mode)))
@@ -166,13 +139,11 @@ Then I use =[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
 )
 #+END_SRC
 * Fill columns and line highlighting
-I find a 120 character line length is best for modern screens. Individual languages/major modes can override this.
-
-In text-based modes (non-programming modes) I enable automatic line wrapping also.
+I find a 120 character line length is best for modern screens. Individual languages/major modes can override this. In programming modes I enable automatic line wrapping.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq-default fill-column 120)
-(add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'prog-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 I also like a highlight on the screen to show the current cursor line.
@@ -204,8 +175,7 @@ When working with structured code it's nice to have an indentation guide.
 )
 #+END_SRC
 * Shortcut help
-It's very difficult to remember all the shortcuts available in emacs. The =guide-key= plugin pops up a list of available
-suggestions after a little while.
+It's very difficult to remember all the shortcuts available in emacs. The =guide-key= plugin pops up a list of available suggestions after a little while.
 
 =:diminish guide-key-mode= configures the mode to not show up in the list of minor modes.
 
@@ -225,9 +195,7 @@ I've configured it to wait 0.5 seconds before popping up the suggestions list.
 #+END_SRC
 
 * Line numbering and cursor position
-I've had a slight change of heart. Typically I would show line numbers everywhere, but now, instead, I leave them turned
-off to save space. If I need to jump to a specific line, I'm using Avy mode to enable =g l= for go to line. This is just
-as fast. See my [[file:config.org::*Window navigation and scrolling][Window navigation and scrolling section]].
+I've had a slight change of heart. Typically I would show line numbers everywhere, but now, instead, I leave them turned off to save space. If I need to jump to a specific line, I'm using Avy mode to enable =g l= for go to line. This is just as fast. See my [[file:config.org::*Window navigation and scrolling][Window navigation and scrolling section]].
 
 I also show the current cursor position column number in the bottom left of the screen:
 
@@ -268,24 +236,20 @@ By default emacs doesn't follow symlinks
 * OS Clipboard integration
 Add proper support for the OS clipboard integrations. Only tested under X.
 
-First we enable the emacs copy buffer to be linked to the OS clipboard. Lines copied from the OS can be pasted into
-emacs and lines copied from emacs can be pasted into other OS windows.
+First we enable the emacs copy buffer to be linked to the OS clipboard. Lines copied from the OS can be pasted into emacs and lines copied from emacs can be pasted into other OS windows.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq x-select-enable-clipboard t)
 #+END_SRC
 
-Now we enable 'primary selection'. The clipboard config above is for the operating system copy buffer with =C-c= and
-=C-v=. Primary selection is the mouse select buffer that usually works as pasted with a middle click. Enabling this allows
-selected text in emacs to be copied there so I can select in the program and paste into somewhere else using X.
+Now we enable 'primary selection'. The clipboard config above is for the operating system copy buffer with =C-c= and =C-v=. Primary selection is the mouse select buffer that usually works as pasted with a middle click. Enabling this allows selected text in emacs to be copied there so I can select in the program and paste into somewhere else using X.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq x-select-enable-primary t)
 (setq mouse-drag-copy-region t)
 #+END_SRC
 * Temporary backup files
-Auto backup can be disabled in emacs with ~(setq make-backup-files nil)~ but rather than disabling them we can simply move
-the directory that they get placed in. This keeps them out of the way in case we need them.
+Auto backup can be disabled in emacs with ~(setq make-backup-files nil)~ but rather than disabling them we can simply move the directory that they get placed in. This keeps them out of the way in case we need them.
 
 I've used =~/.emacs-backups= because my ~/.emacs.d is in git, I don't need to keep backups.
 
@@ -334,16 +298,13 @@ Let's also show a fortune message in the scratch buffer when we start emacs:
 )
 #+END_SRC
 * Terminal bells
-Disable the terminal bell. Use a visible bell instead. A non-nil value causes emacs to try and flash the frame to
-represent a bell.
+Disable the terminal bell. Use a visible bell instead. A non-nil value causes emacs to try and flash the frame to represent a bell.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq visible-bell 1)
 #+END_SRC
 * Menu bar
-Don't show emacs' menu bar - I remember enough shortcuts and understand how to use the inbuilt help system if I don't
-remember the shortcut for something. When we're using graphical emacs, also disable the tooltips for the mouse an the
-scroll bar.
+Don't show emacs' menu bar - I remember enough shortcuts and understand how to use the inbuilt help system if I don't remember the shortcut for something. When we're using graphical emacs, also disable the tooltips for the mouse an the scroll bar.
 
 #+BEGIN_SRC emacs-lisp :results none
 (when window-system
@@ -366,22 +327,19 @@ Whitespace mode is enabled for all programming and text buffers.
 
 #+END_SRC
 ** Trailing whitespace
-Delete trailing whitespace automatically on save. I used to configure editors to highlight trailing whitespace, but it's
-pointless if it can be auto-deleted on save.
+Delete trailing whitespace automatically on save. I used to configure editors to highlight trailing whitespace, but it's pointless if it can be auto-deleted on save.
 
 #+BEGIN_SRC emacs-lisp :results none
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-I also don't like seeing tabs mixed with spaces. This section needs some work however so is currently commented out. I
-need to customise the faces that =whitespace-mode= uses.
+I also don't like seeing tabs mixed with spaces. This section needs some work however so is currently commented out. I need to customise the faces that =whitespace-mode= uses.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq whitespace-line-column 118) ; Highlight lines over 118 characters in whitespace-mode
 #+END_SRC
 ** Default emacs backspace behaviour
-I despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number of
-spaces and inserts tab-width -1 spaces. This seems like an insane default.
+I despise emacs' default behaviour when hitting backspaces on tabs - it converts the tab into the tab-width number of spaces and inserts tab-width -1 spaces. This seems like an insane default.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq backward-delete-char-untabify-method nil)
@@ -394,8 +352,7 @@ Display tabs as four spaces:
 ;(setq-default tab-always-indent 'complete)
 #+END_SRC
 
-Set up the tab stop list. This is what emacs uses when it can't find an appropriate tab stop - i.e how much to try
-indenting when tab is hit.
+Set up the tab stop list. This is what emacs uses when it can't find an appropriate tab stop - i.e how much to try indenting when tab is hit.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq-default tab-stop-list (number-sequence 4 200 4))
@@ -448,8 +405,7 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 )
 #+END_SRC
 * Org Mode
-When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
-more things it became larger and larger and I had to split it into subcategories.
+When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised more things it became larger and larger and I had to split it into subcategories.
 
 One of the main sources for this configuration is [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Diego Zambonis's "Beautifying Org Mode in Emacs"]].
 
@@ -475,8 +431,7 @@ Configure =org-mode= to use a variable pitch font for prose but a fixed pitch fo
 )
 #+end_src
 
-Since we're using a variable pitch font we enable =visual-line-mode= so we don't hard wrap all lines. This means when
-making the screen wider the text will reflow.
+Since we're using a variable pitch font we enable =visual-line-mode= so we don't hard wrap all lines. This means when making the screen wider the text will reflow.
 
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'visual-line-mode)
@@ -486,14 +441,11 @@ making the screen wider the text will reflow.
 - State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
 - State "TODO"       from ""           [2015-12-03 Thu 09:51]
 :END:
-This table lists (and defines) the key bindings that I often use. Most are set to the defaults but it provides both an
-easy way to set variables and a handy reference. Check the source for how the table is used.
+This table lists (and defines) the key bindings that I often use. Most are set to the defaults but it provides both an easy way to set variables and a handy reference. Check the source for how the table is used.
 
-*Note* to future me: If the key is already bound and you're setting a default here, you can find out the name of the
-function with =C-h k <key combination>=.
+*Note* to future me: If the key is already bound and you're setting a default here, you can find out the name of the function with =C-h k <key combination>=.
 
-TODO: These are the header rows but they cause problems with org-babel evaluation. I would also like to use org's
-=monospace markup= but this is causing problems. I need to strip the "=" character out of the value in the table cells.
+TODO: These are the header rows but they cause problems with org-babel evaluation. I would also like to use org's =monospace markup= but this is causing problems. I need to strip the "=" character out of the value in the table cells.
 
 | Key binding | Description | Function   |
 |-------------+-------------+------------|
@@ -525,8 +477,7 @@ TODO: These are the header rows but they cause problems with org-babel evaluatio
 #+END_SRC
 ** Task tracking
 *** Task transition timing
-I like to see timestamps for task transitions but I don't want them filling up screen real estate. Logging these into
-drawers makes them easily expandable and collapsible.
+I like to see timestamps for task transitions but I don't want them filling up screen real estate. Logging these into drawers makes them easily expandable and collapsible.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-log-into-drawer t)
@@ -541,8 +492,7 @@ State transitions are largely based on [[http://doc.norang.ca/org-mode.html#Task
 )
 #+END_SRC
 
-I have defined colours for each task state. TODO is red (bad), blocked is orange and magnta (somewhat bad), in progress
-is gold (OK) and complete is green.
+I have defined colours for each task state. TODO is red (bad), blocked is orange and magnta (somewhat bad), in progress is gold (OK) and complete is green.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-todo-keyword-faces
@@ -556,18 +506,13 @@ is gold (OK) and complete is green.
 ))
 #+END_SRC
 
-Since I have more than two states, moving between them with the default =S-<left>= and =S-<right>= is slow. This enables =C-c
-c t= as a shortcut for quickly choosing the state. some of the states below have an "@" symbol next to them. This lets me
-write a reason why a task is cancelled or blocked, or what it's waiting on. The buffer will appear when selecting such a
-state that lets me enter the reason.
+Since I have more than two states, moving between them with the default =S-<left>= and =S-<right>= is slow. This enables =C-c c t= as a shortcut for quickly choosing the state. some of the states below have an "@" symbol next to them. This lets me write a reason why a task is cancelled or blocked, or what it's waiting on. The buffer will appear when selecting such a state that lets me enter the reason.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-use-fast-todo-selection t)
 #+END_SRC
 ** Agenda
-Tell org mode where my notes are usually kept. This allows the agenda view to index all my org notes for TODO items and
-scheduled items. Some of these directories won't exist on some machines so we filter the list at startup based on
-whether or not the file exists.
+Tell org mode where my notes are usually kept. This allows the agenda view to index all my org notes for TODO items and scheduled items. Some of these directories won't exist on some machines so we filter the list at startup based on whether or not the file exists.
 
 #+BEGIN_SRC emacs-lisp :results none
 (require 'cl) ; remove-if-not is inside the common-lisp package
@@ -615,8 +560,7 @@ From [[http://joat-programmer.blogspot.co.uk/2013/07/org-mode-version-8-and-pdf-
       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 ** Emphasis and italics
-In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some
-emphasis on it, get emacs to hide the markup characters:
+In =org-mode= we can use [[http://orgmode.org/manual/Emphasis-and-monospace.html][several different emphasis types]] using different emphasis markup. When a block of text has some emphasis on it, get emacs to hide the markup characters:
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-hide-emphasis-markers t)
@@ -663,8 +607,7 @@ When we're using a GUI emacs we can display embedded images on startup
 (add-hook 'org-mode-hook 'org-babel-result-hide-all)
 #+END_SRC
 
-I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill
-the screen.
+I use graphical emacs so that I can display inline images. Set them to have a maximum size so large images don't fill the screen.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq org-image-actual-width 800)
@@ -707,11 +650,9 @@ We'll also make the agenda view appear in the current window, not in a right spl
 (setq org-agenda-window-setup 'current-window)
 #+END_SRC
 
-TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There
-is a HUGE wealth of information here.
+TODO: Investigate org-capture, org-agenda etc. See http://pages.sachachua.com/.emacs.d/Sacha.html#orgheadline45. There is a HUGE wealth of information here.
 ** Emoji
-I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in
-interactive buffers.
+I rarely use smiley faces in notes, but sometimes the occasion calls for it. Emojify displays these emojis in interactive buffers.
 
 Example: :)
 
@@ -745,9 +686,7 @@ For bullet lists, I use a slightly modified (removed =*= chars) version of Howar
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+END_SRC
 ** Screenshot attachment
-I use a package called [[https://github.com/dfeich/org-screenshot][org-attach-screenshot]] which is awesome. Calling the function hides emacs and allows you to grab a
-section of the screen to insert, where it uses =org-attach= to save it, embeds it at the cursor position, and calls
-=org-redisplay-inline-images=. This is great for capturing issues at work.
+I use a package called [[https://github.com/dfeich/org-screenshot][org-attach-screenshot]] which is awesome. Calling the function hides emacs and allows you to grab a section of the screen to insert, where it uses =org-attach= to save it, embeds it at the cursor position, and calls =org-redisplay-inline-images=. This is great for capturing issues at work.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package org-attach-screenshot
@@ -774,28 +713,13 @@ Source: http://unconj.ca/blog/linting-prose-in-emacs.html
 #+END_SRC
 
 * Blog
-[[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then
-host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog
-posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll
-understands. I can then run Jekyll normally and it will take these org-published files and convert them into the static
-website. The configuration here is based on [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before
-trying to understand this. I've adapted it slightly to work with the latest =org-mode= (the publishing functions changed
-name). I've also added an third part of the project that handles exporting this org mode config file into a
-=/static/emacs-config= directory. Whenever I run ~org-publish-all~ the latest version of the config file gets pulled in and
-so the config file hosted on my blog is always as up-to-date as the latest blog post.
+[[http://www.mfoot.com][My blog]] uses a static site generator called [[https://jekyllrb.com/][Jekyll]]. This parses YAML files and produces static HTML content which I then host on [[https://aws.amazon.com/s3/][Amazon S3]]. I really like the power of =org-mode= in Emacs, so this configuration block enables me to write blog posts using =org-mode= and then use =org-mode='s publishing system to publish these files in a format that Jekyll understands. I can then run Jekyll normally and it will take these org-published files and convert them into the static website. The configuration here is based on [[http://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]], so reading through that is a good idea before trying to understand this. I've adapted it slightly to work with the latest =org-mode= (the publishing functions changed name). I've also added an third part of the project that handles exporting this org mode config file into a =/static/emacs-config= directory. Whenever I run ~org-publish-all~ the latest version of the config file gets pulled in and so the config file hosted on my blog is always as up-to-date as the latest blog post.
 
-Here we define a list of projects for org mode. When using the export processor (=C-c C-e=) a projects option now appears
-at the bottom from any file. Two projects are defined; one for the blog posts that get processed with the HTML
-publishing function, and one for static content that gets copied verbatim. I can select a project and select either one
-of the two projects or the component project that wraps both of them. Org will maintain timestamps and caches of these
-files so that it doesn't regenerate what it doesn't have to.
+Here we define a list of projects for org mode. When using the export processor (=C-c C-e=) a projects option now appears at the bottom from any file. Two projects are defined; one for the blog posts that get processed with the HTML publishing function, and one for static content that gets copied verbatim. I can select a project and select either one of the two projects or the component project that wraps both of them. Org will maintain timestamps and caches of these files so that it doesn't regenerate what it doesn't have to.
 
 TODO: Describe folder structure. Link to GitHub?
 
-Additionally I embed my Google Analytics tracking code in my org mode config for purely informational
-purposes. Everybody likes cool statistics. To do this I define a custom HTML export that derives from the default org
-HTML export. It includes a translation function that calls the default HTML template renderer then uses string
-manipulation to insert the Google Analytics code at the end of the =<body>= tag.
+Additionally I embed my Google Analytics tracking code in my org mode config for purely informational purposes. Everybody likes cool statistics. To do this I define a custom HTML export that derives from the default org HTML export. It includes a translation function that calls the default HTML template renderer then uses string manipulation to insert the Google Analytics code at the end of the =<body>= tag.
 
 #+BEGIN_SRC emacs-lisp :results none
 (defun mfoot-append-google-analytics-tag (template info)
@@ -901,11 +825,7 @@ information.
 )
 #+END_SRC
 
-In order to get images to work both inside emacs and inside the generated output I need to register a custom image
-format. Emacs currently will only generate ~<a href />~ tags for images it can actually resolve on the filesystem. Since
-my images on my blog are hosted under =/images=, emacs will generate =file:///images= URLs which is not useful. The
-following allows me to use =img:../images/2015/11/photo.png= as an image reference and have both emacs and the html
-generator generate the correct paths. This is modified from [[http://stackoverflow.com/a/14841597][this StackOverflow answer]].
+In order to get images to work both inside emacs and inside the generated output I need to register a custom image format. Emacs currently will only generate ~<a href />~ tags for images it can actually resolve on the filesystem. Since my images on my blog are hosted under =/images=, emacs will generate =file:///images= URLs which is not useful. The following allows me to use =img:../images/2015/11/photo.png= as an image reference and have both emacs and the html generator generate the correct paths. This is modified from [[http://stackoverflow.com/a/14841597][this StackOverflow answer]].
 
 #+BEGIN_SRC emacs-lisp :results none
 (defun org-custom-link-img-follow (path)
@@ -920,16 +840,14 @@ generator generate the correct paths. This is modified from [[http://stackoverfl
 (org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
 #+END_SRC
 
-TODO: Write some notes on how I publish this to S3 with s3-website. I always forget this and have to check my bash
-history.
+TODO: Write some notes on how I publish this to S3 with s3-website. I always forget this and have to check my bash history.
 * Window navigation and scrolling
 Scroll smoothly rather than by paging
 #+BEGIN_SRC emacs-lisp :results none
 (setq scroll-step 1)
 #+END_SRC
 
-When the cursor moves past the top or bottom of the window, scroll one line at a time rather than jumping. I don't like
-having to find my place in the file again.
+When the cursor moves past the top or bottom of the window, scroll one line at a time rather than jumping. I don't like having to find my place in the file again.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq scroll-conservatively 10000)
@@ -945,8 +863,7 @@ Add vim-like navigation between panes in a window using windmove.
 (global-set-key (kbd "C-c <down>") 'windmove-down)
 #+END_SRC
 
-I use [[https://github.com/abo-abo/avy][avy-mode]] for fast buffer navigation. As I use =evil-mode= I've bound =gc= to goto-char and =gl= to goto-line. This makes
-for some really fast navigation of the visible buffer.
+I use [[https://github.com/abo-abo/avy][avy-mode]] for fast buffer navigation. As I use =evil-mode= I've bound =gc= to goto-char and =gl= to goto-line. This makes for some really fast navigation of the visible buffer.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package avy
@@ -1014,8 +931,7 @@ I've just started learning about Go so this is very basic. Enough to run through
 )
 #+END_SRC
 ** SCSS
-When doing web development, SCSS is really useful. We use [[https://github.com/antonj/scss-mode][scss-mode]] for this. By default hitting tab will insert four
-spaces. We'll modify this to use two in the same format that Twitter's Bootstrap library uses.
+When doing web development, SCSS is really useful. We use [[https://github.com/antonj/scss-mode][scss-mode]] for this. By default hitting tab will insert four spaces. We'll modify this to use two in the same format that Twitter's Bootstrap library uses.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package scss-mode
@@ -1030,8 +946,7 @@ spaces. We'll modify this to use two in the same format that Twitter's Bootstrap
 #+END_SRC
 
 * Autocompletion
-I use [[http://company-mode.github.io/][company-mode]] for autocompletion. It's bound to =C-<space>= in a similar way to eclipse. Since I use =evil-mode= I
-don't use emacs' default mark combo.
+I use [[http://company-mode.github.io/][company-mode]] for autocompletion. It's bound to =C-<space>= in a similar way to eclipse. Since I use =evil-mode= I don't use emacs' default mark combo.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package company
@@ -1078,8 +993,7 @@ I've discovered =yafolding-mode= for all my code folding needs.
 #+END_SRC
 
 * Git
-[[https://github.com/magit/magit][Magit]] is awesome. It's =git= integration with Emacs and it's incredibly well made. Taking the time to learn it is highly
-advised.
+[[https://github.com/magit/magit][Magit]] is awesome. It's =git= integration with Emacs and it's incredibly well made. Taking the time to learn it is highly advised.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package magit
@@ -1090,16 +1004,13 @@ advised.
 )
 #+END_SRC
 
-As per the [[https://magit.vc/manual/magit.html#Essential-Settings][Magit User Manual]], I also switch off Emacs' built-in =vc= (version control) system. I only use =git= and don't
-need =vc= to be doing work that =magit= should be doing.
+As per the [[https://magit.vc/manual/magit.html#Essential-Settings][Magit User Manual]], I also switch off Emacs' built-in =vc= (version control) system. I only use =git= and don't need =vc= to be doing work that =magit= should be doing.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq vc-handled-backends nil)
 #+END_SRC
 
-There's also a useful project called [[https://github.com/chrisbarrett/git-commit-jira-prefix][git-commit-jira-prefix]] which looks for a ticket number in the previous commit in
-the git log and prefixes it to the start of the message when making commits. It's not on any package managers yet so the
-source file is included in =.emacs.d= in this repository.
+There's also a useful project called [[https://github.com/chrisbarrett/git-commit-jira-prefix][git-commit-jira-prefix]] which looks for a ticket number in the previous commit in the git log and prefixes it to the start of the message when making commits. It's not on any package managers yet so the source file is included in =.emacs.d= in this repository.
 
 #+BEGIN_SRC emacs-lisp :results none
 (autoload 'git-commit-jira-prefix-init
@@ -1135,8 +1046,7 @@ Enable the mouse when running in a terminal.
   (xterm-mouse-mode +1))
 #+END_SRC
 * TODO Package installation
-All of the packages that I use get automatically installed. First we define ~required-packages~ and then a function that
-iterates over all of them, installing each one. My =~/.emacs= configures [[https://melpa.org/][Melpa]] and [[https://marmalade-repo.org/][Marmalade]] before this gets executed.
+All of the packages that I use get automatically installed. First we define ~required-packages~ and then a function that iterates over all of them, installing each one. My =~/.emacs= configures [[https://melpa.org/][Melpa]] and [[https://marmalade-repo.org/][Marmalade]] before this gets executed.
 
 #+BEGIN_SRC emacs-lisp :results none
 (defvar required-packages
@@ -1193,11 +1103,9 @@ iterates over all of them, installing each one. My =~/.emacs= configures [[https
 #+END_SRC
 
 * Remote shells
-I use =tramp= to edit files on remote machines. Locally I use =zsh= but this might not be installed on the target
-machine. Use =bash= when connecting to a remote host.
+I use =tramp= to edit files on remote machines. Locally I use =zsh= but this might not be installed on the target machine. Use =bash= when connecting to a remote host.
 
-TODO: This sets my local shell also. I don't really use =M-x shell= yet, but if I move further into the "everything inside
-emacs" way, something like [[https://github.com/bbatsov/projectile/issues/921][this]] (with hostname-specificity removed) might be useful.
+TODO: This sets my local shell also. I don't really use =M-x shell= yet, but if I move further into the "everything inside emacs" way, something like [[https://github.com/bbatsov/projectile/issues/921][this]] (with hostname-specificity removed) might be useful.
 
 #+BEGIN_SRC emacs-lisp :results none
 (setq shell-file-name "/bin/bash")
@@ -1216,17 +1124,14 @@ I use the Spacemacs dark theme.
 #+end_src
 
 ** Displaying the time
-I don't need Emacs to tell me the time, and I never use Linux's mail system so I don't want emacs to tell me if I have
-new emails. This removes the "Mail" link from the mode line indirectly.
+I don't need Emacs to tell me the time, and I never use Linux's mail system so I don't want emacs to tell me if I have new emails. This removes the "Mail" link from the mode line indirectly.
 
 #+BEGIN_SRC emacs-lisp :results none
 (display-time-mode -1)
 #+END_SRC
 * Editor augmentation
 ** Vim customisations
-[[http://www.emacswiki.org/emacs/Evil][Evil mode]] provides vim-style keybindings for emacs. It makes it much more usable for a long-time vim user. [[https://github.com/timcharper/evil-surround][Evil-surround]]
-is an emacs wrapper of Tim Pope's [[https://github.com/tpope/vim-surround][vim-surround]] plugin. [[https://github.com/krisajenkins/evil-tabs][Evil-tabs]] is an emacs mode that allows tabs with vim's tab
-keybindings.
+[[http://www.emacswiki.org/emacs/Evil][Evil mode]] provides vim-style keybindings for emacs. It makes it much more usable for a long-time vim user. [[https://github.com/timcharper/evil-surround][Evil-surround]] is an emacs wrapper of Tim Pope's [[https://github.com/tpope/vim-surround][vim-surround]] plugin. [[https://github.com/krisajenkins/evil-tabs][Evil-tabs]] is an emacs mode that allows tabs with vim's tab keybindings.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package evil
@@ -1255,10 +1160,7 @@ Note: actually electric-indent-mode is used for this.
 (global-set-key (kbd "RET") 'newline-and-indent)
 #+END_SRC
 ** Projectile
-[[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to provide a nice set of features operating on a
-project level without introducing external dependencies(when feasible). For instance - finding project files has a
-portable implementation written in pure Emacs Lisp without the use of GNU find (but for performance sake an indexing
-mechanism backed by external commands exists as well).
+[[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to provide a nice set of features operating on a project level without introducing external dependencies(when feasible). For instance - finding project files has a portable implementation written in pure Emacs Lisp without the use of GNU find (but for performance sake an indexing mechanism backed by external commands exists as well).
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package projectile
@@ -1280,8 +1182,7 @@ I use =helm-projectile-ag= quite a lot which requires the =ag= package.
 )
 #+END_SRC
 ** Recentf mode
-As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows recently opened files in the buffer list for fast
-switching to them.
+As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows recently opened files in the buffer list for fast switching to them.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package recentf
@@ -1293,8 +1194,7 @@ switching to them.
 )
 #+END_SRC
 ** Neotree
-Sometimes I need to see the directory structure for the current file. The [[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable
-pane that will pop up and disappear with the =F8= key.
+Sometimes I need to see the directory structure for the current file. The [[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable pane that will pop up and disappear with the =F8= key.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package neotree
@@ -1303,9 +1203,7 @@ pane that will pop up and disappear with the =F8= key.
 )
 #+END_SRC
 ** Improving search with ace-isearch
-[[https://github.com/tam17aki/ace-isearch][ace-ijump]] mode switches search tool based on the length of the search string. By default, if you use isearch for a
-single character it'll jump into =ace-jump-mode= or =avy=, for 1-6 characters it will use normal isearch, and if you start
-typing longer search strings it'll jump into either =helm-swoop= or =swiper=, depending on which is available.
+[[https://github.com/tam17aki/ace-isearch][ace-ijump]] mode switches search tool based on the length of the search string. By default, if you use isearch for a single character it'll jump into =ace-jump-mode= or =avy=, for 1-6 characters it will use normal isearch, and if you start typing longer search strings it'll jump into either =helm-swoop= or =swiper=, depending on which is available.
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package ace-isearch
@@ -1350,8 +1248,7 @@ I've switched to Swiper from Helm.
 #+END_SRC
 
 ** Anzu
-[[https://github.com/syohex/emacs-anzu][Anzu]] shows how many strings match the regex you're replacing and show the effect of replacement as the substitution is
-typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in the buffer.
+[[https://github.com/syohex/emacs-anzu][Anzu]] shows how many strings match the regex you're replacing and show the effect of replacement as the substitution is typed. This is awesome. Using =%s/using/foo/= you'll see the change to =foo= in the buffer.
 
 http://pragmaticemacs.com/emacs/prettier-text-replacement-with-anzu/
 
@@ -1534,8 +1431,7 @@ I use =rubocop= for Ruby static analysis:
 )
 #+END_SRC
 ** MySQL
-Emacs has a built-in MySQL client. When using it, I want to disable line wrapping. I can use standard text navigation
-features to see what I need ([[https://zeekat.nl/articles/making-emacs-work-for-me.html][source]]).
+Emacs has a built-in MySQL client. When using it, I want to disable line wrapping. I can use standard text navigation features to see what I need ([[https://zeekat.nl/articles/making-emacs-work-for-me.html][source]]).
 
 #+BEGIN_SRC emacs-lisp :results none
 (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
@@ -1547,17 +1443,14 @@ Bats is a bash testing framework. I want to ensure we use sh-mode when opening t
 (add-to-list 'auto-mode-alist '("\\.bats$" . sh-mode))
 #+END_SRC
 * Syntax highlighting and static analysis
-I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax
-checking for known languages. Some languages also provide linting as well via flycheck.
+I use [[https://github.com/flycheck/flycheck][flycheck]] as a framework for syntax checking and static analysis. E.g. it will provide language-specific syntax checking for known languages. Some languages also provide linting as well via flycheck.
 
 TODO: This section should be merged with my =use-package= declaration for flycheck.
 #+BEGIN_SRC emacs-lisp :results none
 (add-hook 'prog-mode-hook (lambda () (flycheck-mode)))
 #+END_SRC
 * Spell checking
-I have several modes that execute =flyspell-mode=. There's a problem with this with xemacs by default: middle clicking to
-save a correction also inadvertently pastes whatever was in the selection buffer. This can be fixed by swapping around
-the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-when-correcting-spelling-mistakes-using-flyspell][source]]).
+I have several modes that execute =flyspell-mode=. There's a problem with this with xemacs by default: middle clicking to save a correction also inadvertently pastes whatever was in the selection buffer. This can be fixed by swapping around the bindings ([[http://emacs.stackexchange.com/questions/580/inadvertent-paste-when-correcting-spelling-mistakes-using-flyspell][source]]).
 
 I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGIN_SRC..END_SRC= blocks.
 
@@ -1609,8 +1502,7 @@ I use [[https://github.com/capitaomorte/yasnippet][yasnippet]] for code snippet 
  )
 #+END_SRC
 * TODO Other configuration
-This section holds configuration from before I moved to using =org-babel= (i.e. it lived directly inside =~/.emacs=). It is
-here just because I haven't had the time or the impetus to categorise and document it.
+This section holds configuration from before I moved to using =org-babel= (i.e. it lived directly inside =~/.emacs=). It is here just because I haven't had the time or the impetus to categorise and document it.
 
 #+BEGIN_SRC emacs-lisp :results none
 ;; If we're at the end of a word and hit TAB, run the expand command
