@@ -451,6 +451,36 @@ I highlight mixed spaces and tabs, and have whitespace mode clean out blank line
 When I originally wrote this file I had a few simple customisations here. As I discovered new features and customised
 more things it became larger and larger and I had to split it into subcategories.
 
+One of the main sources for this configuration is [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Diego Zambonis's "Beautifying Org Mode in Emacs"]].
+
+Configure =org-mode= to use a variable pitch font for prose but a fixed pitch font for various blocks.
+
+#+begin_src emacs-lisp :results none
+(add-hook 'org-mode-hook (lambda ()
+  (custom-set-faces
+    '(org-block ((t (:inherit fixed-pitch))))
+    '(org-code ((t (:inherit (shadow fixed-pitch)))))
+    '(org-document-info ((t (:foreground "dark orange"))))
+    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+    '(org-link ((t (:foreground "royal blue" :underline t))))
+    '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-property-value ((t (:inherit fixed-pitch))) t)
+    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  (variable-pitch-mode)
+)
+)
+#+end_src
+
+Since we're using a variable pitch font we enable =visual-line-mode= so we don't hard wrap all lines. This means when
+making the screen wider the text will reflow.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'visual-line-mode)
+#+end_src
 ** Key bindings
 :LOGBOOK:
 - State "IN_PROGRESS" from "TODO"       [2015-12-03 Thu 10:17]
