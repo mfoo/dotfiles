@@ -26,11 +26,6 @@
 (setq use-package-verbose t)
 (require 'use-package)
 
-; Ensure the latest org-mode version. This is a trick - the org package is provided by the OS distribution, but org-plus-contrib isn't, it's from the org-mode repo, and it will pull down the latest org package.
-(use-package org-plus-contrib
-  :ensure t
-)
-
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
 (setq gc-cons-threshold 800000)
