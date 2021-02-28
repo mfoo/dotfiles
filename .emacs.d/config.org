@@ -1174,44 +1174,17 @@ emacs" way, something like [[https://github.com/bbatsov/projectile/issues/921][t
 #+END_SRC
 * Themes and visual config
 
-** Custom-safe-themes
-Emacs requires used themes to be whitelisted. This section contains all of the hash identifiers of themes I'm OK with
-loading.
-
-#+BEGIN_SRC emacs-lisp :results none
-(custom-set-variables
-'(custom-safe-themes
-   (quote
-     ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "1297a022df4228b81bc0436230f211bad168a117282c20ddcba2db8c6a200743" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-      default))) )
-#+END_SRC
-** Smart mode line
-[[https://github.com/Malabarba/smart-mode-line][Smart Mode Line]] is a mode-line for emacs.
-
-#+BEGIN_QUOTE
-Smart Mode Line is a sexy mode-line for Emacs. It aims to be easy to read from small to large monitors by using colors,
-a prefix feature, and smart truncation.
-#+END_QUOTE
-
-This is customised to use the =solarized= theme.
-
-#+BEGIN_SRC emacs-lisp :results none
-(use-package solarized-theme
-  :defer t
-  :init
-  (load-theme 'solarized-dark)
-  :config
-  (use-package smart-mode-line
+** Spacemacs dark theme
+I use the Spacemacs dark theme.
+#+begin_src emacs-lisp
+(use-package spacemacs-theme
+    :ensure t
     :defer t
-    :diminish
-    :config
-    (progn
-      (setq sml/no-confirm-load-theme t)
-      (sml/setup)
-    )
-  )
+    :init
+    (load-theme 'spacemacs-dark t)
 )
-#+END_SRC
+#+end_src
+
 ** Displaying the time
 I don't need Emacs to tell me the time, and I never use Linux's mail system so I don't want emacs to tell me if I have
 new emails. This removes the "Mail" link from the mode line indirectly.
