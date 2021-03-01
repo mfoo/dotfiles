@@ -1109,7 +1109,6 @@ TODO: This sets my local shell also. I don't really use =M-x shell= yet, but if 
 I use the Spacemacs dark theme.
 #+begin_src emacs-lisp
 (use-package spacemacs-theme
-    :ensure t
     :defer t
     :init
     (load-theme 'spacemacs-dark t)
@@ -1207,12 +1206,9 @@ Sometimes I need to see the directory structure for the current file. The [[http
 I've switched to Swiper from Helm.
 
 #+BEGIN_SRC emacs-lisp :results none
-(use-package counsel
-  :ensure t
-)
+(use-package counsel)
 
 (use-package swiper
-  :ensure t
   :config
 
   ;; Allow typing word sections in any order
@@ -1235,7 +1231,6 @@ I've switched to Swiper from Helm.
 )
 
 (use-package ivy
-  :ensure t
   :diminish
 )
 #+END_SRC
@@ -1411,7 +1406,6 @@ I use =rubocop= for Ruby static analysis:
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package rubocop
-  :ensure t
   :defer t
   :init (add-hook 'ruby-mode-hook 'rubocop-mode)
 )
@@ -1465,7 +1459,6 @@ I've been using [[https://github.com/yjwen/org-reveal][org-reveal]] for presenta
 
 #+BEGIN_SRC emacs-lisp :results none
 ;; (use-package ox-reveal
-;;   :ensure t
 ;;   :defer t
 ;;   :config
 ;;   (setq org-reveal-root (concat user-emacs-directory "reveal-js/reveal.js"))
@@ -1477,7 +1470,6 @@ I use Elasticsearch at work, and =es-mode= has some very useful tools for monito
 
 #+BEGIN_SRC emacs-lisp :results none
 (use-package es-mode
-  :ensure t
   :defer t
   :config
   (add-to-list 'auto-mode-alist '("\\.es$" . es-mode))
