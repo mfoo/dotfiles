@@ -21,7 +21,7 @@ Organising my configuration in this way came about after a general interest in l
 - a [[https://www.youtube.com/watch?v=VIuOwIBL-ZU][YouTube video by Daniel Mai]]
 I already make notes on all my work and a lot of personal tasks throughout the day. This way I know I can confirm exactly what queries I executed or steps I took on a support request, or the methods I took at resolving a certain issue. Since I've been using org to do this, having org's power inside my editor configuration was a huge plus.
 
-This file makes a lot of use of the ~use-package~ function. This is a really nice way to keep the installation of a package, it's keybindings, configuration, packaged together in the config file. There's a good description on how it works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]] and you can see the project page [[https://github.com/jwiegley/use-package][here]].
+This file makes a lot of use of the ~use-package~ function. This is a really nice way to keep the installation of a package, its keybindings, configuration, packaged together in the config file. There's a good description on how it works [[http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html][here]] and you can see the project page [[https://github.com/jwiegley/use-package][here]].
 
 *Note*: Parts of this file are marked =TODO=. These are sections that require more work. They may not be properly documented, may be badly organised (maybe they should be part of other sections), or could be part of my old emacs configuration from before I used =org-mode= that I still haven't converted.
 * Installation instructions
@@ -53,14 +53,16 @@ Here is the contents of my =~/.emacs= file:
 
 That's it.
 
-The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package repositories]] section comes before any of the other non-standard config.
+The reason that this works is that some parts of this file are carefully organised. =org-babel-load-file= pulls out and executes =emacs-lisp= code blocks in the order they're in the file. This means that it's very important that my [[Package repositories][Package repositories]] section comes before anything else.
 
 Small note for readers of the source file: The example above uses the org babel source language of ~lisp~ rather than ~emacs-lisp~, meaning that it won't be executed by ~org-babel-load-file~ on startup. Initially I had a ~tangle~ block here so =~/.emacs.d/.emacs= would be written conveniently by org, but it adds to the startup time of every emacs load. Removing the ~tangle~ block meant a recursive load, so my workaround is to change the source language. ~org-babel-load-file~ will only evaluate ~emacs-lisp~ blocks.
 * Package repositories
 I use Melpa and Marmalade for repositories as well as Org's official repository.
 
 #+BEGIN_SRC emacs-lisp :results none
+; Fix a bug where Emacs fails to fetch packages from Melpa
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (require 'package)
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
@@ -203,7 +205,7 @@ I also show the current cursor position column number in the bottom left of the 
 (column-number-mode)
 #+END_SRC
 * Yes or no prompts
-Use 'y' or 'n' instead of 'yes' and 'no' in interactive prompts. This saves typing.
+Use =y= or =n= instead of =yes= and =no= in interactive prompts. This saves typing.
 
 #+BEGIN_SRC emacs-lisp :results none
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -1447,8 +1449,6 @@ I don't flyspell =org-mode= buffers inside the =PROPERTIES=, =LOGBOOK=, or =BEGI
 
 (eval-after-load "flyspell"
   '(progn
-;     (define-key flyspell-mouse-map [down-mouse-2] nil)
-;     (define-key flyspell-mouse-map [mouse-2] #'flyspell-correct-word))
      (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
      (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
   )
