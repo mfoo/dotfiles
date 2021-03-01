@@ -409,25 +409,19 @@ When I originally wrote this file I had a few simple customisations here. As I d
 
 One of the main sources for this configuration is [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Diego Zambonis's "Beautifying Org Mode in Emacs"]].
 
-Configure =org-mode= to use a variable pitch font for prose but a fixed pitch font for various blocks.
-
+** Fonts and headlines
+Configure =org-mode= to use a variable pitch font for prose but a fixed pitch font for various blocks. Fonts can be downloaded [[https://github.com/edwardtufte/et-book/tree/gh-pages/et-book][here]].
 #+begin_src emacs-lisp :results none
-(add-hook 'org-mode-hook (lambda ()
-  (custom-set-faces
-    '(org-block ((t (:inherit fixed-pitch))))
-    '(org-code ((t (:inherit (shadow fixed-pitch)))))
-    '(org-document-info ((t (:foreground "dark orange"))))
-    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-    '(org-link ((t (:foreground "royal blue" :underline t))))
-    '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-    '(org-property-value ((t (:inherit fixed-pitch))) t)
-    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
-  (variable-pitch-mode)
+(custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "ETBembo" :height 0.9 :weight thin))))
 )
+
+(use-package mixed-pitch
+  :defer t
+  :diminish
+  :hook
+  (org-mode . mixed-pitch-mode)
 )
 #+end_src
 
@@ -672,8 +666,7 @@ These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-a
 (use-package org-bullets
   :defer t
   :diminish
-  :init
-  (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
+  :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 )
 #+END_SRC
