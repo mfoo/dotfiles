@@ -667,9 +667,10 @@ These are taken from https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-a
 #+BEGIN_SRC emacs-lisp :results none
 (use-package org-bullets
   :defer t
+  :commands org-bullets-mode
   :diminish
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  :init
+  (add-hook 'org-mode-hook 'org-bullets-mode)
 )
 #+END_SRC
 *** Bullet point lists
