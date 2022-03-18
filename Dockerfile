@@ -1,7 +1,7 @@
 ## -*- docker-image-name: "mfoo/dotfiles" -*-
 
 # Dockerfile purpose: testing my emacs configuration under TI
-FROM alpine:latest
+FROM alpine:3.15
 MAINTAINER martin@mfoot.com
 
 RUN apk update
