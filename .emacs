@@ -5,6 +5,7 @@
 ; To speed up init, the garbage collection settings are increased while init is happening, then restored afterwards.
 (setq gc-cons-threshold 100000000)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (require 'package)
 
 ; Org mode is a bit of a pain, it's the only bit that needs to be inside .emacs, since org is necessary to parse my
