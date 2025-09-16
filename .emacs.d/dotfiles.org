@@ -300,10 +300,12 @@ I always manage to hit the terminal locking =C-s= and =C-q= characters, so I jus
 stty start undef stop undef
 #+END_SRC
 
-** RVM
+** rbenv
 #+BEGIN_SRC conf :tangle ~/.zshrc
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+eval "$(rbenv init -)"
 #+END_SRC
 
 ** Automatically time slow processes
